@@ -1,0 +1,52 @@
+<!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                视频播放
+                <small>实时播放教室视频
+                </small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-gears"></i> 视频管理</a></li>
+                <li>视频播放</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">视频 </h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="btn-group btn-group-justified btn-group-camera"  role="group" aria-label="...">
+                                <div *ngFor="let camera of cameras;let i = index" class="btn-group" role="group">
+                                    <button type="button" class="btn btn-default" (click)="getPullAddress(camera.cameraId,i)">{{camera.cameraAngle}}</button>
+                                </div>
+                            </div>
+                            <div class="videoBox">
+                                <div id="playerVideoBox"></div>
+                            </div><!-- videoBox -->
+                            <div class="btn-group-adjust">
+                                <button type="button" class="btn btn-primary" (click)="directorCamera('up')">向 上</button>
+                                <button type="button" class="btn btn-primary" (click)="directorCamera('down')">向 下</button>
+                                <button type="button" class="btn btn-primary" (click)="directorCamera('left')">向 左</button>
+                                <button type="button" class="btn btn-primary" (click)="directorCamera('right')">向 右</button>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+

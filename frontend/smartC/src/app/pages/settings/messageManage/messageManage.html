@@ -1,0 +1,65 @@
+ <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                消息管理
+                <small>查看当天所有消息信息</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-gears"></i> 系统管理</a></li>
+                <li class="active">消息管理</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">消息列表</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <table id="example2" class="table table-bordered table-hover" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="5">
+                                <thead>
+                                <tr>
+                                    <th><mfDefaultSorter by="buildClass">地点</mfDefaultSorter></th>
+                                    <th><mfDefaultSorter by="nowTime">时间</mfDefaultSorter></th>
+                                    <th>内容</th>
+                                    <th>来源</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let message of mf.data">
+                                        <td>{{message.buildClass}}</td>
+                                        <td>{{message.nowTime}}</td>
+                                        <td>{{message.message}}</td>
+                                        <td>
+                                            <p *ngIf="message.tab=='video'">视频</p>
+                                            <p *ngIf="message.tab=='device'">设备</p>
+                                            <p *ngIf="message.tab=='all'">树莓派</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="7">
+                                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->

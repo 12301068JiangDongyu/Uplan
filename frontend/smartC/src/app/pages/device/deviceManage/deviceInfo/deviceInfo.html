@@ -1,0 +1,424 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            设备信息
+            <small>对基础设备进行增加、删除、修改</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-gears"></i> 设备管理</a></li>
+            <li>编辑设备</li>
+            <li>设备信息</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Custom Tabs -->
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active" id="tabComputer"><a href="#tab_1" data-toggle="tab">电脑</a></li>
+                        <li id="tabCamera"><a href="#tab_2" data-toggle="tab">摄像头</a></li>
+                        <li id="tabProjector"><a href="#tab_3" data-toggle="tab">投影仪</a></li>
+                        <li id="tabRaspberry"><a href="#tab_4" data-toggle="tab">树莓派</a></li>
+                        <li id="tabSingleChip"><a href="#tab_5" data-toggle="tab">单片机</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_1">
+                            <table class="table table-bordered table-hover table-page">
+                                <thead>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>型号</th>
+                                    <th>操作系统</th>
+                                    <th>内存</th>
+                                    <th>硬盘</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let computer of computers">
+                                        <td>{{computer.computerTypeId}}</td>
+                                        <td>{{computer.computerTypeName}}</td>
+                                        <td>{{computer.operatingSystem}}</td>
+                                        <td>{{computer.memorySize}}G</td>
+                                        <td>{{computer.diskSize}}G</td>
+                                        <td>
+                                            <span class="label label-success cursor-hand" data-toggle="modal" data-target="#computerModal" (click)="getDeviceInfo('computer',computer)"> 修改 </span>
+                                            &nbsp;
+                                            <span class="label label-danger cursor-hand" data-toggle="modal" data-target="#deleteModal" (click)="getDeviceId(computer.computerTypeId,'computer')"> 删除 </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>型号</th>
+                                    <th>操作系统</th>
+                                    <th>内存</th>
+                                    <th>硬盘</th>
+                                    <th>操作</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                            <button class="btn btn-warning btn-flat" data-toggle="modal" data-target="#computerModal" (click)="resetModal()">添加电脑</button>
+                        </div>
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="tab_2">
+                            <table id="table2" class="table table-bordered table-hover table-page">
+                                <thead>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>型号</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let camera of cameras">
+                                        <td>{{camera.cameraTypeId}}</td>
+                                        <td>{{camera.cameraTypeName}}</td>
+                                        <td>
+                                            <span class="label label-success cursor-hand" data-toggle="modal" data-target="#cameraModal" (click)="getDeviceInfo('camera',camera)"> 修改 </span>
+                                            &nbsp;
+                                            <span class="label label-danger cursor-hand" data-toggle="modal" data-target="#deleteModal" (click)="getDeviceId(camera.cameraTypeId,'camera')"> 删除 </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>型号</th>
+                                    <th>操作</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                            <button class="btn btn-warning btn-flat" data-toggle="modal" data-target="#cameraModal" (click)="resetModal()">添加摄像头</button>
+                        </div>
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="tab_3">
+                            <table id="table3" class="table table-bordered table-hover table-page">
+                                <thead>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>型号</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let projector of projectors">
+                                        <td>{{projector.projectorTypeId}}</td>
+                                        <td>{{projector.projectorTypeName}}</td>
+                                        <td>
+                                            <span class="label label-success cursor-hand" data-toggle="modal" data-target="#projectorModal" (click)="getDeviceInfo('projector',projector)"> 修改 </span>
+                                            &nbsp;
+                                            <span class="label label-danger cursor-hand" data-toggle="modal" data-target="#deleteModal" (click)="getDeviceId(projector.projectorTypeId,'projector')"> 删除 </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>型号</th>
+                                    <th>操作</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                            <button class="btn btn-warning btn-flat" data-toggle="modal" data-target="#projectorModal" (click)="resetModal()">添加投影仪</button>
+                        </div>
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="tab_4">
+                            <table id="table4" class="table table-bordered table-hover table-page">
+                                <thead>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>型号</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let raspberry of raspberrys">
+                                        <td>{{raspberry.raspberryTypeId}}</td>
+                                        <td>{{raspberry.raspberryTypeName}}</td>
+                                        <td>
+                                            <span class="label label-success cursor-hand" data-toggle="modal" data-target="#raspberryModal" (click)="getDeviceInfo('raspberry',raspberry)"> 修改 </span>
+                                            &nbsp;
+                                            <span class="label label-danger cursor-hand" data-toggle="modal" data-target="#deleteModal" (click)="getDeviceId(raspberry.raspberryTypeId,'raspberry')" > 删除 </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>型号</th>
+                                    <th>操作</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                            <button class="btn btn-warning btn-flat" data-toggle="modal" data-target="#raspberryModal" (click)="resetModal()">添加树莓派</button>
+                        </div>
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="tab_5">
+                            <table id="table5" class="table table-bordered table-hover table-page">
+                                <thead>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>型号</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let singlechip of singlechips">
+                                        <td>{{singlechip.singlechipTypeId}}</td>
+                                        <td>{{singlechip.singlechipTypeName}}</td>
+                                        <td>
+                                            <span class="label label-success cursor-hand" data-toggle="modal" data-target="#singlechipModal" (click)="getDeviceInfo('singlechip',singlechip)"> 修改 </span>
+                                            &nbsp;
+                                            <span class="label label-danger cursor-hand" data-toggle="modal" data-target="#deleteModal" (click)="getDeviceId(singlechip.singlechipTypeId,'singlechip')"> 删除 </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>型号</th>
+                                    <th>操作</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                            <button class="btn btn-warning btn-flat" data-toggle="modal" data-target="#singlechipModal" (click)="resetModal()">添加单片机</button>
+                        </div>
+                        <!-- /.tab-pane -->
+                    </div>
+                    <!-- /.tab-content -->
+                </div>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<!-- computerModal -->
+<div class="modal fade" id="computerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">电脑信息</h4>
+            </div>
+            <div class="modal-body">
+                <div class="modal-width">
+                    <!-- form start -->
+                    <form class="form-horizontal">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="inputComputerName" class="col-sm-2 control-label">型号</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" placeholder="电脑型号" name="computerTypeName" [(ngModel)]="computerModel.computerTypeName">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputOS" class="col-sm-2 control-label">系统</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" placeholder="电脑操作系统" name="operatingSystem" [(ngModel)]="computerModel.operatingSystem">
+                                </div>
+                            </div>
+                            <div class="form-group">
+
+                                <label for="inputMemory" class="col-sm-2 control-label">内存</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" name="memorySize" [(ngModel)]="computerModel.memorySize">
+                                        <span class="input-group-addon">G</span>
+                                    </div>
+                                </div>
+
+                                <label for="inputDisk" class="col-sm-2 control-label">硬盘</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" name="diskSize" [(ngModel)]="computerModel.diskSize">
+                                        <span class="input-group-addon">G</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <p class="label label-danger device-wrong-tip" [ngClass]="{'div-display': judgeTips.addEdit}" style="margin-top: 5px;float: left;" >{{tip}}</p>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" *ngIf="judgeTips.status" class="btn btn-primary computer-btn" (click)="handleComputer('add')">添加</button>
+                <button type="button" *ngIf="!judgeTips.status" class="btn btn-primary computer-btn" (click)="handleComputer('edit')">修改</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- cameraModal -->
+<div class="modal fade" id="cameraModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">摄像头</h4>
+            </div>
+            <div class="modal-body">
+                <div class="modal-width">
+                    <!-- form start -->
+                    <form class="form-horizontal">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="cameraType" class="col-sm-2 control-label">型号</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="cameraType" placeholder="摄像头型号" [(ngModel)]="cameraModel.cameraTypeName">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <p class="label label-danger device-wrong-tip" [ngClass]="{'div-display': judgeTips.addEdit}" style="margin-top: 5px;float: left;" >{{tip}}</p>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" *ngIf="judgeTips.status" class="btn btn-primary camera-btn" (click)="handleCamera('add')">添加</button>
+                <button type="button" *ngIf="!judgeTips.status" class="btn btn-primary camera-btn" (click)="handleCamera('edit')">修改</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- projectorModal -->
+<div class="modal fade" id="projectorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">投影仪</h4>
+            </div>
+            <div class="modal-body">
+                <div class="modal-width">
+                    <!-- form start -->
+                    <form class="form-horizontal">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="projectorType" class="col-sm-2 control-label">型号</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="projectorType" placeholder="投影仪型号" [(ngModel)]="projectorModel.projectorTypeName">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <p class="label label-danger device-wrong-tip" [ngClass]="{'div-display': judgeTips.addEdit}" style="margin-top: 5px;float: left;" >{{tip}}</p>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" *ngIf="judgeTips.status" class="btn btn-primary" (click)="handleProjector('add')">添加</button>
+                <button type="button" *ngIf="!judgeTips.status" class="btn btn-primary" (click)="handleProjector('edit')">修改</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- raspberryModal -->
+<div class="modal fade" id="raspberryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">树莓派</h4>
+            </div>
+            <div class="modal-body">
+                <div class="modal-width">
+                    <!-- form start -->
+                    <form class="form-horizontal">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="raspberryType" class="col-sm-2 control-label">型号</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="raspberryType" placeholder="树莓派型号" [(ngModel)]="raspberryModel.raspberryTypeName">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <p class="label label-danger device-wrong-tip" [ngClass]="{'div-display': judgeTips.addEdit}" style="margin-top: 5px;float: left;" >{{tip}}</p>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" *ngIf="judgeTips.status" class="btn btn-primary" (click)="handleRaspberry('add')">添加</button>
+                <button type="button" *ngIf="!judgeTips.status" class="btn btn-primary" (click)="handleRaspberry('edit')">修改</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- singlechipModal -->
+<div class="modal fade" id="singlechipModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">单片机</h4>
+            </div>
+            <div class="modal-body">
+                <div class="modal-width">
+                    <!-- form start -->
+                    <form class="form-horizontal">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="singlechipType" class="col-sm-2 control-label">型号</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="singlechipType" placeholder="单片机型号" [(ngModel)]="singlechipModel.singlechipTypeName">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <p class="label label-danger device-wrong-tip" [ngClass]="{'div-display': judgeTips.addEdit}" style="margin-top: 5px;float: left;" >{{tip}}</p>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" *ngIf="judgeTips.status" class="btn btn-primary" (click)="handleSinglechip('add')">添加</button>
+                <button type="button" *ngIf="!judgeTips.status" class="btn btn-primary" (click)="handleSinglechip('edit')">修改</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--模态框删除-->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="deleteModalLabel">删除设备</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal" role="form">
+
+                    <div class="fcol-sm-5 ">
+                        <p>确定要删除该设备吗？</p>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <p class="label label-danger delete-wrong-tip" [ngClass]="{'div-display': judgeTips.delete}" style="margin-top: 5px;float: left;" >{{tip}}</p>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="submit" class="btn btn-primary" (click)="deleteDeviceType()">删除</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

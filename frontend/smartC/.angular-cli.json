@@ -1,0 +1,80 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "project": {
+    "name": "smart-c"
+  },
+  "apps": [
+    {
+      "root": "src",
+      "outDir": "dist",
+      "assets": [
+        "assets",
+        "favicon.ico"
+      ],
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "polyfills.ts",
+      "test": "test.ts",
+      "tsconfig": "tsconfig.app.json",
+      "testTsconfig": "tsconfig.spec.json",
+      "prefix": "app",
+      "styles": [
+        "./assets/bootstrap/css/bootstrap.min.css",
+        "./assets/bootstrap/css/font-awesome.min.css",
+        "./assets/bootstrap/css/ionicons.min.css",
+        "./assets/adminlte/css/AdminLTE.min.css",
+        "./assets/plugins/iCheck/square/blue.css",
+        "./assets/adminlte/css/SmartClassroom.css",
+        "./assets/adminlte/css/ng2-toastr.min.css",
+        "./assets/adminlte/css/skins/skin-blue.min.css",
+        "./assets/plugins/datatables/dataTables.bootstrap.css",
+        "styles.css",
+        "../node_modules/ztree/css/metroStyle/metroStyle.css"
+      ],
+      "scripts": [
+        "./assets/plugins/jQuery/jquery-2.2.3.min.js",
+        "./assets/bootstrap/js/bootstrap.min.js",
+        "./assets/plugins/iCheck/icheck.min.js",
+        "./assets/plugins/jQuery/jquery.cookie.js",
+        "./assets/plugins/datatables/jquery.dataTables.min.js",
+        "./assets/plugins/datatables/dataTables.bootstrap.min.js",
+        "./assets/plugins/slimScroll/jquery.slimscroll.min.js",
+        "./assets/plugins/fastclick/fastclick.min.js",
+        "./assets/adminlte/js/app.min.js",
+        "./assets/adminlte/js/jquery.toaster.js",
+        "./assets/jwplayer/jwplayer.js",
+        "./assets/jwplayer/cyberplayer.js"
+      ],
+      "environmentSource": "environments/environment.ts",
+      "environments": {
+        "dev": "environments/environment.ts",
+        "prod": "environments/environment.prod.ts"
+      }
+    }
+  ],
+  "e2e": {
+    "protractor": {
+      "config": "./protractor.conf.js"
+    }
+  },
+  "lint": [
+    {
+      "project": "src/tsconfig.app.json"
+    },
+    {
+      "project": "src/tsconfig.spec.json"
+    },
+    {
+      "project": "e2e/tsconfig.e2e.json"
+    }
+  ],
+  "test": {
+    "karma": {
+      "config": "./karma.conf.js"
+    }
+  },
+  "defaults": {
+    "styleExt": "css",
+    "component": {}
+  }
+}

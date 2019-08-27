@@ -1,0 +1,178 @@
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                教学楼信息管理
+                <small>添加删除修改教学楼教室信息</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-gears"></i> 系统管理</a></li>
+                <li>教学楼信息管理</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- Horizontal Form -->
+                    <div class="box">
+                         <!-- /.box-header -->
+                        <div class="box-header">
+                            <h3 class="box-title">教室列表</h3>
+                            <a class="btn btn-warning btn-flat pull-right" routerLink="/addBuildClass">添加教室</a>
+                            <button class="btn btn-primary btn-flat pull-right" style="margin-right: 10px" data-toggle="modal" data-target="#editBuildModal" (click)="getBuildings()">修改教学楼</button>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <table id="example2" class="table table-bordered table-hover" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="10">
+                                <thead>
+                                <tr>
+                                    <th><mfDefaultSorter by="b_id">编号</mfDefaultSorter></th>
+                                    <th>教学楼</th>
+                                    <th><mfDefaultSorter by="classroomNum">教室</mfDefaultSorter></th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let buildClass of mf.data">
+                                        <td>{{buildClass.b_id}}</td>
+                                        <td>{{buildClass.building.buildingNum}}</td>
+                                        <td>{{buildClass.classroomNum}}</td>
+                                        <td>
+                                            <span class="label label-success cursor-hand" data-toggle="modal" data-target="#editModal" (click)="recordInfo(buildClass.b_id,buildClass.id,buildClass.building.buildingNum,buildClass.classroomNum)"> 修改 </span>
+                                            &nbsp;
+                                            <span class="label label-danger cursor-hand" data-toggle="modal" data-target="#deleteModal" (click)="recordInfo(buildClass.b_id,buildClass.id,buildClass.building.buildingNum,buildClass.classroomNum)"> 删除 </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="7">
+                                            <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+<!-- editModal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">修改</h4>
+            </div>
+            <div class="modal-body">
+                <div class="modal-width">
+                    <!-- form start -->
+                    <form class="form-horizontal">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-2 control-label">教学楼</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="building" placeholder="教学楼" [(ngModel)]="buildClass.building.buildingNum">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="classroom" class="col-sm-2 control-label">教室</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="classroom" placeholder="教室" [(ngModel)]="buildClass.classroomNum">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <p class="label label-danger edit-wrong-tip" [ngClass]="{'div-display': judgeTips.edit}" style="margin-top: 5px;float: left;" >{{tip}}</p>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" (click)="editBuildClass()">修改</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--模态框删除-->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="deleteModalLabel">删除教室</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal" role="form">
+
+                    <div class="fcol-sm-5 ">
+                        <p>确定要删除{{buildClass.building.buildingNum}} {{buildClass.classroomNum}}吗？</p>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <p class="label label-danger delete-wrong-tip" [ngClass]="{'div-display': judgeTips.delete}" style="margin-top: 5px;float: left;" >{{tip}}</p>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="submit" class="btn btn-primary" (click)="deleteBuildClass()">删除</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- editBuildingModal -->
+<div class="modal fade" id="editBuildModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="pullModalLabel">修改教学楼</h4>
+            </div>
+            <div class="modal-body">
+                <div class="modal-width">
+                    <!-- form start -->
+                    <form class="form-horizontal">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="chooseBuilding" class="col-sm-2 control-label">教学楼</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="buildModel" [(ngModel)]="buildingNum.old">
+                                        <option *ngFor="let building of buildings" [value]="building.id">
+                                            {{building.buildingNum}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="chooseClassroom" class="col-sm-2 control-label">修改</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="buildingNum" placeholder="教学楼名称" [(ngModel)]="buildingNum.new">
+
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <p class="label label-danger delete-wrong-tip" [ngClass]="{'div-display': judgeTips.edit}" style="margin-top: 5px;float: left;" >{{tip}}</p>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" (click)="editBuilding()">修改</button>
+            </div>
+        </div>
+    </div>
+</div>

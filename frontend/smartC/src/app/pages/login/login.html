@@ -1,0 +1,42 @@
+<body class="hold-transition login-page"> 
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="../../index2.html"><b>智慧教室</b></a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            <p class="login-box-msg">登录</p>
+            <form [formGroup]="loginForm">
+                    <div class="form-group has-feedback">
+                        <input type="text" formControlName="LoginName" name="username" class="form-control" placeholder="用户名">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input type="password" formControlName="LoginPwd" name="password" class="form-control" placeholder="密码">
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-8">
+                            <a href="#">忘记密码</a>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-xs-4">
+                            <button type="button" name="submit" class="btn btn-primary btn-block btn-flat" (click)="login(loginForm.value, $event)" [disabled]="!loginForm.valid">登录</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.social-auth-links -->
+            </form>
+            <div style="margin-top: 10px;">
+                <p class="label label-danger wrong-tip"  *ngIf="!loginForm.controls.LoginName.valid && loginForm.controls.LoginName.touched">用户名输入不合法！</p>
+                <p class="label label-danger wrong-tip"  *ngIf="!judgeMessage">用户名或密码错误！</p>
+            </div>
+        </div>
+        <!-- /.login-box-body -->
+    </div>
+    <!-- /.login-box -->
+</body>
+
+
+
+

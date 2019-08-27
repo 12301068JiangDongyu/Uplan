@@ -1,0 +1,75 @@
+body,html{
+    height: 100%;
+}
+body{
+    font-family: "微软雅黑","黑体";
+}
+
+.main-header .logo{
+    font-family: "微软雅黑","黑体";
+}
+
+.login-page{
+    background-color: #3c8dbc;
+    height: 100%
+}
+
+.login-logo a{
+    color:white;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-family: "微软雅黑","黑体";
+}
+
+.modal-width{
+    width: 80%;
+}
+
+.cursor-hand{
+    cursor:pointer;
+}
+
+.wrong-tip{
+    width: 40%;
+}
+
+.table-td{
+    vertical-align: middle;
+}
+
+.videoBox{
+    width: 690px;
+    height: 400px;
+    margin: 10px auto;
+    background: rgba(0,0,0,.5) url(../img/case_video_bg.png) no-repeat center center;
+    _background:#606875 url(../img/case_video_bg.png) no-repeat center center;
+}
+
+div.zTreeDemoBackground {width:360px;height:252px;text-align:left;}
+
+ul.ztree {margin-top: 10px;border: 1px solid #ccc;width:360px;height:250px;overflow-y:scroll;overflow-x:auto;}
+
+.btn-group-camera{
+    width: 690px;
+    margin: 10px auto;
+}
+.btn-group-adjust{
+    width: 330px;
+    margin: 10px auto;
+}
+.btn-group-adjust button{
+    margin-right: 20px;
+}
+
+.content-wrapper{
+    height: 100%;
+}
+
+.div-display{
+    display: none;
+}
+
+.radio input{
+    margin-top: 10px;
+}

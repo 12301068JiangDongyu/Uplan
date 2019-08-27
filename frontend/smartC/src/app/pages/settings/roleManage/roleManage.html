@@ -1,0 +1,136 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            角色管理
+            <small>对角色信息进行增加、删除、修改</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-gears"></i> 系统管理</a></li>
+            <li>权限管理</li>
+            <li>角色管理</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">角色列表</h3>
+                        <button class="btn btn-warning btn-flat pull-right" data-toggle="modal" data-target="#addModal"  (click)="getPermissionTree('add')">添加角色</button>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>编号</th>
+                                <th>角色</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let role of roles">
+                                    <td>{{role.r_id}}</td>
+                                    <td>{{role.r_name}}</td>
+                                    <td *ngIf="role.r_id == 0">
+                                        默认角色无法删除修改
+                                    </td>
+                                    <td *ngIf="role.r_id != 0">
+                                        <span class="label label-success cursor-hand" data-toggle="modal" data-target="#addModal" (click)="getRoleId(role.r_id,'edit')"> 修改 </span>
+                                        &nbsp;
+                                        <span class="label label-danger cursor-hand" data-toggle="modal" data-target="#deleteModal" (click)="getRoleId(role.r_id,'delete')"> 删除 </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>编号</th>
+                                <th>角色</th>
+                                <th>操作</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<!-- addModal -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="addModalLabel">{{modalOption.name}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="modal-width">
+                    <!-- form start -->
+                    <form class="form-horizontal">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="inputRoleName" class="col-sm-2 control-label">角色</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="role" [(ngModel)]="modalOption.role.r_name" placeholder="角色">
+                                </div>
+                            </div>
+                            <!-- select -->
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">权限</label>
+                                <div class="col-sm-10">
+                                    <ul id="ztree" class="ztree"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <p class="label label-danger" [ngClass]="{'div-display': judgeTip.addedit}" style="margin-top: 5px;float: left;" >{{tip}}</p>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button *ngIf="modalOption.type == 'add'" type="button" class="btn btn-primary" id="roleModalBtn" (click)="addRole()">添加</button>
+                <button *ngIf="modalOption.type == 'edit'" type="button" class="btn btn-primary" id="roleModalBtn" (click)="editRole()">修改</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--模态框删除-->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="deleteModalLabel">删除角色</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal" role="form">
+
+                    <div class="fcol-sm-5 ">
+                        <p>确定要删除本角色吗？</p>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <p class="label label-danger" [ngClass]="{'div-display':judgeTip.delete}" style="margin-top: 5px;float: left;" >{{tip}}</p>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="submit" class="btn btn-primary" (click)="deleteRole()">删除</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
