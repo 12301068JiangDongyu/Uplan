@@ -1,2 +1,2 @@
 # Uplan
-SSM Springboot SpringMVC MyBatis
+SSM: Springboot SpringMVC MyBatis
