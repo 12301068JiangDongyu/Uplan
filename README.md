@@ -1,2 +1,2 @@
-# springboot_sc
-use springboot to reconstruct the project
+# Uplan
+SSM Springboot SpringMVC MyBatis
