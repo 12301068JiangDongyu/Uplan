@@ -20,6 +20,12 @@ import { addBuildClassPage } from './pages/settings/buildClassManage/addBuildCla
 import {ActivateGuard} from './guard/auth.guard';
 import {DeactivateGuard} from './guard/deactivate.guard';
 
+import { CarTypeManageComponent } from './pages/info/car-type-manage/car-type-manage.component';
+import { CarManageComponent } from './pages/info/car-manage/car-manage.component';
+import { CarRecordComponent } from './pages/info/car-record/car-record.component';
+import { CarApplyComponent } from './pages/mission/car-apply/car-apply.component';
+import { CarCheckComponent } from './pages/mission/car-check/car-check.component';
+import { StatisticsComponent } from './pages/statistics/statistics/statistics.component'
 
 export const MAINMENU_ROUTES = [
     //full : makes sure the path is absolute path
@@ -37,5 +43,12 @@ export const MAINMENU_ROUTES = [
     { path: 'assignDevice', component: assignDevicePage, canActivate: [ActivateGuard],data: {route:1112} },
     { path: 'assignDeviceClassroom', component: assignDeviceClassroomPage, canActivate: [ActivateGuard],data: {route:1112} },
     { path: 'messageManage', component: messageManagePage, canActivate: [ActivateGuard],data: {route:313} },
+    
+    { path: 'carTypeManage', component: CarTypeManageComponent},
+    { path: 'carManage', component: CarManageComponent},
+    { path: 'carRecord', component: CarRecordComponent},
+    { path: 'carApply', component: CarApplyComponent},
+    { path: 'carCheck', component: CarCheckComponent},
+    { path: 'statistics', component: StatisticsComponent},
 ];
 //export const CONST_ROUTING = RouterModule.forRoot(MAINMENU_ROUTES);

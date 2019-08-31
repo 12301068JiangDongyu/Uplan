@@ -8,7 +8,7 @@ import { User } from '../entity/user.entity';
 export class DeactivateGuard implements CanActivate {
   user: User;
   private can: boolean = false;
-	constructor(private router:Router, 
+	constructor(private router:Router,
               private route: ActivatedRoute,
               private storageService: StorageService){
     this.user = this.storageService.read<User>('user');
@@ -19,7 +19,7 @@ export class DeactivateGuard implements CanActivate {
 	        this.router.navigate(['/home']);
 	        return false;
 	    }
-	    return true;
-    }  
+      return true;
+    }
 
 }

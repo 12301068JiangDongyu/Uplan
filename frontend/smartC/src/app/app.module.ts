@@ -42,7 +42,13 @@ import { ToastService } from './service/toast.service';
 import {ActivateGuard} from './guard/auth.guard';
 import {DeactivateGuard} from './guard/deactivate.guard';
 
-import { Constant } from './common/constant'
+import { Constant } from './common/constant';
+import { CarTypeManageComponent } from './pages/info/car-type-manage/car-type-manage.component';
+import { CarManageComponent } from './pages/info/car-manage/car-manage.component';
+import { CarRecordComponent } from './pages/info/car-record/car-record.component';
+import { CarApplyComponent } from './pages/mission/car-apply/car-apply.component';
+import { CarCheckComponent } from './pages/mission/car-check/car-check.component';
+import { StatisticsComponent } from './pages/statistics/statistics/statistics.component'
 
 @NgModule({
   declarations: [
@@ -61,7 +67,13 @@ import { Constant } from './common/constant'
     assignDevicePage,
     assignDeviceClassroomPage,
     messageManagePage,
-    homePage
+    homePage,
+    CarTypeManageComponent,
+    CarManageComponent,
+    CarRecordComponent,
+    CarApplyComponent,
+    CarCheckComponent,
+    StatisticsComponent
   ],
   imports: [
     BrowserModule,

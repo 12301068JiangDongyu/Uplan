@@ -17,11 +17,11 @@ export class ActivateGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot) {
     var pid = route.data.route;
+    // debugger;
     if(this.user == null) {
         this.router.navigate(['/login']);
         return false;
     }else{
-        
         var permissions = this.user.role.p_ids;
         if(this.user!=null&&pid==0){
             this.router.navigate(['/home']);
