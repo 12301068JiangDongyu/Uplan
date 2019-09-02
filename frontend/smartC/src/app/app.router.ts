@@ -23,7 +23,7 @@ import {DeactivateGuard} from './guard/deactivate.guard';
 import { CarTypeManageComponent } from './pages/info/car-type-manage/car-type-manage.component';
 import { CarManageComponent } from './pages/info/car-manage/car-manage.component';
 import { CarRecordComponent } from './pages/info/car-record/car-record.component';
-import { CarApplyComponent } from './pages/mission/car-apply/car-apply.component';
+import { CarApplyComponent } from './pages/mission/carApply/carApply';
 import { CarCheckComponent } from './pages/mission/car-check/car-check.component';
 import { StatisticsComponent } from './pages/statistics/statistics/statistics.component'
 

@@ -29,7 +29,6 @@ import { roleManagePage } from './pages/settings/roleManage/roleManage';
 import { messageManagePage } from './pages/settings/messageManage/messageManage';
 import { buildClassManagePage } from './pages/settings/buildClassManage/buildClassManage';
 import { addBuildClassPage } from './pages/settings/buildClassManage/addBuildClass/addBuildClass';
-import { statisitcPage } from './pages/statistic/display';
 
 import { StorageService } from './service/storage.service';
 import { UserService } from './service/user.service';
@@ -47,13 +46,12 @@ import { Constant } from './common/constant';
 import { CarTypeManageComponent } from './pages/info/car-type-manage/car-type-manage.component';
 import { CarManageComponent } from './pages/info/car-manage/car-manage.component';
 import { CarRecordComponent } from './pages/info/car-record/car-record.component';
-import { CarApplyComponent } from './pages/mission/car-apply/car-apply.component';
+import { CarApplyComponent } from './pages/mission/carApply/carApply';
 import { CarCheckComponent } from './pages/mission/car-check/car-check.component';
 import { StatisticsComponent } from './pages/statistics/statistics/statistics.component'
 
 @NgModule({
   declarations: [
-    statisitcPage,
     AppComponent,
     SidebarComponent,
     NavComponent,

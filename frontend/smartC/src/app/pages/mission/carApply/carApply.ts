@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 declare var $:any;
 
 @Component({
-    selector: 'statisticComponent',
-    templateUrl: './display.html'
+    selector: 'CarApplyComponent',
+    templateUrl: './carApply.html'
 })
 
-export class statisitcPage implements OnInit{
+export class CarApplyComponent implements OnInit{
    
     constructor() { 
     }
