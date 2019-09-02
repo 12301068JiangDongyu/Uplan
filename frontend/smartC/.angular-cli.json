@@ -28,6 +28,7 @@
         "./assets/adminlte/css/ng2-toastr.min.css",
         "./assets/adminlte/css/skins/skin-blue.min.css",
         "./assets/plugins/datatables/dataTables.bootstrap.css",
+        "./assets/plugins/calendar/css/fullcalendar.min.css",
         "styles.css",
         "../node_modules/ztree/css/metroStyle/metroStyle.css"
       ],
@@ -36,6 +37,7 @@
         "./assets/bootstrap/js/bootstrap.min.js",
         "./assets/plugins/iCheck/icheck.min.js",
         "./assets/plugins/jQuery/jquery.cookie.js",
+        "./assets/plugins/jQuery/jquery-ui.min.js",
         "./assets/plugins/datatables/jquery.dataTables.min.js",
         "./assets/plugins/datatables/dataTables.bootstrap.min.js",
         "./assets/plugins/slimScroll/jquery.slimscroll.min.js",
@@ -43,7 +45,9 @@
         "./assets/adminlte/js/app.min.js",
         "./assets/adminlte/js/jquery.toaster.js",
         "./assets/jwplayer/jwplayer.js",
-        "./assets/jwplayer/cyberplayer.js"
+        "./assets/jwplayer/cyberplayer.js",
+        "./assets/plugins/calendar/js/moment.js",
+        "./assets/plugins/calendar/js/fullcalendar.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
