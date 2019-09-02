@@ -7,7 +7,7 @@ public class Car {
     private int id;
     private int car_type_id;
     private String license_plate_num;//车牌号
-    private String run_time;//汽车投入使用时间
+    private Date run_time;//汽车投入使用时间
     private int mileage;//里程数
     private double oil_used;//使用油量
     private double oil_remained;//目前剩余油量
@@ -24,6 +24,18 @@ public class Car {
 
     public void setId(int Id) {
         this.id = Id;
+    }
+
+    public int getMileage() {
+        return mileage;
+    }
+
+    public void setMileage(int mileage) {
+        this.mileage = mileage;
+    }
+
+    public double getOil_used() {
+        return oil_used;
     }
 
     public int getCar_Type_Id() {
@@ -58,11 +70,11 @@ public class Car {
         this.license_plate_num = license_plate_num;
     }
 
-    public String getRun_time() {
+    public Date getRun_time() {
         return run_time;
     }
 
-    public void setRun_time(String run_time) {
+    public void setRun_time(Date run_time) {
         this.run_time = run_time;
     }
 
