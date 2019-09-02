@@ -11,7 +11,7 @@
  Target Server Version : 50718
  File Encoding         : 65001
 
- Date: 31/08/2019 18:46:22
+ Date: 02/09/2019 09:25:18
 */
 
 SET NAMES utf8mb4;
@@ -104,8 +104,8 @@ CREATE TABLE `car` (
   `license_plate_num` varchar(20) DEFAULT NULL COMMENT '车牌号',
   `run_time` datetime DEFAULT NULL COMMENT '汽车投入使用时间',
   `mileage` bigint(20) DEFAULT NULL COMMENT '里程数',
-  `oil_used` decimal(10,2) DEFAULT NULL COMMENT '使用油量',
-  `oil_remained` decimal(10,2) DEFAULT NULL COMMENT '目前剩余油量',
+  `oil_used` double(10,2) DEFAULT NULL COMMENT '使用油量',
+  `oil_remained` double(10,2) DEFAULT NULL COMMENT '目前剩余油量',
   `type` tinyint(2) DEFAULT NULL COMMENT '汽车类型 1:班车，2:公车',
   `status` int(11) DEFAULT NULL COMMENT '车辆状态-1:空闲，2:使用中，3：维修中',
   `creator` int(11) DEFAULT NULL COMMENT '创建人id',
@@ -122,7 +122,7 @@ CREATE TABLE `car_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `brand` varchar(50) DEFAULT NULL COMMENT '品牌型号',
   `capacity` varchar(20) DEFAULT NULL COMMENT '汽车排量',
-  `price` decimal(10,2) DEFAULT NULL COMMENT '购入价格（万）',
+  `price` double(10,2) DEFAULT NULL COMMENT '购入价格（万）',
   `buy_time` datetime DEFAULT NULL COMMENT '购入日期',
   `seat_num` tinyint(3) DEFAULT NULL COMMENT '车座数',
   `oil_type` tinyint(3) DEFAULT NULL COMMENT '0 柴油，1 汽油',
@@ -192,7 +192,7 @@ DROP TABLE IF EXISTS `daily_operation`;
 CREATE TABLE `daily_operation` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
   `car_id` int(11) DEFAULT NULL COMMENT '汽车id，对应car表的id',
-  `cost` decimal(10,2) DEFAULT NULL COMMENT '所花费的钱数',
+  `cost` double(10,2) DEFAULT NULL COMMENT '所花费的钱数',
   `type` tinyint(2) DEFAULT NULL COMMENT '1:维修,2:加油,3:违章',
   `occurrence_time` datetime DEFAULT NULL COMMENT '事件发生时间',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注信息',
@@ -254,10 +254,10 @@ INSERT INTO `headers` VALUES (1, 1234, '哈哈，啦啦', 'haha,lala', '2018-09-
 COMMIT;
 
 -- ----------------------------
--- Table structure for officialcar_apply
+-- Table structure for official_car_apply
 -- ----------------------------
-DROP TABLE IF EXISTS `officialcar_apply`;
-CREATE TABLE `officialcar_apply` (
+DROP TABLE IF EXISTS `official_car_apply`;
+CREATE TABLE `official_car_apply` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `car_id` int(11) DEFAULT NULL COMMENT '公车id',
   `user_id` int(11) DEFAULT NULL COMMENT '预约用户id,关联tb_user中id',
@@ -266,9 +266,9 @@ CREATE TABLE `officialcar_apply` (
   `end_time` datetime DEFAULT NULL COMMENT '实际归还公车时间',
   `reason` varchar(50) DEFAULT NULL COMMENT '申请原因',
   `travel_distance` int(11) DEFAULT NULL COMMENT '实际行驶里程数',
-  `oil_used` decimal(10,2) DEFAULT NULL COMMENT '实际使用油耗',
+  `oil_used` double(10,2) DEFAULT NULL COMMENT '实际使用油耗',
   `status` tinyint(2) DEFAULT NULL COMMENT '状态  1:通过, 2:不通过',
-  `remark` varbinary(255) DEFAULT NULL COMMENT '备注',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   `create_time` datetime DEFAULT NULL COMMENT '数据创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '数据更新时间',
   PRIMARY KEY (`id`)
@@ -404,7 +404,7 @@ CREATE TABLE `statistic` (
   `car_id` bigint(20) DEFAULT NULL COMMENT '公车id',
   `oil_cost` bigint(50) DEFAULT NULL COMMENT '总油耗',
   `repairs_num` int(20) DEFAULT NULL COMMENT '维修次数',
-  `maintenance_cost` double DEFAULT NULL COMMENT '保养总花费',
+  `maintenance_cost` double(10,2) DEFAULT NULL COMMENT '保养总花费',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
