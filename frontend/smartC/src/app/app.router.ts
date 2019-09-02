@@ -16,6 +16,7 @@ import { roleManagePage } from './pages/settings/roleManage/roleManage';
 import { messageManagePage } from './pages/settings/messageManage/messageManage';
 import { buildClassManagePage } from './pages/settings/buildClassManage/buildClassManage';
 import { addBuildClassPage } from './pages/settings/buildClassManage/addBuildClass/addBuildClass';
+import { statisitcPage } from './pages/statistic/display';
 
 import {ActivateGuard} from './guard/auth.guard';
 import {DeactivateGuard} from './guard/deactivate.guard';
@@ -37,5 +38,6 @@ export const MAINMENU_ROUTES = [
     { path: 'assignDevice', component: assignDevicePage, canActivate: [ActivateGuard],data: {route:1112} },
     { path: 'assignDeviceClassroom', component: assignDeviceClassroomPage, canActivate: [ActivateGuard],data: {route:1112} },
     { path: 'messageManage', component: messageManagePage, canActivate: [ActivateGuard],data: {route:313} },
+    { path: 'statistic', component: statisitcPage},
 ];
 //export const CONST_ROUTING = RouterModule.forRoot(MAINMENU_ROUTES);

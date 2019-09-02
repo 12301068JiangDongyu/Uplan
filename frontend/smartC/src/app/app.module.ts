@@ -29,6 +29,7 @@ import { roleManagePage } from './pages/settings/roleManage/roleManage';
 import { messageManagePage } from './pages/settings/messageManage/messageManage';
 import { buildClassManagePage } from './pages/settings/buildClassManage/buildClassManage';
 import { addBuildClassPage } from './pages/settings/buildClassManage/addBuildClass/addBuildClass';
+import { statisitcPage } from './pages/statistic/display';
 
 import { StorageService } from './service/storage.service';
 import { UserService } from './service/user.service';
@@ -46,6 +47,7 @@ import { Constant } from './common/constant'
 
 @NgModule({
   declarations: [
+    statisitcPage,
     AppComponent,
     SidebarComponent,
     NavComponent,
