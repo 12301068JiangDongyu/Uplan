@@ -15,7 +15,34 @@
 
   <!-- Main content -->
   <section class="content">
-    <div echarts [options]="barOptions" class="chart"></div>
+    <div class="row">
+      <div class="col-md-6">
+        <!-- USAGE CHART -->
+        <div class="box box-primary">
+          <div class="box-header with-border">
+            <h3 class="box-title">使用率</h3>
+          </div>
+          <div class="box-body">
+            <div echarts [options]="barOptions" class="chart"></div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
+      <div class="col-md-6">
+          <!-- USAGE CHART -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">使用率</h3>
+            </div>
+            <div class="box-body">
+              <div echarts [options]="barOptions" class="chart"></div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+    </div>
   </section>
   <!-- /.content -->
 </div>
