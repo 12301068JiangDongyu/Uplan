@@ -47,7 +47,8 @@
         "./assets/jwplayer/jwplayer.js",
         "./assets/jwplayer/cyberplayer.js",
         "./assets/plugins/calendar/js/moment.js",
-        "./assets/plugins/calendar/js/fullcalendar.min.js"
+        "./assets/plugins/calendar/js/fullcalendar.min.js",
+        "../node_modules/echarts/dist/echarts.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
