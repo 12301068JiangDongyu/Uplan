@@ -2,10 +2,12 @@ package com.pku.system.dao;
 
 import com.pku.system.model.RaspberryType;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Mapper
+@Component
 public interface RaspberryTypeDao {
     @Select("select * from raspberryType where raspberryTypeId = #{raspberryTypeId}")
     public RaspberryType selectById(int id);

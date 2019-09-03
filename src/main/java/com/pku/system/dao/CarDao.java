@@ -3,10 +3,12 @@ package com.pku.system.dao;
 import com.pku.system.model.Building;
 import com.pku.system.model.Car;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Mapper
+@Component
 public interface CarDao {
     @Select("select * from car where id = #{id}")
     public Car selectById(int id);
