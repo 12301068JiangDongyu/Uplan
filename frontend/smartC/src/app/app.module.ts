@@ -39,6 +39,7 @@ import { MessageService } from './service/message.service';
 import { RoleService } from './service/role.service';
 import { BuildClassService } from './service/buildClass.service';
 import { ToastService } from './service/toast.service';
+import { CarTypeService } from './service/cartype.service';
 import { CarApplyInfoService } from './service/car.service';
 
 import {ActivateGuard} from './guard/auth.guard';
@@ -49,13 +50,14 @@ import { CarTypeManageComponent } from './pages/info/car-type-manage/car-type-ma
 import { CarManageComponent } from './pages/info/car-manage/car-manage.component';
 import { CarRecordComponent } from './pages/info/car-record/car-record.component';
 import { CarApplyComponent } from './pages/mission/carApply/carApply';
-import { UserApplyListComponent } from './pages/mission/user-apply-list/user-apply-list.component';
+import { UserApplyListComponent  } from './pages/mission/user-apply-list/user-apply-list.component';
 import { CarCheckComponent } from './pages/mission/car-check/car-check.component';
 import { StatisticsComponent } from './pages/statistics/statistics/statistics.component'
 
+import * as $ from 'jquery';
+
 @NgModule({
   declarations: [
-    UserApplyListComponent,
     AppComponent,
     SidebarComponent,
     NavComponent,
@@ -77,7 +79,8 @@ import { StatisticsComponent } from './pages/statistics/statistics/statistics.co
     CarRecordComponent,
     CarApplyComponent,
     CarCheckComponent,
-    StatisticsComponent
+    StatisticsComponent,
+    UserApplyListComponent
   ],
   imports: [
     BrowserModule,
@@ -105,6 +108,7 @@ import { StatisticsComponent } from './pages/statistics/statistics/statistics.co
     ToastService,
     ActivateGuard,
     DeactivateGuard,
+    CarTypeService,
     CarApplyInfoService
   ],
   bootstrap: [AppComponent]

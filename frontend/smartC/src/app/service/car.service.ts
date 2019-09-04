@@ -19,7 +19,7 @@ export class CarApplyInfoService {
 
 
     constructor(private constant: Constant, private http: Http) {
-        this.carApplyUrl = constant.URL + 'carAppplyList/infoList';
+        this.carApplyUrl = constant.URL;
         this.options = new RequestOptions({
             // withCredentials: true,
             headers: this.getHeaders()
@@ -46,21 +46,31 @@ export class CarApplyInfoService {
     //请求汽车数据:
     getCarListByDate(date): Promise<any> {
         return this.http
-            .get(this.constant.URL + "carAppply/carList", this.options)
+            .get(this.constant.URL + "car/getCar", this.options)
             .toPromise()
             .then(response => response.json().data)
             .catch(this.handleError)
     }
 
+    //通过公车id请求某个公车的详细数据:
+    getCarInfoByCarId(car_id): Promise<any> {
+        return this.http
+            .get(this.carApplyUrl + "carAppply/carList", this.options)
+            .toPromise()
+            .then(response => response.json().data)
+            .catch(this.handleError)
+    }
+
+    // 增加申请
     addCarApply(): Promise<any> {
         return this.http
-            .post(this.constant.URL + "carAppply/carList", this.options)
+            .post(this.carApplyUrl + "carAppply/carList", this.options)
             .toPromise()
             .then(response => response.json().res)
             .catch(this.handleError)
     }
 
-    
+    // 通过状态查询公车申请列表
     findCarApplyListByStatus(status: string): Promise<any> {
         return this.http
             .post(this.constant.URL + "carAppply/carList", this.options)

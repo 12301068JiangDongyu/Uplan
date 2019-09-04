@@ -22,6 +22,7 @@ export class CarApplyComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getCarInfoByCarId();
     this.initCalendar();
   }
 
@@ -40,6 +41,12 @@ export class CarApplyComponent implements OnInit {
       strHtml += "<div class='external-event bg-green'>" + car.c_brand + "</div>";
     };
     $("#external-events").html(strHtml);
+  }
+
+  getCarInfoByCarId():void{
+    this.carApplyInfoService.getCarInfoByCarId(1).then(data => {
+      console.log(data)
+    });
   }
 
 
