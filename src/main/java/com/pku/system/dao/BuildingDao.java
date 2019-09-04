@@ -2,10 +2,12 @@ package com.pku.system.dao;
 
 import com.pku.system.model.Building;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Mapper
+@Component
 public interface BuildingDao {
     @Select("select * from building where id = #{id}")
     public Building selectById(int id);

@@ -2,10 +2,12 @@ package com.pku.system.dao;
 
 import com.pku.system.model.ProjectorType;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Mapper
+@Component
 public interface ProjectorTypeDao {
     @Select("select * from projectorType where projectorTypeId = #{projectorTypeId}")
     public ProjectorType selectById(int id);

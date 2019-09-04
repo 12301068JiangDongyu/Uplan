@@ -2,10 +2,12 @@ package com.pku.system.dao;
 
 import com.pku.system.model.Camera;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Mapper
+@Component
 public interface CameraDao {
     @Select("select * from camera where cameraId = #{cameraId}")
     public Camera selectById(int cameraId);

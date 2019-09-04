@@ -1,22 +1,183 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        车辆记录
-        <small>记录车辆维修、加油、违章等信息</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><i class="fa fa-home"></i><a routerLink="/home"> 主页</a></li>
-        <li><i class="fa fa-car"></i> 信息管理</li>
-        <li>车辆记录</li>
-      </ol>
-    </section>
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      车辆记录
+      <small>记录车辆维修、加油、违章等信息</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><i class="fa fa-home"></i><a routerLink="/home"> 主页</a></li>
+      <li><i class="fa fa-car"></i> 信息管理</li>
+      <li>车辆记录</li>
+    </ol>
+  </section>
 
-    <!-- Main content -->
-    <section class="content">
-       <!-- 添加你的代码  -->
-    </section>
-    <!-- /.content -->
+  <!-- Main content -->
+  <section class="content">
+    <!-- 添加你的代码  -->
+    <div class="row">
+      <div class="col-md-12">
+        <!-- Custom Tabs -->
+        <div class="nav-tabs-custom">
+          <ul class="nav nav-tabs">
+            <li class="active" id="tabComputer"><a href="#tab_1" data-toggle="tab">加油记录</a></li>
+            <li id="tabCamera"><a href="#tab_2" data-toggle="tab">维修记录</a></li>
+            <li id="tabProjector"><a href="#tab_3" data-toggle="tab">违章记录</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab_1">
+              <table class="table table-bordered table-hover table-page" [mfData]="oilList" #mf="mfDataTable" [mfRowsOnPage]="10">
+                <thead>
+                  <tr>
+                    <th><mfDefaultSorter by="license">车牌号</mfDefaultSorter></th>
+                    <th><mfDefaultSorter by="creator">责任人</mfDefaultSorter></th>
+                    <th><mfDefaultSorter by="occurrenceTime">时间</mfDefaultSorter></th>
+                    <th><mfDefaultSorter by="cost">花费</mfDefaultSorter></th>
+                    <th>备注</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let oil of mf.data">
+                    <td>{{ oil.license }}</td>
+                    <td>{{ oil.creator }}</td>
+                    <td>{{ oil.occurrenceTime }}</td>
+                    <td>{{ oil.cost }}元</td>
+                    <td>{{ oil.remark }}</td>
+                    <td>
+                      <span class="label label-success cursor-hand" data-toggle="modal" data-target="#recordModal" (click)="getCarRecord(oil)"> 修改 </span>
+                      &nbsp;
+                      <span class="label label-danger cursor-hand" data-toggle="modal" data-target="#deleteModal" (click)="getCarRecordId(oil.id)"> 删除 </span>
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="7">
+                      <mfBootstrapPaginator [rowsOnPageSet]="[5, 10, 25]"></mfBootstrapPaginator>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+              <button class="btn btn-warning btn-flat" data-toggle="modal" data-target="#recordModal" (click)="resetModal('oil')">添加记录</button>
+            </div>
+            <!-- /.tab-pane -->
+            <div class="tab-pane" id="tab_2">
+           </div>
+            <!-- /.tab-pane -->
+            <div class="tab-pane" id="tab_3">
+            </div>
+            <!-- /.tab-pane -->
+          </div>
+          <!-- /.tab-content -->
+        </div>
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<!-- recordModal -->
+<div class="modal fade" id="recordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">车辆记录信息</h4>
+      </div>
+      <div class="modal-body">
+        <div class="modal-width">
+          <!-- form start -->
+          <form class="form-horizontal">
+            <div class="box-body">
+              <div class="form-group">
+                <label for="license" class="col-sm-2 control-label">车牌号</label>
+
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" placeholder="车牌号" name="license" [(ngModel)]="carRecordModel.license" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="creator" class="col-sm-2 control-label">责任人</label>
+
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" placeholder="责任人" name="creator" [(ngModel)]="carRecordModel.creator" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="occurrenceTime" class="col-sm-2 control-label">时间</label>
+                <div class="col-sm-10">
+                  <div class="input-group date">
+                    <div class="input-group-addon">
+                      <i class="fa fa-calendar"></i>
+                    </div>
+                    <input type="text" class="form-control pull-right" name="occurrenceTime" placeholder="选择时间" id="datepicker" [(ngModel)]="carRecordModel.occurrenceTime" />
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="cost" class="col-sm-2 control-label">花费</label>
+                <div class="col-sm-10">
+                  <div class="input-group">
+                    <input type="number" class="form-control" name="cost" [(ngModel)]="carRecordModel.cost" />
+                    <span class="input-group-addon">元</span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="type" class="col-sm-2 control-label">类型</label>
+                <div class="col-sm-10">
+                  <select class="form-control" name="type" [(ngModel)]="carRecordModel.type">
+                    <option *ngFor="let type of constant.RecordTypeMap" value="{{type.key}}">{{type.name}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="remark" class="col-sm-2 control-label">备注</label>
+                <div class="col-sm-10">
+                  <textarea type="number" class="form-control" name="remark" rows="3" [(ngModel)]="carRecordModel.remark"></textarea>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <p class="label label-danger device-wrong-tip" [ngClass]="{ 'div-display': judgeTips.addEdit }" style="margin-top: 5px;float: left;">{{ tip }}</p>
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" *ngIf="judgeTips.status" class="btn btn-primary computer-btn" (click)="handleComputer('add')">添加</button>
+        <button type="button" *ngIf="!judgeTips.status" class="btn btn-primary computer-btn" (click)="handleComputer('edit')">修改</button>
+      </div>
+    </div>
   </div>
-  <!-- /.content-wrapper -->
+</div>
+
+<!--模态框删除-->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="deleteModalLabel">删除设备</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-horizontal" role="form">
+          <div class="fcol-sm-5 ">
+            <p>确定要删除该设备吗？</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <p class="label label-danger delete-wrong-tip" [ngClass]="{ 'div-display': judgeTips.delete }" style="margin-top: 5px;float: left;">{{ tip }}</p>
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="submit" class="btn btn-primary" (click)="deleteDeviceType()">删除</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

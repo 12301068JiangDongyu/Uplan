@@ -2,11 +2,13 @@ package com.pku.system.dao;
 
 import com.pku.system.model.User;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Set;
 
 @Mapper
+@Component
 public interface UserDao{
     @Select("SELECT u.id,u.username,u.password,r.r_id,r.r_name,u.license FROM tb_user u INNER JOIN tb_role r ON u.r_id=r.r_id")
     public List<User> getAllUser();
