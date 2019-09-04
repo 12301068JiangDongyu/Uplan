@@ -55,6 +55,7 @@ public class RoleController {
         jsonObject.put("msg","调用成功");
         jsonObject.put("code","0000");
         JSONObject jsonData = new JSONObject();
+
         if(role.getR_name().length()==0){
             jsonData.put("judge","-1");
         }else if(roleService.selectByRoleName(role.getR_name())!=null){
