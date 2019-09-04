@@ -4,7 +4,9 @@ package com.pku.system.controller;
 import com.pku.system.model.CameraType;
 import com.pku.system.model.Car;
 //import com.pku.system.model.CarType;
+import com.pku.system.model.CarType;
 import com.pku.system.service.CarService;
+import com.pku.system.service.CarTypeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.sf.ehcache.pool.sizeof.SizeOf;
@@ -28,6 +30,8 @@ import java.util.List;
 public class CarController {
     @Autowired
     private CarService carService;
+    @Autowired
+    private CarTypeService carTypeService;
 
     @ApiOperation(value = "获得车辆信息列表", notes = "获得车辆信息列表notes", produces = "application/json")
     @RequestMapping(value="/", method= RequestMethod.GET)
@@ -48,6 +52,30 @@ public class CarController {
         return jsonObject.toString();
     }
 
+    @ApiOperation(value = "通过Id获得车辆信息列表", notes = "通过Id获得车辆信息列表notes", produces = "application/json")
+    @RequestMapping(value="/getCar/{id}", method= RequestMethod.GET)
+    public String getCar(@PathVariable("id") int id){
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("msg","调用成功");
+        jsonObject.put("code","0000");
+        //JSONArray jsonArray = new JSONArray();
+        JSONObject jsonData = new JSONObject();
+       // JSONObject jsonData2 = new JSONObject();
+
+        if(carService.selectById(id) ==null)
+            //判断公车是否存在
+            jsonData.put("judge", "-1");
+
+        Car car = carService.selectById(id);
+        //int a=car.getCar_Type_Id();
+        CarType carType = carTypeService.selectById(car.getCar_Type_Id());
+
+        jsonData.put("carList",car);
+        jsonData.put("carTypeList",carType);
+
+        jsonObject.put("data",jsonData);
+        return jsonObject.toString();
+    }
 
     @ApiOperation(value = "添加车辆信息信息", notes = "添加车辆信息notes", produces = "application/json")
     @RequestMapping(value="/carAdd", method=RequestMethod.POST)
@@ -98,14 +126,14 @@ public class CarController {
         }
 
     @ApiOperation(value = "根据id删除公车信息信息", notes = "根据id删除公车信息notes", produces = "application/json")
-    @RequestMapping(value="/{carId}", method=RequestMethod.DELETE)
-    public String deleteCar(@PathVariable("carId") int id) {
+    @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+    public String deleteCar(@PathVariable("id") int id) {
         // 处理"/users/{id}"的DELETE请求，用来删除User
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("msg","调用成功");
         jsonObject.put("code","0000");
         JSONObject jsonData = new JSONObject();
-
+        //int a = Integer.parseInt(id);
         Car car = carService.selectById(id);
 
         if(car == null){
