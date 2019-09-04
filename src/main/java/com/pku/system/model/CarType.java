@@ -1,5 +1,10 @@
 package com.pku.system.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
+
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class CarType {
@@ -7,7 +12,11 @@ public class CarType {
     private String brand;//品牌型号
     private String capacity;//汽车排量
     private double price;//购入价格（万）
-    private Date buy_time;//购入日期
+
+    //@DateTimeFormat(pattern = "dd/MM/yyyy")
+    //@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    private Timestamp buy_time;//购入日期
+
     private int seat_num;//车座数
     private int oil_type;//0 柴油，1 汽油
     private int creator;//user_id
@@ -48,11 +57,11 @@ public class CarType {
         this.price = price;
     }
 
-    public Date getBuy_time() {
+    public Timestamp getBuy_time() {
         return buy_time;
     }
 
-    public void setBuy_time(Date buy_time) {
+    public void setBuy_time(Timestamp buy_time) {
         this.buy_time = buy_time;
     }
 
