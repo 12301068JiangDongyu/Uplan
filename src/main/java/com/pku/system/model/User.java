@@ -6,10 +6,11 @@ public class User{
     private int id;
     private String username;
     private String password;
+    private String real_name;
     private int r_id;
     private String license;
-    private Date createTime;
-    private Date updateTime;
+    private Date create_time;
+    private Date update_time;
     private Role role;//使用一个role来表示角色
 
     public Role getRole() {
@@ -26,6 +27,14 @@ public class User{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getReal_name() {
+        return real_name;
+    }
+
+    public void setReal_name(String real_name) {
+        this.real_name = real_name;
     }
 
     public int getId() {
@@ -60,19 +69,19 @@ public class User{
         this.license = license;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public Date getCreate_time() {
+        return create_time;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setCreate_time(Date create_time) {
+        this.create_time = create_time;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
+    public Date getUpdate_time() {
+        return update_time;
     }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setUpdate_time(Date update_time) {
+        this.update_time = update_time;
     }
 }

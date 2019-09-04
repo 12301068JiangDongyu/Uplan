@@ -2,10 +2,12 @@ package com.pku.system.dao;
 
 import com.pku.system.model.DeviceInfo;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Mapper
+@Component
 public interface DeviceInfoDao {
 
     @Select("select * from device_info where id = #{id}")

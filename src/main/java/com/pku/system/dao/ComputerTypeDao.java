@@ -2,10 +2,12 @@ package com.pku.system.dao;
 
 import com.pku.system.model.ComputerType;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Mapper
+@Component
 public interface ComputerTypeDao {
 
     @Select("select * from computerType where computerTypeId = #{computerTypeId}")

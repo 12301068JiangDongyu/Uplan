@@ -2,10 +2,12 @@ package com.pku.system.dao;
 
 import com.pku.system.model.SinglechipType;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Mapper
+@Component
 public interface SinglechipTypeDao {
     @Select("select * from singlechipType where singlechipTypeId = #{singlechipTypeId}")
     public SinglechipType selectById(int id);

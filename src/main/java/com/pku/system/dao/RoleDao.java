@@ -2,10 +2,12 @@ package com.pku.system.dao;
 
 import com.pku.system.model.Role;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Mapper
+@Component
 public interface RoleDao {
     @Select("select r_id,r_name,p_ids as p_idsStr from tb_role where r_id = #{r_id}")
     public Role selectById(int id);
