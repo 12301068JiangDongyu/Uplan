@@ -22,8 +22,8 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Car selectByName(String usename) {
-        return carDao.selectByName(usename);
+    public Car selectLicensePlateNum(String plateNum) {
+        return carDao.selectByLicense_Plate_Num(plateNum);
     }
 
     @Override
@@ -31,22 +31,20 @@ public class CarServiceImpl implements CarService {
         return carDao.getAllCar();
     }
 
-
-
     @Override
     public void addCar(Car car) {
-
+        carDao.addCar(car);
     }
 
     @Override
     public void updateCar(Car car) {
-        carDao.updatecar(car);
+        carDao.updateCar(car);
 
     }
 
     @Override
     public void deleteCar(int id) {
-        carDao.deletecar(id);
+        carDao.deleteCar(id);
 
     }
 

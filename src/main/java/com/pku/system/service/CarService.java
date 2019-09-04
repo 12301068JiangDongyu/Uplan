@@ -14,10 +14,10 @@ public interface CarService {
 
     /**
      * 根据使用者查询公务车
-     * @param username
+     * @param plateNum
      * @return
      */
-    public Car selectByName(String username);
+    public Car selectLicensePlateNum(String plateNum);
 
     /**
      * 获得所有的公务车

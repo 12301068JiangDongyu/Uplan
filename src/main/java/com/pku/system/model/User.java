@@ -1,10 +1,15 @@
 package com.pku.system.model;
 
+import java.util.Date;
+
 public class User{
     private int id;
     private String username;
     private String password;
     private int r_id;
+    private String license;
+    private Date createTime;
+    private Date updateTime;
     private Role role;//使用一个role来表示角色
 
     public Role getRole() {
@@ -45,5 +50,29 @@ public class User{
 
     public void setR_id(int r_id) {
         this.r_id = r_id;
+    }
+
+    public String getLicense() {
+        return license;
+    }
+
+    public void setLicense(String license) {
+        this.license = license;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

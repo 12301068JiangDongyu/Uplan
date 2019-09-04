@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import { CustomOption } from './custom-option';
 import { ToastOptions } from 'ng2-toastr';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 import { AppComponent } from './app.component';
 import { LoginPage } from './pages/login/login';
@@ -88,7 +89,8 @@ import { StatisticsComponent } from './pages/statistics/statistics/statistics.co
     RouterModule.forRoot(MAINMENU_ROUTES),
     Ng2Bs3ModalModule,
     BrowserAnimationsModule,
-    ToastModule.forRoot()
+    ToastModule.forRoot(),
+    NgxEchartsModule
   ],
   providers: [
     {provide: ToastOptions, useClass: CustomOption},

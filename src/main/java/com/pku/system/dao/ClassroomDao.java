@@ -2,10 +2,12 @@ package com.pku.system.dao;
 
 import com.pku.system.model.Classroom;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Mapper
+@Component
 public interface ClassroomDao {
     @Select("select * from classroom where id = #{id}")
     public Classroom selectById(int id);

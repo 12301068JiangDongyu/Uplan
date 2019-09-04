@@ -1,5 +1,6 @@
 package com.pku.system.model;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -7,7 +8,7 @@ public class Car {
     private int id;
     private int car_type_id;
     private String license_plate_num;//车牌号
-    private Date run_time;//汽车投入使用时间
+    private Timestamp run_time;//汽车投入使用时间
     private int mileage;//里程数
     private double oil_used;//使用油量
     private double oil_remained;//目前剩余油量
@@ -74,7 +75,7 @@ public class Car {
         return run_time;
     }
 
-    public void setRun_time(Date run_time) {
+    public void setRun_time(Timestamp run_time) {
         this.run_time = run_time;
     }
 

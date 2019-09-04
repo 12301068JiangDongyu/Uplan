@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Api(value="用户管理",tags = {"用户管理API"},description = "描述信息")
@@ -70,6 +71,7 @@ public class UserController {
             jsonData.put("judge","-3");
         }else{
             try{
+                user.setCreateTime(new Timestamp(System.currentTimeMillis()));
                 userService.addUser(user);
                 //添加成功
                 jsonData.put("judge","0");
@@ -129,6 +131,7 @@ public class UserController {
             jsonData.put("judge","-4");
         }else{
             try{
+                user.setUpdateTime(new Timestamp(System.currentTimeMillis()));
                 userService.updateUser(user);
                 //修改成功
                 jsonData.put("judge","0");
