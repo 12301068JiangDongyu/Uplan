@@ -29,6 +29,7 @@
         "./assets/adminlte/css/skins/skin-blue.min.css",
         "./assets/plugins/datatables/dataTables.bootstrap.css",
         "./assets/plugins/calendar/css/fullcalendar.min.css",
+		    "./assets/plugins/datepicker/bootstrap-datepicker.min.css",
         "styles.css",
         "../node_modules/ztree/css/metroStyle/metroStyle.css"
       ],
@@ -48,7 +49,8 @@
         "./assets/jwplayer/cyberplayer.js",
         "./assets/plugins/calendar/js/moment.js",
         "./assets/plugins/calendar/js/fullcalendar.min.js",
-        "../node_modules/echarts/dist/echarts.min.js"
+        "../node_modules/echarts/dist/echarts.min.js",
+		    "./assets/plugins/datepicker/bootstrap-datepicker.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
