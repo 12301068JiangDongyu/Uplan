@@ -43,11 +43,11 @@ public class OfficialCarApplyController {
         JSONObject jsonData = new JSONObject();
 
         List<OfficialCarApply> officialCarApplies = officialCarApplyService.queryByUserId(user_id);
-        if(user_id == null){
-
-        }else{
-
-        }
+//        if(user_id == null){
+//
+//        }else{
+//
+//        }
 
         jsonObject.put("data",jsonData);
         return jsonObject.toString();
