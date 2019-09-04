@@ -39,6 +39,7 @@ import { MessageService } from './service/message.service';
 import { RoleService } from './service/role.service';
 import { BuildClassService } from './service/buildClass.service';
 import { ToastService } from './service/toast.service';
+import { CarTypeService } from './service/cartype.service';
 
 import {ActivateGuard} from './guard/auth.guard';
 import {DeactivateGuard} from './guard/deactivate.guard';
@@ -50,6 +51,8 @@ import { CarRecordComponent } from './pages/info/car-record/car-record.component
 import { CarApplyComponent } from './pages/mission/carApply/carApply';
 import { CarCheckComponent } from './pages/mission/car-check/car-check.component';
 import { StatisticsComponent } from './pages/statistics/statistics/statistics.component'
+
+import * as $ from 'jquery';
 
 @NgModule({
   declarations: [
@@ -101,7 +104,8 @@ import { StatisticsComponent } from './pages/statistics/statistics/statistics.co
     Constant,
     ToastService,
     ActivateGuard,
-    DeactivateGuard
+    DeactivateGuard,
+    CarTypeService
   ],
   bootstrap: [AppComponent]
 })
