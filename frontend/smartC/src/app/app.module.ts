@@ -52,6 +52,8 @@ import { CarApplyComponent } from './pages/mission/carApply/carApply';
 import { CarCheckComponent } from './pages/mission/car-check/car-check.component';
 import { StatisticsComponent } from './pages/statistics/statistics/statistics.component'
 
+import * as $ from 'jquery';
+
 @NgModule({
   declarations: [
     AppComponent,
