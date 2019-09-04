@@ -1,22 +1,113 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        派车审核
-        <small>管理员审核申请</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><i class="fa fa-home"></i><a routerLink="/home"> 主页</a></li>
-        <li><i class="fa fa-tasks"></i> 派车任务</li>
-        <li>派车审核</li>
-      </ol>
-    </section>
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      派车审核
+      <small>管理员审核申请</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><i class="fa fa-home"></i><a routerLink="/home"> 主页</a></li>
+      <li><i class="fa fa-tasks"></i> 派车任务</li>
+      <li>派车审核</li>
+    </ol>
+  </section>
 
-    <!-- Main content -->
-    <section class="content">
-       <!-- 添加你的代码  -->
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header">
+            <h3 class="box-title">申请列表</h3>
+            <!-- 查询框begin -->
+            <div class="">
+              <button class="btn btn-primary pull-right" (click)=findCarApplyListByStatus(statusInput.value)>查询</button>
+              <div class="form-group pull-right">
+                <input list="list" class="form-control dropdown-toggle" #statusInput placeholder="状态"
+                  (keyup.enter)="findCarApplyListByStatus(statusInput.value)">
+
+                <datalist id="list">
+                  <option value="未审核"></option>
+                  <option value="通过"></option>
+                  <option value="不通过"></option>
+                </datalist>
+              </div>
+
+            </div>
+            <!-- 查询框end -->
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <table id="example2" class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>编号</th>
+                  <th>车辆型号</th>
+                  <th>预约用户</th>
+                  <th>目的地</th>
+                  <th>计划开始用车时间</th>
+                  <th>申请原因</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let info of carApplyInfos">
+                  <td>{{info.c_id}}</td>
+                  <td>{{info.c_brand}}</td>
+                  <td>{{info.user_name}}</td>
+                  <td>{{info.destination}}</td>
+                  <td>{{info.start_time}}</td>
+                  <td>{{info.reason}}</td>
+                  <td *ngIf="info.status == '未审核'">
+                    <span class="label label-success cursor-hand" data-toggle="modal" data-target="#checkModal"
+                      (click)="getApplyId(info.c_id, '通过')"> 通过 </span>
+                    &nbsp;
+                    <span class="label label-danger cursor-hand" data-toggle="modal" data-target="#checkModal"
+                      (click)="getApplyId(info.c_id, '不通过')"> 不通过 </span>
+                  </td>
+                </tr>
+              </tbody>
+
+            </table>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<!--模态框删除-->
+<div class="modal fade" id="checkModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="deleteModalLabel">操作</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-horizontal" role="form">
+
+          <div class="fcol-sm-5 ">
+            <p>此次审核结果为：{{statusOperate}}，您确定本次操作吗？</p>
+
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <p class="label label-danger delete-wrong-tip" [ngClass]="{'div-display': judgeDelete}"
+          style="margin-top: 5px;float: left;">{{tip}}</p>
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="submit" class="btn btn-primary" (click)="checkApply()">确定</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

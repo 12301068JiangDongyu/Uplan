@@ -60,6 +60,22 @@ export class CarApplyInfoService {
             .catch(this.handleError)
     }
 
+    
+    findCarApplyListByStatus(status: string): Promise<any> {
+        return this.http
+            .post(this.constant.URL + "carAppply/carList", this.options)
+            .toPromise()
+            .then(response => response.json().res)
+            .catch(this.handleError)
+    }
+
+    checkApplyByApplyId(applyId:number, status: string): Promise<any> {
+        return this.http
+            .post(this.constant.URL + "carAppply/carList", this.options)
+            .toPromise()
+            .then(response => response.json().res)
+            .catch(this.handleError)
+    }
 
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error); // for demo purposes only
@@ -75,5 +91,6 @@ export class CarApplyInfoService {
         headers.append('Content-Type', 'application/json');
         return headers;
     }
+
 
 }

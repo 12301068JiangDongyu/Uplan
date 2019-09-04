@@ -8,7 +8,7 @@ declare var $: any;
 @Component({
   selector: 'CarApplyComponent',
   templateUrl: './carApply.html',
-  styles:['td.fc-day:hover{background-color:skyblue;}']
+  styles: ['td.fc-day:hover{background-color:skyblue;}']
 })
 
 export class CarApplyComponent implements OnInit {
@@ -25,7 +25,7 @@ export class CarApplyComponent implements OnInit {
     this.initCalendar();
   }
 
-  getCarInfo(date, cars):void {
+  getCarInfo(date, cars): void {
     cars = [{ c_id: 1, c_brand: "doge", c_plateNum: "d123323", status: "可用" },
     { c_id: 2, c_brand: "保时捷-怕那美拉", c_plateNum: "d123323", status: "可用" },
     { c_id: 3, c_brand: "宝马750Li", c_plateNum: "d123323", status: "可用" },
@@ -91,7 +91,7 @@ export class CarApplyComponent implements OnInit {
       },
       buttonText: {
         today: '今天',
-        month: '月份展示',
+        month: '日历展示',
         list: '列表展示'
         // week: '周',
         // day: '日'
@@ -119,10 +119,10 @@ export class CarApplyComponent implements OnInit {
           borderColor: '#0073b7' //Blue
         }
       ],
-      eventLimit : true,
+      eventLimit: true,
       views: {
         agenda: {
-            eventLimit: 3 // adjust to 6 only for agendaWeek/agendaDay
+          eventLimit: 3 // adjust to 6 only for agendaWeek/agendaDay
         }
       },
       navLinks: true,
@@ -163,13 +163,13 @@ export class CarApplyComponent implements OnInit {
       },
       //给日期添加点击事件,刷 
       dayClick: function (date, jsEvent, view) {
-        getCarInfo(date.format(),cars);
+        getCarInfo(date.format(), cars);
         init_events($('#external-events div.external-event'));
       }
     })
 
     // $(".fc-day").hover("")   
-    
+
   }
 
 
