@@ -1,5 +1,6 @@
 package com.pku.system.service;
 
+import com.pku.system.dto.StatisticDto;
 import com.pku.system.model.OfficialCarApply;
 
 import java.util.List;
@@ -53,5 +54,17 @@ public interface OfficialCarApplyService {
      * @return 删除用车信息
      */
     void deleteOfficialCarApply(int user_id);
+
+    /**
+     * 获得车型使用情况
+     * @return
+     */
+    List<StatisticDto> getAllBrandCount();
+
+    /**
+     * 员工预约班车次数统计
+     * @return
+     */
+    List<StatisticDto> getAllUserCount();
 
 }

@@ -1,7 +1,9 @@
 package com.pku.system.dao;
 
+import com.pku.system.dto.StatisticDto;
 import com.pku.system.model.OfficialCarApply;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -12,6 +14,7 @@ import java.util.List;
  * @since 2019-09-03 15:09:05
  */
 @Mapper
+@Component
 public interface OfficialCarApplyDao {
 
     /**
@@ -66,5 +69,21 @@ public interface OfficialCarApplyDao {
      */
     @Delete("delete from official_car_apply where user_id = #{user_id}")
     void deleteOfficialCarApply(int user_id);
+
+    /**
+     * 车型使用情况
+     * @return
+     */
+    @Select("select brand as keyName,count(brand) as keyValue from official_car_apply where status = 1 group by brand order by count(brand) DESC")
+    List<StatisticDto> getAllBrandCount();
+
+    /**
+     * 员工预约班车次数统计
+     * @return
+     */
+    @Select("select u.real_name as keyName,count(o.user_id) as keyValue from official_car_apply o INNER JOIN tb_user u on o.user_id = u.id where o.status = 1 group by o.user_id order by count(o.user_id) DESC")
+    List<StatisticDto> getAllUserCount();
+
+
 
 }

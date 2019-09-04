@@ -1,6 +1,8 @@
 package com.pku.system.controller;
 
+import com.pku.system.dto.StatisticDto;
 import com.pku.system.model.Statistic;
+import com.pku.system.service.OfficialCarApplyService;
 import com.pku.system.service.StatisticService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,7 +26,7 @@ import java.util.List;
 @RequestMapping("/statistic")
 public class StatisticController {
     @Autowired
-    private StatisticService statisticService;
+    private OfficialCarApplyService officialCarApplyService;
 
     @ApiOperation(value = "获得统计分析列表", notes = "获得统计分析列表notes", produces = "application/json")
     @RequestMapping(value="/", method= RequestMethod.GET)
@@ -34,9 +36,11 @@ public class StatisticController {
         jsonObject.put("code","0000");
         JSONObject jsonData = new JSONObject();
 
-        List<Statistic> statistics = statisticService.selectAll();
+        List<StatisticDto> carTypeCount = officialCarApplyService.getAllBrandCount();
+        List<StatisticDto> userCount = officialCarApplyService.getAllUserCount();
 
-        jsonData.put("statistics",statistics);
+        jsonData.put("carTypeCount",carTypeCount);
+        jsonData.put("userCount",userCount);
 
         jsonObject.put("data",jsonData);
         return jsonObject.toString();
