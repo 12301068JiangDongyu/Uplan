@@ -16,7 +16,7 @@ public interface CarTypeDao {
     @Select("select * from car_type where buildingNum = #{buildingNum}")
     public CarType selectByBrand(String brand);
 
-    @Select("select * from car_type")
+    @Select("select id,brand,capacity,price,buy_time,seat_num,oil_type from car_type")
     public List<CarType> getAllCarType();
 
     @Insert("insert into car_type (id,brand,capacity,price,buy_time,seat_num,oil_type,creator,create_time,update_time) values (#{id},#{brand},#{capacity},#{price},#{buy_time},#{seat_num},#{oil_type},#{creator},#{create_time},#{update_time})")
