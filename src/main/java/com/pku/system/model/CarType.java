@@ -12,7 +12,6 @@ public class CarType {
     private int oil_type;//0 柴油，1 汽油
     private int creator;//user_id
 
-
     private Date create_time;
     private Date update_time;
 

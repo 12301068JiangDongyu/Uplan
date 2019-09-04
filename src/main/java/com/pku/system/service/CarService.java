@@ -42,4 +42,18 @@ public interface CarService {
      * @param id
      */
     public void deleteCar(int id);
+
+    /**
+     * 根据id选择车
+     * @param id
+     * @return
+     */
+    public Car selectCarById(int id);
+
+    /**
+     * 更新车的使用状态
+     * @param id
+     * @param status
+     */
+    public void updateCarStatusById(int id, int status);
 }
