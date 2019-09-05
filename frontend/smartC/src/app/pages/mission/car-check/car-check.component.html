@@ -48,23 +48,26 @@
                   <th>目的地</th>
                   <th>计划开始用车时间</th>
                   <th>申请原因</th>
+                  <th>数据状态</th>
                   <th>操作</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let info of carApplyInfos">
-                  <td>{{info.c_id}}</td>
-                  <td>{{info.c_brand}}</td>
+                  <td>{{info.id}}</td>
+                  <td>{{info.brand}}</td>
                   <td>{{info.user_name}}</td>
                   <td>{{info.destination}}</td>
                   <td>{{info.start_time}}</td>
                   <td>{{info.reason}}</td>
-                  <td *ngIf="info.status == '未审核'">
+                  <td>{{info.status}}</td>
+                  <!-- <td *ngIf="info.status == '未审核'"> -->
+                  <td>
                     <span class="label label-success cursor-hand" data-toggle="modal" data-target="#checkModal"
-                      (click)="getApplyId(info.c_id, '通过')"> 通过 </span>
+                      (click)="getApplyId(info.id, '通过')"> 通过 </span>
                     &nbsp;
                     <span class="label label-danger cursor-hand" data-toggle="modal" data-target="#checkModal"
-                      (click)="getApplyId(info.c_id, '不通过')"> 不通过 </span>
+                      (click)="getApplyId(info.id, '不通过')"> 不通过 </span>
                   </td>
                 </tr>
               </tbody>

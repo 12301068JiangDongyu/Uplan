@@ -14,7 +14,9 @@ declare var $: any;
 export class CarApplyComponent implements OnInit {
 
   cars: CarInfo[];
+  carInfo: CarInfo = {c_id: 0, c_brand: "", c_plateNum: "", status: ""};
   strHtml: string;
+  applyReason: string;
   res: string;
 
   constructor(private carApplyInfoService: CarApplyInfoService) {
@@ -22,13 +24,16 @@ export class CarApplyComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCarInfoByCarId();
+    this.getCarInfo(new Date(), this.cars);
+    // this.getCarInfoByCarId(1);
     this.initCalendar();
   }
 
   getCarInfo(date, cars): void {
+    let that = this
     cars = [{ c_id: 1, c_brand: "doge", c_plateNum: "d123323", status: "可用" },
     { c_id: 2, c_brand: "保时捷-怕那美拉", c_plateNum: "d123323", status: "可用" },
+    { c_id: 6, c_brand: "保时捷-怕那美拉", c_plateNum: "d123444", status: "可用" },
     { c_id: 3, c_brand: "宝马750Li", c_plateNum: "d123323", status: "可用" },
     { c_id: 4, c_brand: "丰田阿尔法", c_plateNum: "d123323", status: "可用" }];
 
@@ -38,14 +43,32 @@ export class CarApplyComponent implements OnInit {
 
     let strHtml = "";
     for (let car of cars) {
-      strHtml += "<div class='external-event bg-green'>" + car.c_brand + "</div>";
+      strHtml += "<div class='external-event bg-green' id='"+ car.c_id +"' (click)='this.getCarInfoByCarId("+ car.c_id +")'>" + car.c_brand + "-" + car.c_id + "</div>";
     };
+    $("#external-events").on('click','div','', function(){
+      var num = $(this).attr('id');
+      that.getCarInfoByCarId(num);
+    });
+
     $("#external-events").html(strHtml);
+
   }
 
-  getCarInfoByCarId():void{
-    this.carApplyInfoService.getCarInfoByCarId(1).then(data => {
-      console.log(data)
+  onEnter(value: string): void {
+     this.applyReason = value; 
+  }
+
+  getCarInfoByCarId(carId){
+    console.log(carId);
+    let that = this;
+   
+    that.carApplyInfoService.getCarInfoByCarId(carId).then(data => {
+      that.carInfo.c_id = data.carList.id;
+      that.carInfo.c_brand = data.carTypeList.brand;
+      that.carInfo.c_plateNum = data.carList.license_plate_num;
+      that.carInfo.status = data.carList.status == 1? "可用":"不可用";
+
+      $("#car-info").html(" <li class='list-group-item'> 汽车编号："+ this.carInfo.c_id +"</li><li class='list-group-item'>品牌：" + this.carInfo.c_brand +"</li><li class='list-group-item'>车牌号：" + this.carInfo.c_plateNum +"</li> <li class='list-group-item'>汽车状态：" + this.carInfo.status +"</li>")
     });
   }
 
@@ -78,7 +101,7 @@ export class CarApplyComponent implements OnInit {
 
       })
     }
-    getCarInfo(new Date(), cars)
+    // getCarInfo(new Date(), cars);
 
     init_events($('#external-events div.external-event'))
 
@@ -94,14 +117,11 @@ export class CarApplyComponent implements OnInit {
         left: 'prev,next today',
         center: 'title',
         right: 'month,listMonth'
-        // right: 'month,agendaWeek,agendaDay'
       },
       buttonText: {
         today: '今天',
         month: '日历展示',
         list: '列表展示'
-        // week: '周',
-        // day: '日'
       },
       //Random default events
       events: [

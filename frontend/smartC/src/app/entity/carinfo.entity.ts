@@ -1,6 +1,6 @@
 export class CarInfo {
-	c_id : number;
-    c_brand : string;
-    c_plateNum : string;
-	status : string;
+	public c_id : number;
+    public c_brand : string;
+    public c_plateNum : string;
+	public status : string;
 }
