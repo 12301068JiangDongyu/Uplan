@@ -50,6 +50,7 @@ public class OfficialCarApplyController {
     @ResponseBody
     public String carApply(OfficialCarApply officialCarApply) {
 
+        JSONObject jsonReturn = new JSONObject();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("msg","调用成功");
         jsonObject.put("code","0000");
@@ -60,7 +61,8 @@ public class OfficialCarApplyController {
             SimpleDateFormat df = new SimpleDateFormat("YYYY MM DD");
             if (df.format(of.getStart_time()).equals(df.format(officialCarApply.getStart_time())) && of.getStatus() < 2){
                 jsonObject.put("msg", officialCarApply.getStart_time()+"已经存在申请");
-                return jsonObject.toString();
+                jsonReturn.put("data",jsonObject);
+                return jsonReturn.toString();
             }
         }
 
@@ -79,13 +81,15 @@ public class OfficialCarApplyController {
             jsonObject.put("msg","调用失败");
             jsonObject.put("code","1000");
         }
-        return jsonObject.toString();
+        jsonReturn.put("data",jsonObject);
+        return jsonReturn.toString();
     }
 
     @ApiOperation(value = "用车申请撤销", notes= "用车申请撤销", produces = "application/json")
     @RequestMapping(value = "/carRepeal",method = RequestMethod.GET)
     public String carRepeal(OfficialCarApply officialCarApply) {
 
+        JSONObject jsonReturn = new JSONObject();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("msg","调用成功");
         jsonObject.put("code","0000");
@@ -94,6 +98,22 @@ public class OfficialCarApplyController {
         try {
             officialCarApplyService.updateOfficialCarApply(officialCarApply);
         }catch (Exception e) {
+            jsonObject.put("msg","调用失败");
+            jsonObject.put("code","1000");
+        }
+        jsonReturn.put("data",jsonObject);
+        return jsonReturn.toString();
+    }
+
+    @RequestMapping(value = "/carListByUser",method = RequestMethod.GET)
+    public String carListByUserId(int user_id){
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("msg","调用成功");
+        jsonObject.put("code","0000");
+        try{
+            jsonObject.put("data",officialCarApplyService.queryByUserId(user_id));
+        } catch(Exception e){
             jsonObject.put("msg","调用失败");
             jsonObject.put("code","1000");
         }
