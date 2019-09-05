@@ -8,6 +8,16 @@ public class Car {
     private int id;
     private int car_type_id;
     private String license_plate_num;//车牌号
+    private String brand;//车牌号
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
     private Timestamp run_time;//汽车投入使用时间
     private int mileage;//里程数
     private double oil_used;//使用油量
