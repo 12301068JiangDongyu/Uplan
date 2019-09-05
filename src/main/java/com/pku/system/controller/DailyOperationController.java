@@ -2,9 +2,12 @@ package com.pku.system.controller;
 
 
 import com.pku.system.model.DailyOperation;
+import com.pku.system.service.CarService;
 import com.pku.system.service.DailyOperationService;
+import com.pku.system.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -19,7 +22,10 @@ import java.util.List;
 public class DailyOperationController {
    @Autowired
    DailyOperationService dailyOperationService;
-
+   @Autowired
+   UserService userService;
+   @Autowired
+   CarService carService;
 
    @ApiOperation(value = "获得日常运维列表", notes = "获得日常运维列表notes", produces = "application/json")
    @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -28,9 +34,23 @@ public class DailyOperationController {
       jsonObject.put("msg", "调用成功");
       jsonObject.put("code", "0000");
       JSONObject jsonData = new JSONObject();
+      JSONArray  jsonArray = new JSONArray();
 
       List<DailyOperation> dailyOperationList = dailyOperationService.getAllDailyOperation();
-      jsonData.put("dailyOperationList", dailyOperationList);
+      for(int i=0; i<dailyOperationList.size();i++){
+         if (userService.selectById(dailyOperationList.get(i).getCreator()) == null)
+            //判断有无此用户
+            jsonData.put("judge","-9");
+         if(carService.selectById(dailyOperationList.get(i).getCar_id())==null);
+         //判断有无此车型
+         jsonData.put("judge","-9");
+          dailyOperationList.get(i).setName(userService.selectById(dailyOperationList.get(i).getCreator()).getUsername());
+          dailyOperationList.get(i).setLisence_num(carService.selectById(dailyOperationList.get(i).getCar_id()).getLicense_Plate_Num());
+
+          jsonArray.add(dailyOperationList.get(i));
+          jsonData.put("dailyOperationList", jsonArray);
+
+   }
       jsonObject.put("data", jsonData);
       return jsonObject.toString();
 
@@ -116,9 +136,12 @@ public class DailyOperationController {
          jsonData.put("judge", "-1");
       } else if (dailyOperation.getType() != 1 && dailyOperation.getType() != 2 && dailyOperation.getType() != 3) {
          jsonData.put("judge", "-3");
-      } else {
+      } else if(dailyOperationService.selectById(id) == null) {
+         //判断运维信息为空
+         jsonData.put("judge", "-9");
+      }else{
          try {
-            dailyOperationService.deleteDailyOperation(id);
+            dailyOperationService.updateDailyOperation(dailyOperation);
             //删除成功
             jsonData.put("judge", "0");
          } catch (DataAccessException e) {
