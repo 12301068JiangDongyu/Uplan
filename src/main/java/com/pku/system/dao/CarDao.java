@@ -28,6 +28,6 @@ public interface CarDao {
     public void deleteCar(int id);
 
     //用车审批通过，将car的状态改为不可用。
-    @Update("update car set status=#{status} where id=#{id}")
-    public void updateCarById(int id, int status);
+    @Update("update car set status=#{status}, update_time=#{update_time} where id=#{id}")
+    public void updateCarById(Car car);
 }

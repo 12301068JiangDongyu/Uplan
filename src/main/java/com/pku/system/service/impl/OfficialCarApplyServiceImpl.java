@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -25,8 +26,13 @@ public class OfficialCarApplyServiceImpl implements OfficialCarApplyService {
     }
 
     @Override
-    public void updateOfficialCarApply(int id, int status) {
-        officialCarApplyDao.updateOfficialCarApply(id, status);
+//    public void updateOfficialCarApply(OfficialCarApply officialCarApply) {
+//        officialCarApplyDao.updateOfficialCarApply(officialCarApply);
+//    }
+    public void updateOfficialCarApply(OfficialCarApply officialCarApply){
+        officialCarApplyDao.updateOfficialCarApply(officialCarApply.getStatus(),
+                officialCarApply.getUpdate_time(),
+                officialCarApply.getId());
     }
 
     @Override

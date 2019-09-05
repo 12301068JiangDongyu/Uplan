@@ -1,6 +1,7 @@
 package com.pku.system.model;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * (OfficialCarApply)实体类
@@ -33,7 +34,7 @@ public class OfficialCarApply {
     //数据创建时间
     private Timestamp create_time;
     //数据更新时间
-    private Timestamp update_time;
+    private Date update_time;
 
     public Integer getId() {
         return id;
@@ -139,11 +140,11 @@ public class OfficialCarApply {
         this.create_time = create_time;
     }
 
-    public Timestamp getUpdate_time() {
+    public Date getUpdate_time() {
         return update_time;
     }
 
-    public void setUpdate_time(Timestamp update_time) {
+    public void setUpdate_time(Date update_time) {
         this.update_time = update_time;
     }
 }

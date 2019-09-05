@@ -1,14 +1,9 @@
 package com.pku.system.controller;
 
-
-import com.pku.system.model.CameraType;
 import com.pku.system.model.Car;
-//import com.pku.system.model.CarType;
 import com.pku.system.service.CarService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import net.sf.ehcache.pool.sizeof.SizeOf;
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -73,7 +68,7 @@ public class CarController {
         car.setCreate_time(time);
         car.setUpdate_time(time);
 
-         if(car.getLicense_Plate_Num().length()==0){
+         if(car.getLicense_plate_num().length()==0){
             //判断车牌号为空
             jsonData.put("judge","-1");
         }else if( car.getType() !=1 && car.getType()!= 2){
@@ -135,7 +130,7 @@ public class CarController {
         JSONObject jsonData = new JSONObject();
 
 
-        String license_Plate_Num = car.getLicense_Plate_Num();
+        String license_Plate_Num = car.getLicense_plate_num();
         int type = car.getType();
         int status = car.getStatus();
 

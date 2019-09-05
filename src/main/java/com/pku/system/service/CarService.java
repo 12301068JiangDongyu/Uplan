@@ -52,8 +52,7 @@ public interface CarService {
 
     /**
      * 更新车的使用状态
-     * @param id
-     * @param status
+     * @param
      */
-    public void updateCarStatusById(int id, int status);
+    public void updateCarStatusById(Car car);
 }

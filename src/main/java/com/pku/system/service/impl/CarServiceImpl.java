@@ -48,23 +48,13 @@ public class CarServiceImpl implements CarService {
 
     }
 
-    /**
-     *
-     * @param id
-     * @return
-     */
     @Override
     public Car selectCarById(int id) {
         return carDao.selectById(id);
     }
 
-    /**
-     *
-     * @param id
-     * @param status
-     */
     @Override
-    public void updateCarStatusById(int id, int status) {
-        carDao.updateCarById(id, status);
+    public void updateCarStatusById(Car car) {
+        carDao.updateCarById(car);
     }
 }
