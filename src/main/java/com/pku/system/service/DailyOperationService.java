@@ -17,7 +17,7 @@ public interface DailyOperationService {
      * @param
      * @return
      */
-    public DailyOperation selectByType (String remark);
+    public DailyOperation selectRemark (String remark);
     /**
      * 获得所有
      * @return

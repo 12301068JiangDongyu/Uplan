@@ -9,9 +9,9 @@ public class DailyOperation{
     private int car_id;   //汽车id
     private double cost;  //花费的钱数
     private int type;    //1、维修，2、加油，3、违章
-    private Timestamp  ocurrence_time;  //事件发生时间
+    private Timestamp  occurrence_time;  //事件发生时间
     private String remark;  //备注信息
-    private int creator;//创建人ID
+    private int creator;//责任人ID
     private Timestamp  create_time;  //创建记录时间
 
     public int getId() {
@@ -22,12 +22,12 @@ public class DailyOperation{
         this.id = id;
     }
 
-    public int getCarId() {
+    public int getCar_id() {
         return car_id;
     }
 
     public void setCar_id(int car_id) {
-        car_id = car_id;
+        this.car_id = car_id;
     }
 
     public double getCost() {
@@ -46,12 +46,12 @@ public class DailyOperation{
         this.type = type;
     }
 
-    public Timestamp  getOcurrence_time() {
-        return ocurrence_time;
+    public Timestamp getOccurrence_time() {
+        return occurrence_time;
     }
 
-    public void setOcurrence_time(Timestamp ocurrence_time) {
-        ocurrence_time = ocurrence_time;
+    public void setOccurrence_time(Timestamp occurrence_time) {
+        this.occurrence_time = occurrence_time;
     }
 
     public String getRemark() {
@@ -75,6 +75,6 @@ public class DailyOperation{
     }
 
     public void setCreate_time(Timestamp create_time) {
-        create_time = create_time;
+        this.create_time = create_time;
     }
 }

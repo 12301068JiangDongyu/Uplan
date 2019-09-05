@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Api (value="日常运维",tags = {"日常运维API"},description = "描述信息")
@@ -38,11 +39,15 @@ public class DailyOperationController {
    @ApiOperation(value = "添加日常运维信息", notes = "添加日常运维信息notes", produces = "application/json")
    @RequestMapping(value = "/dailyOperationAdd", method = RequestMethod.POST)
    @ResponseBody
-   public String AdddailyOperation(@RequestBody DailyOperation dailyOperation) {
+   public String AddDailyOperation(@RequestBody DailyOperation dailyOperation) {
+
       JSONObject jsonObject = new JSONObject();
       jsonObject.put("msg", "调用成功");
       jsonObject.put("code", "0000");
       JSONObject jsonData = new JSONObject();
+
+      dailyOperation.setCreate_time(new Timestamp(System.currentTimeMillis()));
+
 
       if (dailyOperation.getRemark().length() == 0) {
          //判断备注信息是否为空
@@ -99,7 +104,7 @@ public class DailyOperationController {
    @ApiOperation(value = "根据id修改运维信息", notes = "根据id修改运维信息notes", produces = "application/json")
    @RequestMapping(value = "/dailyOperationUpdate/{id}", method = RequestMethod.PUT)
    @ResponseBody
-   public String putdailyOperation(@PathVariable("id") int id,
+   public String putDailyOperation(@PathVariable("id") int id,
                                    @RequestBody DailyOperation dailyOperation) {
       JSONObject jsonObject = new JSONObject();
       jsonObject.put("msg", "调用成功");
