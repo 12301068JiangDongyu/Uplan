@@ -46,11 +46,12 @@ public class CarController {
         List<Car> carList = carService.getAllCar();
         //String A=carList.toString();
         for(int i = 0;i < carList.size();i++){
-            if(carTypeService.selectById(carList.get(i).getCar_Type_Id())==null)
+            if(carTypeService.selectById(carList.get(i).getCar_type_id())==null) {
                 //判断有无此车型
                 jsonData.put("judge", "-4");
-
-            CarType carType = carTypeService.selectById(carList.get(i).getCar_Type_Id());
+                break;
+            }
+            CarType carType = carTypeService.selectById(carList.get(i).getCar_type_id());
 
             carList.get(i).setBrand(carType.getBrand());
             jsonArray.add(carList.get(i));
@@ -77,7 +78,7 @@ public class CarController {
 
         Car car = carService.selectById(id);
 
-        CarType carType = carTypeService.selectById(car.getCar_Type_Id());
+        CarType carType = carTypeService.selectById(car.getCar_type_id());
 
         jsonData.put("carList",car);
         jsonData.put("carTypeList",carType);
@@ -110,7 +111,7 @@ public class CarController {
         car.setCreate_time(time);
         car.setUpdate_time(time);
 
-         if(car.getLicense_Plate_Num().length()==0){
+         if(car.getLicense_plate_num().length()==0){
             //判断车牌号为空
             jsonData.put("judge","-1");
         }else if( car.getType() !=1 && car.getType()!= 2){
@@ -172,7 +173,7 @@ public class CarController {
         JSONObject jsonData = new JSONObject();
 
 
-        String license_Plate_Num = car.getLicense_Plate_Num();
+        String license_Plate_Num = car.getLicense_plate_num();
         int type = car.getType();
         int status = car.getStatus();
 
