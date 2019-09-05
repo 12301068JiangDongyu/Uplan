@@ -71,7 +71,7 @@ public class UserController {
             jsonData.put("judge","-3");
         }else{
             try{
-                user.setCreateTime(new Timestamp(System.currentTimeMillis()));
+                user.setCreate_time(new Timestamp(System.currentTimeMillis()));
                 userService.addUser(user);
                 //添加成功
                 jsonData.put("judge","0");
@@ -131,7 +131,7 @@ public class UserController {
             jsonData.put("judge","-4");
         }else{
             try{
-                user.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+                user.setUpdate_time(new Timestamp(System.currentTimeMillis()));
                 userService.updateUser(user);
                 //修改成功
                 jsonData.put("judge","0");

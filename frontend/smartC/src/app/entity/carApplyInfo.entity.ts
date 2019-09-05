@@ -7,8 +7,8 @@ export class CarApplyInfo {
     user_id:number;
     user_name:string;
     distination:string;
-    start_time: Data;
-    end_time: Data;
+    start_time: Date;
+    end_time: Date;
     reason:string;
     travel_distance:number;
     update_time: Data;

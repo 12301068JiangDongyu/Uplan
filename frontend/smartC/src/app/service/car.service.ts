@@ -34,7 +34,7 @@ export class CarApplyInfoService {
 
     getApplyInfoByUserId(id): Promise<any> {
         return this.http
-            .get(this.carApplyUrl, this.options)
+            .get(this.carApplyUrl+"officialCarApply/carListByUser?user_id="+id, this.options)
             .toPromise()
             .then(response => response.json().data)
             .catch(this.handleError)
@@ -54,8 +54,9 @@ export class CarApplyInfoService {
 
     //请求某一天的汽车数据:
     getCarListByDate(date): Promise<any> {
+        console.log(date);
         return this.http
-            .get(this.constant.URL + "car/getCar", this.options)
+            .get(this.constant.URL + "car/carListOn"+date, this.options)
             .toPromise()
             .then(response => response.json().data)
             .catch(this.handleError)

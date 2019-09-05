@@ -11,10 +11,11 @@ import { CarApplyInfoService } from '../../../service/car.service';
 	templateUrl: './user-apply-list.component.html'
 })
 export class UserApplyListComponent implements OnInit {
-	me: CarApplyInfo;
 	userId: number;
+	applyId: number;
 	judgeDelete: boolean = true;
-	carApplyInfos: CarApplyInfo[] = [{ c_id: 1, c_brand: "doge", user_name: "a", c_plateNum: "d123323", destination: "济南1", reason: "没有原因", start_time: "2019-01-01", end_time: "2019-01-01", status: "未审核" }];
+	
+	carApplyInfos: CarApplyInfo[];
 	judgeMsg: string[] = [
 		'请输入20位以下用户名！',//0
 		'请输入6位以上密码！',//1
@@ -37,14 +38,14 @@ export class UserApplyListComponent implements OnInit {
   	 * [ 初始点击对应的数据id]
   	 */
 	getApplyId(id): void {
-		this.userId = id;
+		this.applyId = id;
 	}
 
 	/**
   	 * [ 初始点击对应的数据id]
   	 */
 	deleteApply(): void {
-		this.carApplyInfoService.deleteApplyInfoById(this.userId).then(data => {
+		this.carApplyInfoService.deleteApplyInfoById(this.applyId).then(data => {
 			this.judgeDelete = false;
 			if (data.judge == 0) {
 				this.tip = this.judgeMsg[9];
@@ -65,9 +66,9 @@ export class UserApplyListComponent implements OnInit {
 	 * [ 初始获取申请列表]
 	 */
 	getCarApplyInfosByUserId(): void {
-		this.carApplyInfoService.getApplyInfoByUserId(1).then(data => {
-			// console.log(data);
-			// this.carApplyInfos = data.carApplyInfoList;
+		this.carApplyInfoService.getApplyInfoByUserId(3).then(data => {
+			console.log(data);
+			this.carApplyInfos = data.carApplyInfoList;
 		})
 	}
 

@@ -24,25 +24,25 @@ export class CarApplyComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCarInfo(new Date(), this.cars);
+    this.getCarInfo(new Date());
     // this.getCarInfoByCarId(1);
     this.initCalendar();
   }
 
-  getCarInfo(date, cars): void {
+  getCarInfo(date): void {
     let that = this
-    cars = [{ c_id: 1, c_brand: "doge", c_plateNum: "d123323", status: "可用" },
+    that.cars = [{ c_id: 1, c_brand: "doge", c_plateNum: "d123323", status: "可用" },
     { c_id: 2, c_brand: "保时捷-怕那美拉", c_plateNum: "d123323", status: "可用" },
     { c_id: 6, c_brand: "保时捷-怕那美拉", c_plateNum: "d123444", status: "可用" },
     { c_id: 3, c_brand: "宝马750Li", c_plateNum: "d123323", status: "可用" },
     { c_id: 4, c_brand: "丰田阿尔法", c_plateNum: "d123323", status: "可用" }];
 
-    // this.carApplyInfoService.getCarListByDate(date).then(cars => {
-    //   this.cars = cars;
-    // });
+    this.carApplyInfoService.getCarListByDate(date).then(cars => {
+      that.cars = cars;
+    });
 
     let strHtml = "";
-    for (let car of cars) {
+    for (let car of that.cars) {
       strHtml += "<div class='external-event bg-green' id='"+ car.c_id +"' (click)='this.getCarInfoByCarId("+ car.c_id +")'>" + car.c_brand + "-" + car.c_id + "</div>";
     };
     $("#external-events").on('click','div','', function(){
@@ -101,8 +101,6 @@ export class CarApplyComponent implements OnInit {
 
       })
     }
-    // getCarInfo(new Date(), cars);
-
     init_events($('#external-events div.external-event'))
 
     /* initialize the calendar
@@ -166,20 +164,20 @@ export class CarApplyComponent implements OnInit {
 
         // assign it the date that was reported
         copiedEventObject.start = date
-        copiedEventObject.allDay = allDay
+        copiedEventObject.allDay = true
         copiedEventObject.backgroundColor = $(this).css('background-color')
         copiedEventObject.borderColor = $(this).css('border-color')
-
-        // var res = this.carApplyInfoService.addCarApply()
-        res = "成功"
+        // 像后端插入数据
+        var res
+        this.carApplyInfoService.addCarApply(date).then(data => {
+          res = data.judge;
+        });
+        // res = "成功";
 
         if (res === "成功") {
           // render the event on the calendar
           // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
           $('#calendar').fullCalendar('renderEvent', copiedEventObject, true)
-          // is the "remove after drop" checkbox checked?
-          // if ($('#drop-remove').is(':checked')) {
-          // if so, remove the element from the "Draggable Events" list
           $(this).remove()
 
           // }
@@ -190,7 +188,7 @@ export class CarApplyComponent implements OnInit {
       },
       //给日期添加点击事件,刷 
       dayClick: function (date, jsEvent, view) {
-        getCarInfo(date.format(), cars);
+        getCarInfo(date.format());
         init_events($('#external-events div.external-event'));
       }
     })

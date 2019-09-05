@@ -28,4 +28,8 @@ public interface CarDao {
     @Delete("delete from car where id=#{id}")
     public void deleteCar(int id);
 
+
+    @Select(("select * from car where status = #{status}"))
+    public List<Car> selectCarByStatus(int status);
+
 }
