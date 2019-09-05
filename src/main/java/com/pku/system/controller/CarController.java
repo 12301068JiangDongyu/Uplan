@@ -39,14 +39,23 @@ public class CarController {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("msg","调用成功");
         jsonObject.put("code","0000");
-//        JSONArray jsonArray = new JSONArray();
+        JSONArray jsonArray = new JSONArray();
         JSONObject jsonData = new JSONObject();
 
 
         List<Car> carList = carService.getAllCar();
         //String A=carList.toString();
+        for(int i = 0;i < carList.size();i++){
+            if(carTypeService.selectById(carList.get(i).getCar_Type_Id())==null)
+                //判断有无此车型
+                jsonData.put("judge", "-4");
 
-        jsonData.put("carList",carList);
+            CarType carType = carTypeService.selectById(carList.get(i).getCar_Type_Id());
+
+            carList.get(i).setBrand(carType.getBrand());
+            jsonArray.add(carList.get(i));
+            jsonData.put("carList",jsonArray);
+        }
 
         jsonObject.put("data",jsonData);
         return jsonObject.toString();
@@ -67,7 +76,7 @@ public class CarController {
             jsonData.put("judge", "-1");
 
         Car car = carService.selectById(id);
-        //int a=car.getCar_Type_Id();
+
         CarType carType = carTypeService.selectById(car.getCar_Type_Id());
 
         jsonData.put("carList",car);
