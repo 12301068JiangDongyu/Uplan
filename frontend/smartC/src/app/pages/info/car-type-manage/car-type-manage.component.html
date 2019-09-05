@@ -1,22 +1,172 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        车型管理
-        <small>管理车型的基本信息</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><i class="fa fa-home"></i><a routerLink="/home"> 主页</a></li>
-        <li><i class="fa fa-car"></i> 信息管理</li>
-        <li>车型管理</li>
-      </ol>
-    </section>
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      车型管理
+      <small>管理车型的基本信息</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><i class="fa fa-home"></i><a routerLink="/home"> 主页</a></li>
+      <li><i class="fa fa-car"></i> 信息管理</li>
+      <li>车型管理</li>
+    </ol>
+  </section>
 
-    <!-- Main content -->
-    <section class="content">
-       <!-- 添加你的代码  -->
-    </section>
-    <!-- /.content -->
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-primary">
+          <div class="box-header with-border">
+            <h3 class="box-title">车型列表</h3>
+          </div>
+          <div class="box-body">
+            <table class="table table-bordered table-hover table-page" [mfData]="cartypes" #mf="mfDataTable" [mfRowsOnPage]="10">
+              <thead>
+                <tr>
+                  <th>编号</th>
+                  <th><mfDefaultSorter by="brand">品牌型号</mfDefaultSorter></th>
+                  <th><mfDefaultSorter by="capacity">汽车排量</mfDefaultSorter></th>
+                  <th><mfDefaultSorter by="price">购入价格</mfDefaultSorter></th>
+                  <th><mfDefaultSorter by="buy_time.time">购入日期</mfDefaultSorter></th>
+                  <th><mfDefaultSorter by="seat_num">车座数</mfDefaultSorter></th>
+                  <th><mfDefaultSorter by="oil_type">燃油类型</mfDefaultSorter></th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let cartype of mf.data">
+                  <td>{{ cartype.id }}</td>
+                  <td>{{ cartype.brand }}</td>
+                  <td>{{ cartype.capacity }}L</td>
+                  <td>{{ cartype.price }}万元</td>
+                  <td>{{ cartype.buy_time.time | date: 'yyyy/MM/dd' }}</td>
+                  <td>{{ cartype.seat_num }}</td>
+                  <td>{{ cartype.oil_type == 1 ? '汽油' : '柴油' }}</td>
+                  <td>
+                    <span class="label label-success cursor-hand" data-toggle="modal" data-target="#carModal" (click)="getCarTypeInfo(cartype)"> 修改 </span>
+                    &nbsp;
+                    <span class="label label-danger cursor-hand" data-toggle="modal" data-target="#deleteModal" (click)="getCarId(cartype.id)"> 删除 </span>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="10">
+                    <mfBootstrapPaginator [rowsOnPageSet]="[5, 10, 25]"></mfBootstrapPaginator>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+            <button class="btn btn-warning btn-flat" data-toggle="modal" data-target="#carModal" (click)="resetModal()">添加车辆</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- carModal -->
+<div class="modal fade" id="carModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">车型信息</h4>
+      </div>
+      <div class="modal-body">
+        <div class="modal-width">
+          <!-- form start -->
+          <form class="form-horizontal">
+            <div class="box-body">
+              <div class="form-group">
+                <label for="inputCarBrand" class="col-sm-2 control-label">品型</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" placeholder="车辆品牌型号" name="carBrand" [(ngModel)]="carModel.brand" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputCarCapacity" class="col-sm-2 control-label">排量</label>
+                <div class="col-sm-10">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="" name="carCapacity" [(ngModel)]="carModel.capacity" />
+                    <span class="input-group-addon">L</span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputCarPrice" class="col-sm-2 control-label">价格</label>
+                <div class="col-sm-10">
+                  <div class="input-group">
+                    <input type="number" class="form-control" name="carPrice" [(ngModel)]="carModel.price" />
+                    <span class="input-group-addon">万元</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputCarBuyTime" class="col-sm-2 control-label">日期</label>
+                <div class="col-sm-10">
+                  <div class="input-group date">
+                    <div class="input-group-addon">
+                      <i class="fa fa-calendar"></i>
+                    </div>
+                    <input type="text" class="form-control" id="datepicker" placeholder="车辆购入日期" name="carBuyTime" [(ngModel)]="buyTime.value" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputCarSeatNum" class="col-sm-2 control-label">车位数</label>
+                <div class="col-sm-10">
+                  <input type="number" class="form-control" name="carSeatNum" [(ngModel)]="carModel.seat_num" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputCarOilType" class="col-sm-2 control-label">燃油</label>
+                <div class="col-sm-10">
+                  <select name="selectOil" class="form-control" [(ngModel)]="carModel.oil_type">
+                    <option value="1">汽油</option>
+                    <option value="0">柴油</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <p class="label label-danger device-wrong-tip" [ngClass]="{ 'div-display': judgeTips.addEdit }" style="margin-top: 5px;float: left;">{{ tip }}</p>
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" *ngIf="judgeTips.status" class="btn btn-primary computer-btn" (click)="handleCar('add')">添加</button>
+        <button type="button" *ngIf="!judgeTips.status" class="btn btn-primary computer-btn" (click)="handleCar('edit')">修改</button>
+      </div>
+    </div>
   </div>
-  <!-- /.content-wrapper -->
+</div>
+
+<!--模态框删除-->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="deleteModalLabel">删除车辆</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-horizontal" role="form">
+          <div class="fcol-sm-5 ">
+            <p>确定要删除该车辆吗？</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <p class="label label-danger delete-wrong-tip" [ngClass]="{ 'div-display': judgeTips.addEdit }" style="margin-top: 5px;float: left;">{{ tip }}</p>
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="submit" class="btn btn-primary" (click)="deleteCarType()">删除</button>
+      </div>
+    </div>
+  </div>
+</div>
