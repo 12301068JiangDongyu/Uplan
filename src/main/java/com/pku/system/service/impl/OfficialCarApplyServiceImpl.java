@@ -64,7 +64,9 @@ public class OfficialCarApplyServiceImpl implements OfficialCarApplyService {
     }
 
     @Override
-    public List<StatisticTimeDto> getAllTimeCount() {
-        return officialCarApplyDao.getAllTimeCount();
+    public List<Integer> getAllTimeCount(int year) {
+        return officialCarApplyDao.getAllTimeCount(year);
     }
+
+
 }

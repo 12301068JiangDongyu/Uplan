@@ -90,8 +90,8 @@ public interface OfficialCarApplyDao {
      * 根据年月统计申请审核通过车的次数
      * @return
      */
-    @Select("SELECT COUNT( 1 ) AS count,YEAR ( start_time ) AS year,MONTH ( start_time ) AS month FROM official_car_apply WHERE STATUS = 1 GROUP BY YEAR ( start_time ),MONTH ( start_time )")
-    List<StatisticTimeDto> getAllTimeCount();
+    @Select("SELECT COUNT( 1 ) AS keyValue FROM official_car_apply WHERE STATUS = 1 and YEAR(start_time) = #{year} GROUP BY MONTH ( start_time )")
+    List<Integer> getAllTimeCount(int year);
 
 
 

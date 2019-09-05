@@ -37,11 +37,13 @@ public class StatisticController {
 
         List<StatisticDto> carTypeCount = officialCarApplyService.getAllBrandCount();
         List<StatisticDto> userCount = officialCarApplyService.getAllUserCount();
-        List<StatisticTimeDto> timeCount = officialCarApplyService.getAllTimeCount();
+        List<Integer> timeCount2018 = officialCarApplyService.getAllTimeCount(2018);
+        List<Integer> timeCount2019 = officialCarApplyService.getAllTimeCount(2019);
 
         jsonData.put("carTypeCount",carTypeCount);
         jsonData.put("userCount",userCount);
-        jsonData.put("timeCount",timeCount);
+        jsonData.put("timeCount2018",timeCount2018);
+        jsonData.put("timeCount2019",timeCount2019);
 
         jsonObject.put("data",jsonData);
         return jsonObject.toString();
