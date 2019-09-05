@@ -19,9 +19,8 @@ public interface DailyOperationDao {
     public DailyOperation selectByRemark (String remark);
 
 
-
-@Select("select id,car_id,cost,type,occurrence_time,remark,creator from daily_operation")
-    public List<DailyOperation> getAllDailyOperation();
+@Select("select id,car_id,cost,type,occurrence_time,remark,creator from daily_operation where type = #{type}")
+    public List<DailyOperation> getAllDailyOperation(int type);
 
 @Insert("insert into daily_operation(id,car_id,cost,type,occurrence_time,remark,creator,create_time) values (#{id},#{car_id},#{cost},#{type},#{occurrence_time},#{remark},#{creator},#{create_time})")
     public void addDailyOperation (DailyOperation dailyOperation);

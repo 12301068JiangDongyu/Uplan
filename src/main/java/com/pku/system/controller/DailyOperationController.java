@@ -34,23 +34,15 @@ public class DailyOperationController {
       jsonObject.put("msg", "调用成功");
       jsonObject.put("code", "0000");
       JSONObject jsonData = new JSONObject();
-      JSONArray  jsonArray = new JSONArray();
 
-      List<DailyOperation> dailyOperationList = dailyOperationService.getAllDailyOperation();
-      for(int i=0; i<dailyOperationList.size();i++){
-         if (userService.selectById(dailyOperationList.get(i).getCreator()) == null)
-            //判断有无此用户
-            jsonData.put("judge","-9");
-         if(carService.selectById(dailyOperationList.get(i).getCar_id())==null);
-         //判断有无此车型
-         jsonData.put("judge","-9");
-          dailyOperationList.get(i).setName(userService.selectById(dailyOperationList.get(i).getCreator()).getUsername());
-          dailyOperationList.get(i).setLisence_num(carService.selectById(dailyOperationList.get(i).getCar_id()).getLicense_Plate_Num());
+      List<DailyOperation> repaireList = dailyOperationService.dealDailyOperation(dailyOperationService.getAllDailyOperation(1));
+      List<DailyOperation> oilList = dailyOperationService.dealDailyOperation(dailyOperationService.getAllDailyOperation(2));
+      List<DailyOperation> ruleList = dailyOperationService.dealDailyOperation(dailyOperationService.getAllDailyOperation(3));
 
-          jsonArray.add(dailyOperationList.get(i));
-          jsonData.put("dailyOperationList", jsonArray);
+      jsonData.put("repaireList", repaireList);
+      jsonData.put("oilList", oilList);
+      jsonData.put("ruleList", ruleList);
 
-   }
       jsonObject.put("data", jsonData);
       return jsonObject.toString();
 

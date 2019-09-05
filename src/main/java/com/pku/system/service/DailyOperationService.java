@@ -22,7 +22,7 @@ public interface DailyOperationService {
      * 获得所有
      * @return
      */
-    public List<DailyOperation> getAllDailyOperation();
+    public List<DailyOperation> getAllDailyOperation(int type);
     /**
      * 增加
      * @param
@@ -38,4 +38,6 @@ public interface DailyOperationService {
      * @param id
      */
     public void deleteDailyOperation (int id);
+
+    public List<DailyOperation> dealDailyOperation(List<DailyOperation> list);
 }
