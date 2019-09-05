@@ -50,4 +50,9 @@ public class OfficialCarApplyServiceImpl implements OfficialCarApplyService {
     public void deleteOfficialCarApply(int user_id) {
         officialCarApplyDao.deleteOfficialCarApply(user_id);
     }
+
+    @Override
+    public void updateOfficialCarApplyStatusSchedule(int status){
+        officialCarApplyDao.updateOfficialCarApplyStatusSchedule(status);
+    }
 }

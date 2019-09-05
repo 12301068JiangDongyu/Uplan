@@ -179,4 +179,22 @@ public class CarController {
         jsonObject.put("data",jsonData);
         return jsonObject.toString();
     }
+
+    // zzqq 空闲车辆查询
+    @ApiOperation(value = "空闲车辆车辆", notes= "空闲车辆车辆", produces = "application/json")
+    @RequestMapping(value = "/carListOn",method = RequestMethod.GET)
+    public String carListOn() {
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("msg","调用成功");
+        jsonObject.put("code","0000");
+
+        try {
+            jsonObject.put("data",carService.selectCarByStatus(1));
+        }catch (Exception e) {
+            jsonObject.put("msg","调用失败");
+            jsonObject.put("code","1000");
+        }
+        return jsonObject.toString();
+    }
 }

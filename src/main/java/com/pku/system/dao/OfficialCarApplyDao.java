@@ -46,7 +46,7 @@ public interface OfficialCarApplyDao {
      * @param officialCarApply 实例对象
      * @return 插入数据
      */
-    @Insert("insert into official_car_apply (id,car_id,brand,user_id,destination,start_time,end_time,reason,travel_distance,oil_used,status,remark,create_time,update_time) values (#{id},#{car_id},#{brand},#{user_id},#{destination},#{start_time},#{end_time},#{reson},#{travel_distance},#{oil_used},#{status},#{remark},#{create_time},#{update_time})")
+    @Insert("insert into official_car_apply (id,car_id,brand,user_id,destination,start_time,end_time,reason,travel_distance,oil_used,status,remark,create_time,update_time) values (#{id},#{car_id},#{brand},#{user_id},#{destination},#{start_time},#{end_time},#{reason},#{travel_distance},#{oil_used},#{status},#{remark},#{create_time},#{update_time})")
     void addOfficialCarApply(OfficialCarApply officialCarApply);
 
 
@@ -55,7 +55,7 @@ public interface OfficialCarApplyDao {
      * @param officialCarApply 实例对象
      * @return 更新消息
      */
-    @Update("update official_car_apply set car_id=#{car_id},brand=#{brand},user_id=#{user_id},destination=#{destination},start_time=#{start_time},end_time=#{end_time},reason=#{reason},travel_distance=#{travel_distance},oil_used=#{oil_used},status=#{status},remark=#{remark},create_time=#{create_time},update_time=#{update_time} where id = #{id}")
+    @Update("update official_car_apply set status=#{status} where id = #{id}")
     void updateOfficialCarApply(OfficialCarApply officialCarApply);
 
 
@@ -66,5 +66,9 @@ public interface OfficialCarApplyDao {
      */
     @Delete("delete from official_car_apply where user_id = #{user_id}")
     void deleteOfficialCarApply(int user_id);
+
+
+    @Update("update official_car_apply set status = #{status} where status = 0")
+    void updateOfficialCarApplyStatusSchedule(int status);
 
 }

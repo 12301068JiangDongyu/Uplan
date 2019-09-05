@@ -54,4 +54,11 @@ public interface OfficialCarApplyService {
      */
     void deleteOfficialCarApply(int user_id);
 
+
+    /**
+     * 定时任务的更新操作
+     */
+    void updateOfficialCarApplyStatusSchedule(int status);
+
+
 }

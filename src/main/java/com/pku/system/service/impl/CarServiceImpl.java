@@ -48,5 +48,10 @@ public class CarServiceImpl implements CarService {
 
     }
 
+    @Override
+    public List<Car> selectCarByStatus(int status){
+        return carDao.selectCarByStatus(status);
+    }
+
 
 }
