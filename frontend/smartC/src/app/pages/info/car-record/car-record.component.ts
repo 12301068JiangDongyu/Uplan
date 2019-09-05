@@ -10,13 +10,31 @@ import { Constant } from '../../../common/constant';
 export class CarRecordComponent implements OnInit {
   //list
   oilList: CarRecord[] = [
-    { id: 1, license: '123', occurrenceTime: '2019-9-10', creator: 'xixi', cost: '30', remark: '', type: 2 },
+    { id: 1, license: '123', occurrenceTime: '2019-9-10', creator: 'xixi', cost: '32', remark: '', type: 2 },
     { id: 2, license: '122', occurrenceTime: '2019-9-11', creator: 'xixi', cost: '31', remark: '', type: 2 },
     { id: 2, license: '122', occurrenceTime: '2019-9-11', creator: 'xixi', cost: '31', remark: '', type: 2 },
     { id: 2, license: '122', occurrenceTime: '2019-9-11', creator: 'xixi', cost: '31', remark: '', type: 2 },
     { id: 2, license: '122', occurrenceTime: '2019-9-11', creator: 'xixi', cost: '31', remark: '', type: 2 },
     { id: 2, license: '122', occurrenceTime: '2019-9-11', creator: 'xixi', cost: '31', remark: '', type: 2 },
     { id: 2, license: '122', occurrenceTime: '2019-9-11', creator: 'xixi', cost: '31', remark: '', type: 2 },
+  ];
+  oilList2: CarRecord[] = [
+    { id: 1, license: '344', occurrenceTime: '2019-9-10', creator: 'gg', cost: '30', remark: '', type: 2 },
+    { id: 2, license: '322', occurrenceTime: '2019-9-11', creator: 'xixi', cost: '31', remark: '', type: 2 },
+    { id: 2, license: '211', occurrenceTime: '2019-9-11', creator: 'xixi', cost: '232', remark: '', type: 2 },
+    { id: 2, license: '322', occurrenceTime: '2019-9-11', creator: 'asd', cost: '31', remark: '', type: 2 },
+    { id: 2, license: '322', occurrenceTime: '2019-9-11', creator: 'xixi', cost: '21', remark: '', type: 2 },
+    { id: 2, license: '322', occurrenceTime: '2019-9-11', creator: 'fa', cost: '31', remark: '', type: 2 },
+    { id: 2, license: '322', occurrenceTime: '2019-9-11', creator: 'xixi', cost: '31', remark: '', type: 2 },
+  ];
+  oilList3: CarRecord[] = [
+    { id: 1, license: '321', occurrenceTime: '2019-9-10', creator: 'fae', cost: '13', remark: '', type: 2 },
+    { id: 2, license: '321', occurrenceTime: '2019-9-11', creator: 'xixi', cost: '31', remark: '', type: 2 },
+    { id: 2, license: '321', occurrenceTime: '2019-9-11', creator: 'xixi', cost: '43', remark: '', type: 2 },
+    { id: 2, license: '321', occurrenceTime: '2019-9-11', creator: 'fas', cost: '31', remark: '', type: 2 },
+    { id: 2, license: '321', occurrenceTime: '2019-9-11', creator: 'xixi', cost: '435', remark: '', type: 2 },
+    { id: 2, license: '321', occurrenceTime: '2019-9-11', creator: 'fgr', cost: '31', remark: '', type: 2 },
+    { id: 2, license: '321', occurrenceTime: '2019-9-11', creator: 'xixi', cost: '14', remark: '', type: 2 },
   ];
   fixList: CarRecord[];
   violateList: CarRecord[];
