@@ -2,6 +2,7 @@ package com.pku.system.service.impl;
 
 import com.pku.system.dao.OfficialCarApplyDao;
 import com.pku.system.dto.StatisticDto;
+import com.pku.system.dto.StatisticTimeDto;
 import com.pku.system.model.OfficialCarApply;
 import com.pku.system.service.OfficialCarApplyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,5 +61,10 @@ public class OfficialCarApplyServiceImpl implements OfficialCarApplyService {
     @Override
     public List<StatisticDto> getAllUserCount() {
         return officialCarApplyDao.getAllUserCount();
+    }
+
+    @Override
+    public List<StatisticTimeDto> getAllTimeCount() {
+        return officialCarApplyDao.getAllTimeCount();
     }
 }

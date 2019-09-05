@@ -1,6 +1,7 @@
 package com.pku.system.service;
 
 import com.pku.system.dto.StatisticDto;
+import com.pku.system.dto.StatisticTimeDto;
 import com.pku.system.model.OfficialCarApply;
 
 import java.util.List;
@@ -66,5 +67,11 @@ public interface OfficialCarApplyService {
      * @return
      */
     List<StatisticDto> getAllUserCount();
+
+    /**
+     * 根据年月统计申请审核通过车的次数
+     * @return
+     */
+    List<StatisticTimeDto> getAllTimeCount();
 
 }

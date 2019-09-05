@@ -1,6 +1,7 @@
 package com.pku.system.dao;
 
 import com.pku.system.dto.StatisticDto;
+import com.pku.system.dto.StatisticTimeDto;
 import com.pku.system.model.OfficialCarApply;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
@@ -83,6 +84,14 @@ public interface OfficialCarApplyDao {
      */
     @Select("select u.real_name as keyName,count(o.user_id) as keyValue from official_car_apply o INNER JOIN tb_user u on o.user_id = u.id where o.status = 1 group by o.user_id order by count(o.user_id) DESC")
     List<StatisticDto> getAllUserCount();
+
+
+    /**
+     * 根据年月统计申请审核通过车的次数
+     * @return
+     */
+    @Select("SELECT COUNT( 1 ) AS count,YEAR ( start_time ) AS year,MONTH ( start_time ) AS month FROM official_car_apply WHERE STATUS = 1 GROUP BY YEAR ( start_time ),MONTH ( start_time )")
+    List<StatisticTimeDto> getAllTimeCount();
 
 
 

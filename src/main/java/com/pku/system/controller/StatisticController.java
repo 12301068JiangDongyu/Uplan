@@ -1,9 +1,8 @@
 package com.pku.system.controller;
 
 import com.pku.system.dto.StatisticDto;
-import com.pku.system.model.Statistic;
+import com.pku.system.dto.StatisticTimeDto;
 import com.pku.system.service.OfficialCarApplyService;
-import com.pku.system.service.StatisticService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.sf.json.JSONObject;
@@ -38,9 +37,11 @@ public class StatisticController {
 
         List<StatisticDto> carTypeCount = officialCarApplyService.getAllBrandCount();
         List<StatisticDto> userCount = officialCarApplyService.getAllUserCount();
+        List<StatisticTimeDto> timeCount = officialCarApplyService.getAllTimeCount();
 
         jsonData.put("carTypeCount",carTypeCount);
         jsonData.put("userCount",userCount);
+        jsonData.put("timeCount",timeCount);
 
         jsonObject.put("data",jsonData);
         return jsonObject.toString();
