@@ -34,6 +34,7 @@ import { addBuildClassPage } from './pages/settings/buildClassManage/addBuildCla
 import { StorageService } from './service/storage.service';
 import { UserService } from './service/user.service';
 import { DeviceService } from './service/device.service';
+import { CarService } from './service/car-manage.service';
 import { VideoService } from './service/video.service';
 import { MessageService } from './service/message.service';
 import { RoleService } from './service/role.service';
@@ -104,6 +105,7 @@ import * as $ from 'jquery';
     BuildClassService,
     Constant,
     ToastService,
+    CarService,
     ActivateGuard,
     DeactivateGuard,
     CarTypeService,
