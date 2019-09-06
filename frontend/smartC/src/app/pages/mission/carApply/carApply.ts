@@ -17,89 +17,107 @@ declare var $: any;
 
 export class CarApplyComponent implements OnInit {
 
-  cars: CarInfo[]=[{ c_id: 0, c_brand: "", c_plateNum: "", status: "" }];
-  carInfo: CarInfo = {c_id: 0, c_brand: "", c_plateNum: "", status: ""};
-  applyInfo: CarApplyInfo = {id:0,car_id:0,brand:"",user_id:0,user_name:"",distination:"",
-                              start_time:new Date(),end_time: new Date(),reason:"",travel_distance:0,
-                              creat_time: new Date(),update_time: new Date(),oil_used:0,remark:"",status:0};
+  cars: CarInfo[] = [{ id: 0, brand: "", license_plate_num: "", status: "" }];
+  carInfo: CarInfo = { id: 0, brand: "", license_plate_num: "", status: "" };
+  applyInfo: CarApplyInfo = {
+    id: 0, car_id: 0, brand: "", user_id: 0, userName: "", distination: "",
+    start_time: new Date(), end_time: new Date(), reason: "", travel_distance: 0,
+    creatTime: "", creat_time: new Date(), updateTime: "", startTime: "",
+    update_time: new Date(), oil_used: 0, remark: "", status_name: ""
+  };
   allApplyList = [{
-                title: '丰田阿尔法',
-                start: new Date(2019, 8, 7),
-                backgroundColor: '#f56954', //red
-                borderColor: '#f56954' //red
-              }];
+    title: '丰田阿尔法',
+    start: new Date(2019, 8, 7),
+    backgroundColor: '#f56954', //red
+    borderColor: '#f56954' //red
+  }];
   strHtml: string;
   applyReason: string = "";
-  res: string;
+  // res: number;
+
+
 
   constructor(private carApplyInfoService: CarApplyInfoService, private storageService: StorageService) {
 
   }
 
+  // 初始化函数
   ngOnInit(): void {
-    this.getCarInfoByDate(new Date());
-    this.getAllApplyList();
-    // this.getCarInfoByCarId(1);
-    this.initCalendar();
+    let today = new Date().getFullYear() + "-" + new Date().getMonth() + "-" + new Date().getDay();
+    this.getCarInfoByDate(today);
   }
 
-  getAllApplyList():void{
-    this.carApplyInfoService.getCarUseList().then(data => {
-      for(let info of data){
-        let temp = {title: info.brand, 
-                    start: info.startTime, 
-                    backgroundColor: '#f56954', //red
-                    borderColor: '#f56954' //red
-                  }
-        this.allApplyList.push(temp);
+  // 获取所有申请列表
+  getAllApplyList(): void {
+    let that = this;
+    that.carApplyInfoService.getCarUseList().then(data => {
+      console.log("所有申请汽车数据");
+      console.log(data);
+      for (let info of data) {
+        let temp = {
+          title: info.brand,
+          start: new Date(info.start_time.year,info.start_time.month,info.start_time.day),
+          backgroundColor: '#f56954', //red
+          borderColor: '#f56954' //red
+        }
+        that.allApplyList.push(temp);
       }
+      console.log(this.allApplyList);
+      that.initCalendar();
+
+      var originalEventObject = $(this).data('eventObject')
+      // we need to copy it, so that multiple events don't have a reference to the same object
+      var copiedEventObject = $.extend({}, this.allApplyList)
+      $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+
     });
-    
+
   }
 
+  // 通过日期获取可用汽车信息， 给cars变量赋值
   getCarInfoByDate(date): void {
     let that = this
-    that.cars = [{ c_id: 1, c_brand: "doge", c_plateNum: "d123323", status: "可用" },
-    { c_id: 2, c_brand: "保时捷-怕那美拉", c_plateNum: "d123323", status: "可用" },
-    { c_id: 6, c_brand: "保时捷-怕那美拉", c_plateNum: "d123444", status: "可用" },
-    { c_id: 3, c_brand: "宝马750Li", c_plateNum: "d123323", status: "可用" },
-    { c_id: 4, c_brand: "丰田阿尔法", c_plateNum: "d123323", status: "可用" }];
-
-    that.carApplyInfoService.getCarListByDate(date).then(data => {
-      that.cars = data;
+    console.log(date);
+    this.carApplyInfoService.getCarListByDate(date).then(data => {
+      that.cars = data; 
+      console.log(that.cars);
+      let strHtml = "";
+      for (let car of that.cars) {
+        strHtml += "<div class='external-event bg-green' id='" + car.id + "' (click)='this.getCarInfoByCarId(" + car.id + ")'>" + car.brand + "-" + car.id + "</div>";
+      };
+      $("#external-events").on('click', 'div', '', function () {
+        var num = $(this).attr('id');
+        that.getCarInfoByCarId(num);
+      });
+      $("#external-events").html(strHtml);
+      that.getAllApplyList()
+      // that.initCalendar();
     });
-
-    let strHtml = "";
-    for (let car of that.cars) {
-      strHtml += "<div class='external-event bg-green' id='"+ car.c_id +"' (click)='this.getCarInfoByCarId("+ car.c_id +")'>" + car.c_brand + "-" + car.c_id + "</div>";
-    };
-    $("#external-events").on('click','div','', function(){
-      var num = $(this).attr('id');
-      that.getCarInfoByCarId(num);
-    });
-
-    $("#external-events").html(strHtml);
   }
+
+
 
   // 申请理由内容绑定
   onEnter(value: string): void {
-     this.applyReason = value; 
+    this.applyReason = value;
   }
 
+
   // 通过id获取汽车的具体信息
-  getCarInfoByCarId(carId){
+  getCarInfoByCarId(carId) {
     let that = this;
     that.carApplyInfoService.getCarInfoByCarId(carId).then(data => {
-      that.carInfo.c_id = data.carList.id;
-      that.carInfo.c_brand = data.carTypeList.brand;
-      that.carInfo.c_plateNum = data.carList.license_plate_num;
-      that.carInfo.status = data.carList.status == 1? "可用":"不可用";
+      that.carInfo.id = data.carList.id;
+      that.carInfo.brand = data.carTypeList.brand;
+      that.carInfo.license_plate_num = data.carList.license_plate_num;
+      that.carInfo.status = "可用";
 
-      $("#car-info").html(" <li class='list-group-item'> 汽车编号："+ this.carInfo.c_id +"</li><li class='list-group-item'>品牌：" + this.carInfo.c_brand +"</li><li class='list-group-item'>车牌号：" + this.carInfo.c_plateNum +"</li> <li class='list-group-item'>汽车状态：" + this.carInfo.status +"</li>")
+      $("#car-info").html(" <li class='list-group-item'> 汽车编号：" + this.carInfo.id + "</li><li class='list-group-item'>品牌：" + this.carInfo.brand + "</li><li class='list-group-item'>车牌号：" + this.carInfo.license_plate_num + "</li> <li class='list-group-item'>汽车状态：" + this.carInfo.status + "</li>")
     });
   }
 
 
+  // 初始化日历插件
   initCalendar(): void {
     var that = this
 
@@ -131,7 +149,7 @@ export class CarApplyComponent implements OnInit {
     /* initialize the calendar
      -----------------------------------------------------------------*/
     //Date for the calendar events (dummy data)
-    var date = new Date()
+    var date = new Date();
     var d = date.getDate(),
       m = date.getMonth(),
       y = date.getFullYear()
@@ -147,29 +165,7 @@ export class CarApplyComponent implements OnInit {
         list: '列表展示'
       },
       //Random default events
-      events: that.allApplyList,
-      // [
-        // {
-        //   title: '丰田阿尔法',
-        //   start: new Date(y, m, 1, 7, 12),
-        //   backgroundColor: '#f56954', //red
-        //   borderColor: '#f56954' //red
-        // },
-        // {
-        //   title: '吉利熊猫3.0',
-        //   start: new Date(y, m, d + 5),
-        //   allDay: false,
-        //   backgroundColor: '#f39c12', //yellow
-        //   borderColor: '#f39c12' //yellow
-        // },
-        // {
-        //   title: '宝马750Li',
-        //   start: new Date(y, m, d, 10, 30),
-        //   allDay: false,
-        //   backgroundColor: '#0073b7', //Blue
-        //   borderColor: '#0073b7' //Blue
-        // }
-      // ],
+      events: that.allApplyList,//将已有记录显示
       eventLimit: true,
       views: {
         agenda: {
@@ -189,41 +185,36 @@ export class CarApplyComponent implements OnInit {
         var copiedEventObject = $.extend({}, originalEventObject)
 
         // assign it the date that was reported
-        copiedEventObject.start = date
-        copiedEventObject.allDay = true
-        copiedEventObject.backgroundColor = $(this).css('background-color')
-        copiedEventObject.borderColor = $(this).css('border-color')
+        copiedEventObject.start = date;
+        copiedEventObject.allDay = true;
+        copiedEventObject.backgroundColor = $(this).css('background-color');
+        copiedEventObject.borderColor = $(this).css('border-color');
         // 向后端插入数据
-        that.applyInfo.car_id = that.carInfo.c_id;//创建插入数据
+        that.applyInfo.car_id = that.carInfo.id;//创建插入数据
         that.applyInfo.user_id = that.storageService.read<User>('user').id;//创建插入数据
         that.applyInfo.reason = that.applyReason;//创建插入数据
-        that.applyInfo.start_time = date.format();//创建插入数据
+        that.applyInfo.start_time = date;//创建插入数据
 
-        var res : number;
         that.carApplyInfoService.addCarApply(that.applyInfo).then(data => {
-          res = data.judge;
-        });
-        // res = "成功";//将执行结果返回给也页面
-        if (res === 1) {
-          // render the event on the calendar
-          // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
-          $('#calendar').fullCalendar('renderEvent', copiedEventObject, true)
-          $(this).remove()
-
-          // }
-        }
-        $("#res").text(res);
-        $("#ensureModal").modal('show')
+          console.log(data);
+          let res = data.judge;
+          console.log(res);
+          if (res > 0) {
+            $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+            $(this).remove();
+            $("#res").text("插入成功");
+          } else{
+              $("#res").text("插入失败");
+          }
+          $("#ensureModal").modal('show');
+        });        
       },
       //给日期添加点击事件,刷 
       dayClick: function (date, jsEvent, view) {
         that.getCarInfoByDate(date.format());
-        init_events($('#external-events div.external-event'));
+        // init_events($('#external-events div.external-event'));
       }
     })
-
-    // $(".fc-day").hover("")   
-
   }
 
 

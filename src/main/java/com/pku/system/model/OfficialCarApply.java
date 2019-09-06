@@ -105,11 +105,11 @@ public class OfficialCarApply{
         this.oil_used = oil_used;
     }
 
-    public Integer getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 
@@ -140,7 +140,7 @@ public class OfficialCarApply{
     //实际使用油耗
     private Double oil_used;
     //状态  1:通过, 2:不通过
-    private Integer status;
+    private Boolean status;
     //备注
     private String remark;
     //数据创建时间

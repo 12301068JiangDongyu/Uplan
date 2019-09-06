@@ -1,6 +1,8 @@
 package com.pku.system.service.impl;
 
 import com.pku.system.dao.OfficialCarApplyDao;
+import com.pku.system.dto.StatisticDto;
+import com.pku.system.dto.StatisticTimeDto;
 import com.pku.system.model.OfficialCarApply;
 import com.pku.system.service.OfficialCarApplyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +54,19 @@ public class OfficialCarApplyServiceImpl implements OfficialCarApplyService {
     }
 
     @Override
-    public void updateOfficialCarApplyStatusSchedule(int status){
-        officialCarApplyDao.updateOfficialCarApplyStatusSchedule(status);
+    public List<StatisticDto> getAllBrandCount() {
+        return officialCarApplyDao.getAllBrandCount();
     }
+
+    @Override
+    public List<StatisticDto> getAllUserCount() {
+        return officialCarApplyDao.getAllUserCount();
+    }
+
+    @Override
+    public List<Integer> getAllTimeCount(int year) {
+        return officialCarApplyDao.getAllTimeCount(year);
+    }
+
+
 }

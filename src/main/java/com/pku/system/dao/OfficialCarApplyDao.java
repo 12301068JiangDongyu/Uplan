@@ -1,7 +1,10 @@
 package com.pku.system.dao;
 
+import com.pku.system.dto.StatisticDto;
+import com.pku.system.dto.StatisticTimeDto;
 import com.pku.system.model.OfficialCarApply;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -12,6 +15,7 @@ import java.util.List;
  * @since 2019-09-03 15:09:05
  */
 @Mapper
+@Component
 public interface OfficialCarApplyDao {
 
     /**
@@ -46,7 +50,7 @@ public interface OfficialCarApplyDao {
      * @param officialCarApply 实例对象
      * @return 插入数据
      */
-    @Insert("insert into official_car_apply (id,car_id,brand,user_id,destination,start_time,end_time,reason,travel_distance,oil_used,status,remark,create_time,update_time) values (#{id},#{car_id},#{brand},#{user_id},#{destination},#{start_time},#{end_time},#{reason},#{travel_distance},#{oil_used},#{status},#{remark},#{create_time},#{update_time})")
+    @Insert("insert into official_car_apply (id,car_id,brand,user_id,destination,start_time,end_time,reason,travel_distance,oil_used,status,remark,create_time,update_time) values (#{id},#{car_id},#{brand},#{user_id},#{destination},#{start_time},#{end_time},#{reson},#{travel_distance},#{oil_used},#{status},#{remark},#{create_time},#{update_time})")
     void addOfficialCarApply(OfficialCarApply officialCarApply);
 
 
@@ -55,7 +59,7 @@ public interface OfficialCarApplyDao {
      * @param officialCarApply 实例对象
      * @return 更新消息
      */
-    @Update("update official_car_apply set status=#{status} where id = #{id}")
+    @Update("update official_car_apply set car_id=#{car_id},brand=#{brand},user_id=#{user_id},destination=#{destination},start_time=#{start_time},end_time=#{end_time},reason=#{reason},travel_distance=#{travel_distance},oil_used=#{oil_used},status=#{status},remark=#{remark},create_time=#{create_time},update_time=#{update_time} where id = #{id}")
     void updateOfficialCarApply(OfficialCarApply officialCarApply);
 
 
@@ -67,8 +71,28 @@ public interface OfficialCarApplyDao {
     @Delete("delete from official_car_apply where user_id = #{user_id}")
     void deleteOfficialCarApply(int user_id);
 
+    /**
+     * 车型使用情况
+     * @return
+     */
+    @Select("select brand as keyName,count(brand) as keyValue from official_car_apply where status = 1 group by brand order by count(brand) DESC")
+    List<StatisticDto> getAllBrandCount();
 
-    @Update("update official_car_apply set status = #{status} where status = 0")
-    void updateOfficialCarApplyStatusSchedule(int status);
+    /**
+     * 员工预约班车次数统计
+     * @return
+     */
+    @Select("select u.real_name as keyName,count(o.user_id) as keyValue from official_car_apply o INNER JOIN tb_user u on o.user_id = u.id where o.status = 1 group by o.user_id order by count(o.user_id) DESC LIMIT 10")
+    List<StatisticDto> getAllUserCount();
+
+
+    /**
+     * 根据年月统计申请审核通过车的次数
+     * @return
+     */
+    @Select("SELECT COUNT( 1 ) AS keyValue FROM official_car_apply WHERE STATUS = 1 and YEAR(start_time) = #{year} GROUP BY MONTH ( start_time )")
+    List<Integer> getAllTimeCount(int year);
+
+
 
 }

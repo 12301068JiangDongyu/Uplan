@@ -39,14 +39,24 @@ public class CarController {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("msg","调用成功");
         jsonObject.put("code","0000");
-//        JSONArray jsonArray = new JSONArray();
+        JSONArray jsonArray = new JSONArray();
         JSONObject jsonData = new JSONObject();
 
 
         List<Car> carList = carService.getAllCar();
         //String A=carList.toString();
+        for(int i = 0;i < carList.size();i++){
+            if(carTypeService.selectById(carList.get(i).getCar_type_id())==null) {
+                //判断有无此车型
+                jsonData.put("judge", "-4");
+                break;
+            }
+            CarType carType = carTypeService.selectById(carList.get(i).getCar_type_id());
 
-        jsonData.put("carList",carList);
+            carList.get(i).setBrand(carType.getBrand());
+            jsonArray.add(carList.get(i));
+            jsonData.put("carList",jsonArray);
+        }
 
         jsonObject.put("data",jsonData);
         return jsonObject.toString();
@@ -67,8 +77,8 @@ public class CarController {
             jsonData.put("judge", "-1");
 
         Car car = carService.selectById(id);
-        //int a=car.getCar_Type_Id();
-        CarType carType = carTypeService.selectById(car.getCar_Type_Id());
+
+        CarType carType = carTypeService.selectById(car.getCar_type_id());
 
         jsonData.put("carList",car);
         jsonData.put("carTypeList",carType);
@@ -101,7 +111,7 @@ public class CarController {
         car.setCreate_time(time);
         car.setUpdate_time(time);
 
-         if(car.getLicense_Plate_Num().length()==0){
+         if(car.getLicense_plate_num().length()==0){
             //判断车牌号为空
             jsonData.put("judge","-1");
         }else if( car.getType() !=1 && car.getType()!= 2){
@@ -163,7 +173,7 @@ public class CarController {
         JSONObject jsonData = new JSONObject();
 
 
-        String license_Plate_Num = car.getLicense_Plate_Num();
+        String license_Plate_Num = car.getLicense_plate_num();
         int type = car.getType();
         int status = car.getStatus();
 
@@ -205,24 +215,6 @@ public class CarController {
             }
         }
         jsonObject.put("data",jsonData);
-        return jsonObject.toString();
-    }
-
-    // zzqq 空闲车辆查询
-    @ApiOperation(value = "空闲车辆车辆", notes= "空闲车辆车辆", produces = "application/json")
-    @RequestMapping(value = "/carListOn",method = RequestMethod.GET)
-    public String carListOn() {
-
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("msg","调用成功");
-        jsonObject.put("code","0000");
-
-        try {
-            jsonObject.put("data",carService.selectCarByStatus(1));
-        }catch (Exception e) {
-            jsonObject.put("msg","调用失败");
-            jsonObject.put("code","1000");
-        }
         return jsonObject.toString();
     }
 }

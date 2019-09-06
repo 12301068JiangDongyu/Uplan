@@ -42,11 +42,4 @@ public interface CarService {
      * @param id
      */
     public void deleteCar(int id);
-
-
-    /**
-     * 空闲车辆查询
-     * @param status
-     */
-    public List<Car> selectCarByStatus(int status);
 }
