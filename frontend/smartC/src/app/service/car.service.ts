@@ -4,6 +4,8 @@ import { Constant } from '../common/constant';
 import { Injectable } from '@angular/core';
 import { Headers, Http, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
+import { CarInfo } from 'app/entity/carinfo.entity';
+import { CarApplyInfo } from 'app/entity/carApplyInfo.entity';
 
 @Injectable()
 
@@ -54,9 +56,8 @@ export class CarApplyInfoService {
 
     //请求某一天的汽车数据:
     getCarListByDate(date): Promise<any> {
-        console.log(date);
         return this.http
-            .get(this.constant.URL + "car/carListOn"+date, this.options)
+            .get(this.constant.URL + "car/carListOn", this.options)
             .toPromise()
             .then(response => response.json().data)
             .catch(this.handleError)
@@ -72,13 +73,21 @@ export class CarApplyInfoService {
     }
 
     // 增加申请
-    addCarApply(): Promise<any> {
+    addCarApply(car_id:number, user_id:number, reason:string, startTime:Date): Promise<any> {
+        let data = {
+        	"car_id" : car_id,
+        	"user_id" : user_id,
+            "reason" : reason,
+            "start_time" : startTime
+        };
+        console.log(data);
         return this.http
-            .post(this.carApplyUrl + "carAppply/carList", this.options)
+            .post(this.carApplyUrl + "officialCarApply/carApply", data, this.options)
             .toPromise()
-            .then(response => response.json().res)
+            .then(response => response.json().data)
             .catch(this.handleError)
     }
+
 
     // 通过状态查询公车申请列表
     findCarApplyListByStatus(status: string): Promise<any> {
@@ -104,6 +113,9 @@ export class CarApplyInfoService {
         }
         if(status == "不通过"){
             s = 2;
+        }
+        if(status == "撤回"){
+            s = 3;
         }
 
         let data = {

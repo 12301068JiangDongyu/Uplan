@@ -44,8 +44,8 @@ export class UserApplyListComponent implements OnInit {
 	/**
   	 * [ 初始点击对应的数据id]
   	 */
-	deleteApply(): void {
-		this.carApplyInfoService.deleteApplyInfoById(this.applyId).then(data => {
+	dropApply(): void {
+		this.carApplyInfoService.checkApplyByApplyId(this.applyId, "撤回").then(data => {
 			this.judgeDelete = false;
 			if (data.judge == 0) {
 				this.tip = this.judgeMsg[9];
@@ -68,7 +68,7 @@ export class UserApplyListComponent implements OnInit {
 	getCarApplyInfosByUserId(): void {
 		this.carApplyInfoService.getApplyInfoByUserId(3).then(data => {
 			console.log(data);
-			this.carApplyInfos = data.carApplyInfoList;
+			this.carApplyInfos = data;
 		})
 	}
 

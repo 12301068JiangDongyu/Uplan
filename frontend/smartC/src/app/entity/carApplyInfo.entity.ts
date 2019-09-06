@@ -11,6 +11,7 @@ export class CarApplyInfo {
     end_time: Date;
     reason:string;
     travel_distance:number;
+    creat_time:Date;
     update_time: Data;
     oil_used: number;
     remark:string;

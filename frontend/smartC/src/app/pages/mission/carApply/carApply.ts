@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { CarInfo } from '../../../entity/carinfo.entity'
+import { CarApplyInfo } from '../../../entity/carApplyInfo.entity'
 import { CarApplyInfoService } from 'app/service/car.service';
 declare var $: any;
 
@@ -15,8 +16,11 @@ export class CarApplyComponent implements OnInit {
 
   cars: CarInfo[];
   carInfo: CarInfo = {c_id: 0, c_brand: "", c_plateNum: "", status: ""};
+  applyInfo: CarApplyInfo = {id:0,car_id:0,brand:"",user_id:0,user_name:"",distination:"",
+                              start_time:new Date(),end_time: new Date(),reason:"",travel_distance:0,
+                              creat_time: new Date(),update_time: new Date(),oil_used:0,remark:"",status:0};
   strHtml: string;
-  applyReason: string;
+  applyReason: string = "";
   res: string;
 
   constructor(private carApplyInfoService: CarApplyInfoService) {
@@ -24,12 +28,12 @@ export class CarApplyComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCarInfo(new Date());
+    this.getCarInfoByDate(new Date());
     // this.getCarInfoByCarId(1);
     this.initCalendar();
   }
 
-  getCarInfo(date): void {
+  getCarInfoByDate(data): void {
     let that = this
     that.cars = [{ c_id: 1, c_brand: "doge", c_plateNum: "d123323", status: "可用" },
     { c_id: 2, c_brand: "保时捷-怕那美拉", c_plateNum: "d123323", status: "可用" },
@@ -37,8 +41,8 @@ export class CarApplyComponent implements OnInit {
     { c_id: 3, c_brand: "宝马750Li", c_plateNum: "d123323", status: "可用" },
     { c_id: 4, c_brand: "丰田阿尔法", c_plateNum: "d123323", status: "可用" }];
 
-    this.carApplyInfoService.getCarListByDate(date).then(cars => {
-      that.cars = cars;
+    that.carApplyInfoService.getCarListByDate(data).then(date => {
+      that.cars = date;
     });
 
     let strHtml = "";
@@ -51,17 +55,16 @@ export class CarApplyComponent implements OnInit {
     });
 
     $("#external-events").html(strHtml);
-
   }
 
+  // 申请理由内容绑定
   onEnter(value: string): void {
      this.applyReason = value; 
   }
 
+  // 通过id获取汽车的具体信息
   getCarInfoByCarId(carId){
-    console.log(carId);
     let that = this;
-   
     that.carApplyInfoService.getCarInfoByCarId(carId).then(data => {
       that.carInfo.c_id = data.carList.id;
       that.carInfo.c_brand = data.carTypeList.brand;
@@ -74,9 +77,7 @@ export class CarApplyComponent implements OnInit {
 
 
   initCalendar(): void {
-    var getCarInfo = this.getCarInfo
-    var res = this.res
-    var cars = this.cars
+    var that = this
 
     /* initialize the external events
      -----------------------------------------------------------------*/
@@ -167,14 +168,18 @@ export class CarApplyComponent implements OnInit {
         copiedEventObject.allDay = true
         copiedEventObject.backgroundColor = $(this).css('background-color')
         copiedEventObject.borderColor = $(this).css('border-color')
-        // 像后端插入数据
-        var res
-        this.carApplyInfoService.addCarApply(date).then(data => {
+        // 向后端插入数据
+        that.applyInfo.car_id = that.carInfo.c_id;//创建插入数据
+        that.applyInfo.user_id = 1;//创建插入数据
+        that.applyInfo.reason = that.applyReason;//创建插入数据
+        that.applyInfo.start_time = date.format();//创建插入数据
+
+        var res : number;
+        that.carApplyInfoService.addCarApply(that.carInfo.c_id, 1, that.applyReason, date.format()).then(data => {
           res = data.judge;
         });
-        // res = "成功";
-
-        if (res === "成功") {
+        // res = "成功";//将执行结果返回给也页面
+        if (res === 1) {
           // render the event on the calendar
           // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
           $('#calendar').fullCalendar('renderEvent', copiedEventObject, true)
@@ -182,13 +187,12 @@ export class CarApplyComponent implements OnInit {
 
           // }
         }
-
         $("#res").text(res);
         $("#ensureModal").modal('show')
       },
       //给日期添加点击事件,刷 
       dayClick: function (date, jsEvent, view) {
-        getCarInfo(date.format());
+        that.getCarInfoByDate(date.format());
         init_events($('#external-events div.external-event'));
       }
     })

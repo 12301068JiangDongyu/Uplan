@@ -48,7 +48,7 @@ public class OfficialCarApplyController {
     @ApiOperation(value = "用车申请", notes= "用车申请", produces = "application/json")
     @RequestMapping(value = "/carApply",method = RequestMethod.POST)
     @ResponseBody
-    public String carApply(OfficialCarApply officialCarApply) {
+    public String carApply(@RequestBody OfficialCarApply officialCarApply) {
 
         JSONObject jsonReturn = new JSONObject();
         JSONObject jsonObject = new JSONObject();
