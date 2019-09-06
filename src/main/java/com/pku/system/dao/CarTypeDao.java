@@ -13,7 +13,7 @@ public interface CarTypeDao {
     @Select("select * from car_type where id = #{id}")
     public CarType selectById(int id);
 
-    @Select("select * from car_type where buildingNum = #{buildingNum}")
+    @Select("select * from car_type where brand = #{brand}")
     public CarType selectByBrand(String brand);
 
     @Select("select id,brand,capacity,price,buy_time,seat_num,oil_type from car_type")

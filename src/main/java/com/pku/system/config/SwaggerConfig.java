@@ -31,7 +31,7 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         ApiInfo apiInfo = new ApiInfoBuilder()
-                .title("智慧教室")
+                .title("公务用车管理系统")
                 .description("Restful API文档")
                 .version("1.0")
                 .build();
