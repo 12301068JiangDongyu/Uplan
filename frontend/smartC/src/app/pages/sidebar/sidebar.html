@@ -60,6 +60,9 @@
             <a routerLink="/carApply"><i class="fa fa-circle-o"></i> 派车申请</a>
           </li>
           <li routerLinkActive="active" class="car-check" [ngClass]="{ 'div-display': judgeOptions.carManage }">
+            <a routerLink="/carApplyList"><i class="fa fa-circle-o"></i> 我的申请</a>
+          </li>
+          <li routerLinkActive="active" class="car-check" [ngClass]="{ 'div-display': judgeOptions.carManage }">
             <a routerLink="/carCheck"><i class="fa fa-circle-o"></i> 派车审核</a>
           </li>
         </ul>

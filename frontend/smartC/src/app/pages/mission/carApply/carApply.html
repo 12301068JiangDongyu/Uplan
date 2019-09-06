@@ -1,90 +1,94 @@
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        公车使用配置
-        <small>公车使用信息</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-gears"></i> 公车管理模块</a></li>
-        <li>使用信息</li>
-      </ol>
-    </section>
-  
-    <!-- calender-content -->
-    <section class="content">
-      <div class="row">
-        <div class="col-md-3">
-          <div class="box box-solid">
-            <div class="box-header with-border">
-              <h4 class="box-title">车辆信息</h4>
-            </div>
-            <div class="box-body">
-              <!-- the events -->
-              <div id="external-events">
-                <div class="external-event bg-green">别克商务</div>
-                <div class="external-event bg-green">帕纳美拉</div>
-                <div class="checkbox">
-                  <label for="drop-remove">
-                    <input type="checkbox" id="drop-remove">
-                    remove after drop
-                  </label>
-                </div>
-              </div>
-            </div>
-            <!-- /.box-body -->
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      派车申请
+      <small>用户申请公车</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-gears"></i> 派车任务</a></li>
+      <li>派车申请</li>
+    </ol>
+  </section>
+
+  <!-- calender-content -->
+  <section class="content">
+    <div class="row">
+      <!-- 左侧列表 -->
+      <div class="col-md-3">
+        <!-- 申请理由start -->
+        <div class="box box-solid">
+          <div class="box-header with-border">
+            <h4 class="box-title">申请理由</h4>
           </div>
-          <!-- /. box -->
-          <div class="box box-solid">
-            <div class="box-header with-border">
-              <h3 class="box-title">创建公车信息</h3>
-            </div>
-            <div class="box-body">
-              <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
-                <!--<button type="button" id="color-chooser-btn" class="btn btn-info btn-block dropdown-toggle" data-toggle="dropdown">Color <span class="caret"></span></button>-->
-                <ul class="fc-color-picker" id="color-chooser">
-                  <li><a class="text-aqua" href="#"><i class="fa fa-square"></i></a></li>
-                  <li><a class="text-blue" href="#"><i class="fa fa-square"></i></a></li>
-                  <li><a class="text-light-blue" href="#"><i class="fa fa-square"></i></a></li>
-                  <li><a class="text-teal" href="#"><i class="fa fa-square"></i></a></li>
-                  <li><a class="text-yellow" href="#"><i class="fa fa-square"></i></a></li>
-                  <li><a class="text-orange" href="#"><i class="fa fa-square"></i></a></li>
-                  <li><a class="text-green" href="#"><i class="fa fa-square"></i></a></li>
-                  <li><a class="text-lime" href="#"><i class="fa fa-square"></i></a></li>
-                  <li><a class="text-red" href="#"><i class="fa fa-square"></i></a></li>
-                  <li><a class="text-purple" href="#"><i class="fa fa-square"></i></a></li>
-                  <li><a class="text-fuchsia" href="#"><i class="fa fa-square"></i></a></li>
-                  <li><a class="text-muted" href="#"><i class="fa fa-square"></i></a></li>
-                  <li><a class="text-navy" href="#"><i class="fa fa-square"></i></a></li>
-                </ul>
-              </div>
-              <!-- /btn-group -->
-              <div class="input-group">
-                <input id="new-event" type="text" class="form-control" placeholder="Event Title">
-  
-                <div class="input-group-btn">
-                  <button id="add-new-event" type="button" class="btn btn-primary btn-flat">Add</button>
-                </div>
-                <!-- /btn-group -->
-              </div>
-              <!-- /input-group -->
-            </div>
+          <div class="box-body">
+              <input type="text" #reason (keyup)="onEnter(reason.value)" class="form-control" placeholder="申请理由...">
           </div>
         </div>
-        <!-- /.col -->
-        <div class="col-md-9">
-          <div class="box box-primary">
-            <div class="box-body no-padding">
-              <!-- THE CALENDAR -->
-              <div id="calendar"></div>
-            </div>
-            <!-- /.box-body -->
+        <!-- 申请理由end -->
+        <!-- 车辆列表start -->
+        <div class="box box-solid">
+          <div class="box-header with-border">
+            <h4 class="box-title">车辆列表</h4>
           </div>
-          <!-- /. box -->
+          <div class="box-body">
+            <!-- the events -->
+            <div id="external-events">
+
+            </div>
+          </div>
+          <!-- /.box-body -->
         </div>
-        <!-- /.col -->
+        <!-- 车辆详细信息 -->
+        <div class="box box-solid">
+          <div class="box-header with-border">
+            <h3 class="box-title">车辆信息</h3>
+          </div>
+          <div class="box-body">
+            <div class="btn-group" id="car-info" style="width: 100%; margin-bottom: 10px;">
+              
+            </div>
+            <!-- /input-group -->
+          </div>
+        </div>
       </div>
-      <!-- /.row -->
-    </section>
-  
-  </div>
+      <!-- 日历框 -->
+      <div class="col-md-9">
+        <div class="box box-primary">
+          <div class="box-body no-padding">
+            <!-- THE CALENDAR -->
+            <div id="calendar"></div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /. box -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </section>
+
+</div>
+
+<!--模态框确认信息-->
+<div class="modal fade bs-example-modal-sm" id="ensureModal" tabindex="-1" role="dialog"
+  aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">操作结果</h4>
+      </div>
+      <div class="modal-body">
+        <p id="res">{{res}}</p>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script src="./carApply.js"></script>

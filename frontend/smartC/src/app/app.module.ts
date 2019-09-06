@@ -40,6 +40,7 @@ import { RoleService } from './service/role.service';
 import { BuildClassService } from './service/buildClass.service';
 import { ToastService } from './service/toast.service';
 import { CarTypeService } from './service/cartype.service';
+import { CarApplyInfoService } from './service/car.service';
 
 import {ActivateGuard} from './guard/auth.guard';
 import {DeactivateGuard} from './guard/deactivate.guard';
@@ -49,6 +50,7 @@ import { CarTypeManageComponent } from './pages/info/car-type-manage/car-type-ma
 import { CarManageComponent } from './pages/info/car-manage/car-manage.component';
 import { CarRecordComponent } from './pages/info/car-record/car-record.component';
 import { CarApplyComponent } from './pages/mission/carApply/carApply';
+import { UserApplyListComponent  } from './pages/mission/user-apply-list/user-apply-list.component';
 import { CarCheckComponent } from './pages/mission/car-check/car-check.component';
 import { StatisticsComponent } from './pages/statistics/statistics/statistics.component'
 
@@ -77,7 +79,8 @@ import * as $ from 'jquery';
     CarRecordComponent,
     CarApplyComponent,
     CarCheckComponent,
-    StatisticsComponent
+    StatisticsComponent,
+    UserApplyListComponent
   ],
   imports: [
     BrowserModule,
@@ -105,7 +108,8 @@ import * as $ from 'jquery';
     ToastService,
     ActivateGuard,
     DeactivateGuard,
-    CarTypeService
+    CarTypeService,
+    CarApplyInfoService
   ],
   bootstrap: [AppComponent]
 })
