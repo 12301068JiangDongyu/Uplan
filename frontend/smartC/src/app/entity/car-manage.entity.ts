@@ -4,4 +4,8 @@ export class Car{
     brand : string;
     type : number;
     status : number;
+    car_type_id: number;
+    mileage:number;
+    oil_remained:number;
+    run_time : any;
 }

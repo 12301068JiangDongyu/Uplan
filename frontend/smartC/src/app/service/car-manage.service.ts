@@ -1,8 +1,8 @@
 /**
- * 设备car-manage类
+ * car-manage类
  */
 import { Car } from '../entity/car-manage.entity'
-
+import { Cartype } from '../entity/cartype.entity';
 
 import { Constant } from '../common/constant';
 
@@ -35,13 +35,14 @@ export class CarService {
         .catch(this.handleError)
     }
 
+
     /**
      * [addType 添加设备类型]
      * @param  {[type]}       entity [设备类型实体]
      * @param  {[type]}       type   [设备类型]
      * @return {Promise<any>}        [description]
      */
-    addType(entity,type): Promise<any>{
+    addType(entity): Promise<any>{
       return this.http
         .post(this.carInfoUrl+'carAdd',entity,this.options)
         .toPromise()
@@ -55,7 +56,7 @@ export class CarService {
      * @param  {[type]}       type   [设备类型]
      * @return {Promise<any>}        [description]
      */
-    editType(id,entity,): Promise<any>{
+    editType(id,entity): Promise<any>{
       return this.http
         .put(this.carInfoUrl+'carUpdate/'+id,entity,this.options)
         .toPromise()
@@ -80,10 +81,6 @@ export class CarService {
 
     
    
-
-  
- 
-
  
     /**
      * [commonOperatFunc 公共方法]
