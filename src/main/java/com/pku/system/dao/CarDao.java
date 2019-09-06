@@ -22,7 +22,7 @@ public interface CarDao {
     @Insert("insert into car (id,car_type_id,license_plate_num,run_time,mileage,oil_used,oil_remained,type,status,creator,create_time,update_time) values (#{id},#{car_type_id},#{license_plate_num},#{run_time},#{mileage},#{oil_used},#{oil_remained},#{type},#{status},#{creator},#{create_time},#{update_time})")
     public void addCar(Car car);
 
-    @Update("update car set car_type_id=#{car_type_id},license_plate_num=#{license_plate_num},run_time=#{run_time},mileage=#{mileage},oil_used=#{oil_used},oil_remained=#{oil_remained},type=#{type},status=#{status},creator=#{creator},create_time=#{create_time},update_time=#{update_time} where id=#{id}")
+    @Update("update car set car_type_id=#{car_type_id},license_plate_num=#{license_plate_num},run_time=#{run_time},mileage=#{mileage},oil_used=#{oil_used},oil_remained=#{oil_remained},type=#{type},status=#{status},creator=#{creator},update_time=#{update_time} where id=#{id}")
     void updateCar(Car car);
 
     @Delete("delete from car where id=#{id}")
