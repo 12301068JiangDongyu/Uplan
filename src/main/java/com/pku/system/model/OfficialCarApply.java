@@ -3,9 +3,6 @@ package com.pku.system.model;
 import java.sql.Timestamp;
 import java.util.Date;
 
-/**
- * (OfficialCarApply)实体类
- */
 public class OfficialCarApply {
     //id
     private Integer id;
@@ -18,9 +15,9 @@ public class OfficialCarApply {
     //目的地
     private String destination;
     //计划开始用车时间
-    private Timestamp start_time;
+    private Date start_time;
     //实际归还公车时间
-    private Timestamp end_time;
+    private Date end_time;
     //申请原因
     private String reason;
     //实际行驶里程数
@@ -32,9 +29,15 @@ public class OfficialCarApply {
     //备注
     private String remark;
     //数据创建时间
-    private Timestamp create_time;
+    private Date create_time;
     //数据更新时间
     private Date update_time;
+
+    private String startTime;
+    private String endTime;
+    private String createTime;
+    private String updateTime;
+    private String userName;
 
     public Integer getId() {
         return id;
@@ -76,19 +79,19 @@ public class OfficialCarApply {
         this.destination = destination;
     }
 
-    public Timestamp getStart_time() {
+    public Date getStart_time() {
         return start_time;
     }
 
-    public void setStart_time(Timestamp start_time) {
+    public void setStart_time(Date start_time) {
         this.start_time = start_time;
     }
 
-    public Timestamp getEnd_time() {
+    public Date getEnd_time() {
         return end_time;
     }
 
-    public void setEnd_time(Timestamp end_time) {
+    public void setEnd_time(Date end_time) {
         this.end_time = end_time;
     }
 
@@ -132,11 +135,11 @@ public class OfficialCarApply {
         this.remark = remark;
     }
 
-    public Timestamp getCreate_time() {
+    public Date getCreate_time() {
         return create_time;
     }
 
-    public void setCreate_time(Timestamp create_time) {
+    public void setCreate_time(Date create_time) {
         this.create_time = create_time;
     }
 
@@ -146,5 +149,45 @@ public class OfficialCarApply {
 
     public void setUpdate_time(Date update_time) {
         this.update_time = update_time;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }
