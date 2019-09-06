@@ -1,5 +1,6 @@
 package com.pku.system.dao;
 
+import com.pku.system.dto.StatisticDto;
 import com.pku.system.dto.StatisticTimeDto;
 import com.pku.system.model.DailyOperation;
 import org.apache.ibatis.annotations.*;
@@ -35,5 +36,12 @@ public interface DailyOperationDao {
 
 @Select("select distinct car_id from daily_operation")
     List<Integer> getALLDistinctCarId();
+
+    /**
+     * 员工预约班车次数统计
+     * @return
+     */
+    @Select("select u.real_name as keyName,count(d.creator) as keyValue from daily_operation d INNER JOIN tb_user u on d.creator = u.id WHERE type = 3 group by d.creator order by count(d.creator) DESC LIMIT 10")
+    List<StatisticDto> getAllRuleUserCount();
 
 }

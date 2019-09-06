@@ -1,5 +1,6 @@
 package com.pku.system.service;
 
+import com.pku.system.dto.StatisticDto;
 import com.pku.system.dto.StatisticTimeDto;
 import com.pku.system.model.DailyOperation;
 
@@ -59,4 +60,10 @@ public interface DailyOperationService {
      * @return
      */
     List<String> getAllCard();
+
+    /**
+     * 获得违章的用户次数
+     * @return
+     */
+    List<StatisticDto> getAllRuleUserCount();
 }

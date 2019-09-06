@@ -82,7 +82,7 @@ public interface OfficialCarApplyDao {
      * 员工预约班车次数统计
      * @return
      */
-    @Select("select u.real_name as keyName,count(o.user_id) as keyValue from official_car_apply o INNER JOIN tb_user u on o.user_id = u.id where o.status = 1 group by o.user_id order by count(o.user_id) DESC")
+    @Select("select u.real_name as keyName,count(o.user_id) as keyValue from official_car_apply o INNER JOIN tb_user u on o.user_id = u.id where o.status = 1 group by o.user_id order by count(o.user_id) DESC LIMIT 10")
     List<StatisticDto> getAllUserCount();
 
 
