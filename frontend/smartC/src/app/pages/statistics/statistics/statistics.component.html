@@ -20,28 +20,51 @@
         <!-- USAGE CHART -->
         <div class="box box-primary">
           <div class="box-header with-border">
-            <h3 class="box-title">使用率</h3>
+            <h3 class="box-title">车型使用率</h3>
           </div>
           <div class="box-body">
-            <div echarts [options]="barOptions" class="chart"></div>
+            <div echarts [options]="carTypeUsagePieOption" class="chart"></div>
           </div>
           <!-- /.box-body -->
         </div>
         <!-- /.box -->
       </div>
       <div class="col-md-6">
-          <!-- USAGE CHART -->
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">使用率</h3>
-            </div>
-            <div class="box-body">
-              <div echarts [options]="barOptions" class="chart"></div>
-            </div>
-            <!-- /.box-body -->
+        <div class="box box-primary">
+          <div class="box-header with-border">
+            <h3 class="box-title">预约人排行榜</h3>
           </div>
-          <!-- /.box -->
+          <div class="box-body">
+            <div echarts [options]="userCountBarOption" class="chart"></div>
+          </div>
+          <!-- /.box-body -->
         </div>
+        <!-- /.box -->
+      </div>
+      <div class="col-md-12">
+        <div class="box box-primary">
+          <div class="box-header with-border">
+            <h3 class="box-title">每月预约车量</h3>
+          </div>
+          <div class="box-body">
+            <div echarts [options]="monUsageBarOption" class="chart"></div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
+      <div class="col-md-12">
+        <div class="box box-primary">
+          <div class="box-header with-border">
+            <h3 class="box-title">车辆记录散点图</h3>
+          </div>
+          <div class="box-body">
+            <div echarts [options]="operateScatter" class="chart"></div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
     </div>
   </section>
   <!-- /.content -->
