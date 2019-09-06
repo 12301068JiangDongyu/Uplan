@@ -11,6 +11,7 @@ declare var $: any;
 export class StatisticsComponent implements OnInit {
   carTypeCount: Statistics[];
   userCount: Statistics[];
+  userRuleCount: Statistics[];
   timeCount2018: any;
   timeCount2019: any;
   oilList: any;
@@ -29,6 +30,7 @@ export class StatisticsComponent implements OnInit {
     this.statisticsService.getStatistics().then(data => {
       this.carTypeCount = data.carTypeCount;
       this.userCount = data.userCount;
+      this.userRuleCount = data.userRuleCount;
       this.timeCount2018 = data.timeCount2018;
       this.timeCount2019 = data.timeCount2019;
       this.oilList = data.oilList;
@@ -104,12 +106,17 @@ export class StatisticsComponent implements OnInit {
   }
 
   formatUserCountBarChart(): any {
-    return this.userCount.map(x => [x.keyValue, x.keyName]);
+    let userCount = this.userCount.map(x => [x.keyName, x.keyValue]);
+    let userRuleCount = this.userRuleCount.map(x => [x.keyName, x.keyValue]);
+
+    return {
+      userCount,
+      userRuleCount,
+    };
   }
 
   initUserCountBarChart(): void {
     let data = this.formatUserCountBarChart();
-    data.unshift(['amount', 'name']);
     this.userCountBarOption = {
       toolbox: {
         show: true,
@@ -120,33 +127,25 @@ export class StatisticsComponent implements OnInit {
           saveAsImage: { show: true },
         },
       },
-      dataset: {
-        source: data,
-      },
-      grid: { containLabel: true },
-      xAxis: { name: '次数' },
-      yAxis: { type: 'category' },
-      visualMap: {
-        orient: 'horizontal',
+      legend: {
+        data: ['预约', '违章'],
+        align: 'left',
         left: 10,
-        top: 10,
-        min: 1,
-        max: 100,
-        text: ['高', '低'],
-        dimension: 0,
-        inRange: {
-          color: ['#D7DA8B', '#E15457'],
-        },
       },
+      tooltip: {},
+      grid: { containLabel: true },
+      yAxis: { type: 'value', name: '次数' },
+      xAxis: { type: 'category' },
       series: [
         {
           type: 'bar',
-          encode: {
-            // Map the "amount" column to X axis.
-            x: 'amount',
-            // Map the "product" column to Y axis
-            y: 'name',
-          },
+          name: '预约',
+          data: data.userCount,
+        },
+        {
+          type: 'bar',
+          name: '违章',
+          data: data.userRuleCount,
         },
       ],
     };
@@ -211,38 +210,27 @@ export class StatisticsComponent implements OnInit {
 
   formatOperateScatter(): any {
     let oilList = this.cardNames.map(x => {
-      console.log(x);
-      let data =  this.oilList.find(ele=>ele.card == x);
-      console.log(data);
-
-      return data? [data.card, data.count, data.cost, Number(data.time)] : [x, 0, 0, 0];
+      let data = this.oilList.find(ele => ele.card == x);
+      return data ? [data.card, data.count, data.cost, Number(data.time)] : [x, 0, 0, 0];
     });
-    console.log(oilList);
     let repairList = this.cardNames.map(x => {
-      let data =  this.repairList.find(ele=>ele.card == x);
-      return data? [data.card, data.count, data.cost, Number(data.time)] : [x, 0, 0, 0];
+      let data = this.repairList.find(ele => ele.card == x);
+      return data ? [data.card, data.count, data.cost, Number(data.time)] : [x, 0, 0, 0];
     });
     let ruleList = this.cardNames.map(x => {
-      let data =  this.ruleList.find(ele=>ele.card == x);
-      return data? [data.card, data.count, data.cost, Number(data.time)] : [x, 0, 0, 0];
+      let data = this.ruleList.find(ele => ele.card == x);
+      return data ? [data.card, data.count, data.cost, Number(data.time)] : [x, 0, 0, 0];
     });
-    // let repairList = this.repairList.map(x=>[x.card, x.count, x.cost, Number(x.time)]);
-    // let ruleList = this.ruleList.map(x=>[x.card, x.count, x.cost, Number(x.time)]);
     return {
       oilList,
       repairList,
-      ruleList
-    }
+      ruleList,
+    };
   }
 
   initOperateScatter(): void {
     let data = this.formatOperateScatter();
-    var schema = [
-      { name: 'license', index: 0, text: '车牌号' },
-      { name: 'count', index: 1, text: '总次数' },
-      { name: 'cost', index: 2, text: '总花销' },
-      { name: 'time', index: 3, text: '投入使用时间' },
-    ];
+    var schema = [{ name: 'license', index: 0, text: '车牌号' }, { name: 'count', index: 1, text: '总次数' }, { name: 'cost', index: 2, text: '总花销' }, { name: 'time', index: 3, text: '投入使用时间' }];
 
     var itemStyle = {
       normal: {
@@ -285,15 +273,30 @@ export class StatisticsComponent implements OnInit {
         backgroundColor: '#222',
         borderColor: '#777',
         borderWidth: 1,
-        formatter: function (obj) {
-            var value = obj.value;
-            return '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">'
-                + obj.seriesName + '记录：' + value[0]
-                + '</div>'
-                + schema[1].text + '：' + value[1] + '<br>'
-                + schema[2].text + '：' + value[2] + '元<br>'
-                + schema[3].text + '：' + String(value[3]).slice(0,4) + '年' + String(value[3]).slice(4) + '月<br>';
-        }
+        formatter: function(obj) {
+          var value = obj.value;
+          return (
+            '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">' +
+            obj.seriesName +
+            '记录：' +
+            value[0] +
+            '</div>' +
+            schema[1].text +
+            '：' +
+            value[1] +
+            '<br>' +
+            schema[2].text +
+            '：' +
+            value[2] +
+            '元<br>' +
+            schema[3].text +
+            '：' +
+            String(value[3]).slice(0, 4) +
+            '年' +
+            String(value[3]).slice(4) +
+            '月<br>'
+          );
+        },
       },
       xAxis: {
         type: 'category',
