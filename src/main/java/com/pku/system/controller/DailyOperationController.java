@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.Timestamp;
 import java.util.List;
 
-@Api (value="日常运维",tags = {"日常运维API"},description = "描述信息")
+@Api (value="车辆记录",tags = {"车辆记录API"},description = "描述信息")
 @RestController
 @RequestMapping (value = "/dailyOperation")
 public class DailyOperationController {
@@ -27,7 +27,7 @@ public class DailyOperationController {
    @Autowired
    CarService carService;
 
-   @ApiOperation(value = "获得日常运维列表", notes = "获得日常运维列表notes", produces = "application/json")
+   @ApiOperation(value = "获得车辆记录列表", notes = "获得车辆记录列表notes", produces = "application/json")
    @RequestMapping(value = "/", method = RequestMethod.GET)
    public String getAllDailyOperation() {
       JSONObject jsonObject = new JSONObject();
@@ -35,11 +35,11 @@ public class DailyOperationController {
       jsonObject.put("code", "0000");
       JSONObject jsonData = new JSONObject();
 
-      List<DailyOperation> repaireList = dailyOperationService.dealDailyOperation(dailyOperationService.getAllDailyOperation(1));
+      List<DailyOperation> repairList = dailyOperationService.dealDailyOperation(dailyOperationService.getAllDailyOperation(1));
       List<DailyOperation> oilList = dailyOperationService.dealDailyOperation(dailyOperationService.getAllDailyOperation(2));
       List<DailyOperation> ruleList = dailyOperationService.dealDailyOperation(dailyOperationService.getAllDailyOperation(3));
 
-      jsonData.put("repaireList", repaireList);
+      jsonData.put("repairList", repairList);
       jsonData.put("oilList", oilList);
       jsonData.put("ruleList", ruleList);
 
@@ -48,7 +48,7 @@ public class DailyOperationController {
 
    }
 
-   @ApiOperation(value = "添加日常运维信息", notes = "添加日常运维信息notes", produces = "application/json")
+   @ApiOperation(value = "添加车辆记录信息", notes = "添加车辆记录信息notes", produces = "application/json")
    @RequestMapping(value = "/dailyOperationAdd", method = RequestMethod.POST)
    @ResponseBody
    public String AddDailyOperation(@RequestBody DailyOperation dailyOperation) {
@@ -61,13 +61,9 @@ public class DailyOperationController {
       dailyOperation.setCreate_time(new Timestamp(System.currentTimeMillis()));
 
 
-      if (dailyOperation.getRemark().length() == 0) {
-         //判断备注信息是否为空
+      if (dailyOperation.getType() != 1 && dailyOperation.getType() != 2 && dailyOperation.getType() != 3 ){
+         //判断type是否合法
          jsonData.put("judge", "-1");
-
-      } else if (dailyOperation.getType() != 1 && dailyOperation.getType() != 2 && dailyOperation.getType() != 3 ) {
-         //判断日常运维类型是否合法
-         jsonData.put("judge", "-3");
       } else {
          try {
             dailyOperationService.addDailyOperation(dailyOperation);
@@ -84,7 +80,7 @@ public class DailyOperationController {
 
    }
 
-   @ApiOperation(value = "根据id删除日常运维信息", notes = "根据id删除日常运维信息notes", produces = "application/json")
+   @ApiOperation(value = "根据id删除车辆记录信息", notes = "根据id删除车辆记录信息notes", produces = "application/json")
    @RequestMapping(value = "/{dailyOperationId}", method = RequestMethod.DELETE)
    public String deleteDailyOperation(@PathVariable("dailyOperationId") int id) {
       // 处理"/users/{id}"的DELETE请求，用来删除User
@@ -113,7 +109,7 @@ public class DailyOperationController {
 
    }
 
-   @ApiOperation(value = "根据id修改运维信息", notes = "根据id修改运维信息notes", produces = "application/json")
+   @ApiOperation(value = "根据id修改车辆记录信息", notes = "根据id修改车辆记录信息notes", produces = "application/json")
    @RequestMapping(value = "/dailyOperationUpdate/{id}", method = RequestMethod.PUT)
    @ResponseBody
    public String putDailyOperation(@PathVariable("id") int id,
@@ -123,14 +119,12 @@ public class DailyOperationController {
       jsonObject.put("code", "0000");
       JSONObject jsonData = new JSONObject();
 
-      if (dailyOperation.getRemark().length() == 0) {
-         //判断备注信息为空
+      if (dailyOperation.getType() != 1 && dailyOperation.getType() != 2 && dailyOperation.getType() != 3) {
+         //判断type不合法
          jsonData.put("judge", "-1");
-      } else if (dailyOperation.getType() != 1 && dailyOperation.getType() != 2 && dailyOperation.getType() != 3) {
-         jsonData.put("judge", "-3");
       } else if(dailyOperationService.selectById(id) == null) {
          //判断运维信息为空
-         jsonData.put("judge", "-9");
+         jsonData.put("judge", "-2");
       }else{
          try {
             dailyOperationService.updateDailyOperation(dailyOperation);

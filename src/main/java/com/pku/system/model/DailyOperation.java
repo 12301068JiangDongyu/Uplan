@@ -7,8 +7,8 @@ public class DailyOperation{
 
     private int id;
     private int car_id;   //汽车id
-    private String name;  //名字
-    private String lisence_num;//牌照
+    private String real_name;  //名字
+    private String license_num;//牌照
     private double cost;  //花费的钱数
     private int type;    //1、维修，2、加油，3、违章
     private Timestamp  occurrence_time;  //事件发生时间
@@ -24,13 +24,7 @@ public class DailyOperation{
     public void setId(int id) {
         this.id = id;
     }
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
     public int getCar_id() {
         return car_id;
     }
@@ -86,12 +80,20 @@ public class DailyOperation{
     public void setCreate_time(Timestamp create_time) {
         this.create_time = create_time;
     }
-    public String getLisence_num() {
-        return lisence_num;
+
+    public String getReal_name() {
+        return real_name;
     }
 
-    public void setLisence_num(String lisence_num) {
-        this.lisence_num = lisence_num;
+    public void setReal_name(String real_name) {
+        this.real_name = real_name;
     }
 
+    public String getLicense_num() {
+        return license_num;
+    }
+
+    public void setLicense_num(String license_num) {
+        this.license_num = license_num;
+    }
 }

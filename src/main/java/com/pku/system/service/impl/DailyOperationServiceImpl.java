@@ -58,8 +58,8 @@ public class DailyOperationServiceImpl implements DailyOperationService {
 
         for(DailyOperation dailyOperation : list){
             if(userService.selectById(dailyOperation.getCreator()) != null && carService.selectById(dailyOperation.getCar_id()) != null){
-                dailyOperation.setName(userService.selectById(dailyOperation.getCreator()).getReal_name());
-                dailyOperation.setLisence_num(carService.selectById(dailyOperation.getCar_id()).getLicense_plate_num());
+                dailyOperation.setReal_name(userService.selectById(dailyOperation.getCreator()).getReal_name());
+                dailyOperation.setLicense_num(carService.selectById(dailyOperation.getCar_id()).getLicense_plate_num());
                 newList.add(dailyOperation);
             }
 
