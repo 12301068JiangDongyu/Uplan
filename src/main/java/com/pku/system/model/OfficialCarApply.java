@@ -38,6 +38,8 @@ public class OfficialCarApply {
     private String createTime;
     private String updateTime;
     private String userName;
+    //状态名称
+    private String statusName;
 
     public Integer getId() {
         return id;
@@ -189,5 +191,13 @@ public class OfficialCarApply {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getStatusName() {
+        return statusName;
+    }
+
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
     }
 }
