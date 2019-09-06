@@ -41,6 +41,7 @@ export class userManagePage implements OnInit {
   userId: number;
 
   //tip
+  judgeEditMe: boolean = false;
   judgeAddInput: boolean = true; //提示信息是否显示 true不显示 false验证失败显示
   judgeEditInput: boolean = true;
   judgeDelete: boolean = true;
@@ -87,6 +88,9 @@ export class userManagePage implements OnInit {
       this.editSelectRole = this.user.r_id;
       this.editRealName = this.user.real_name;
       this.editLicense = this.user.license;
+      if (this.me.username == this.editInputName && this.me.r_id == this.editSelectRole) {
+        this.judgeEditMe = true;
+      }
     });
   }
 
@@ -107,9 +111,9 @@ export class userManagePage implements OnInit {
         let judge = Math.abs(data.judge);
         this.judgeAddInput = false;
         if (judge == 0) {
-					this.tip = this.judgeMsg[7];
-					this.reGetUsers();
-					$('#addModal').modal('hide');
+          this.tip = this.judgeMsg[7];
+          this.reGetUsers();
+          $('#addModal').modal('hide');
           // location.reload();
           //this.judgeAddInput = true;
         } else if (judge == 9) {
@@ -147,24 +151,15 @@ export class userManagePage implements OnInit {
     if (this.judgeEditInput) {
       this.userSevice.editUser(editUser, judge).then(data => {
         let judge = Math.abs(data.judge);
-        let count = 0;
         this.judgeEditInput = false;
         if (judge == 0) {
           this.tip = this.judgeMsg[8];
-          if (editUser.username != this.me.username) {
-            this.tip += '修改本账户名，';
-            count++;
-          }
-          if (editUser.r_id != this.me.r_id) {
-            this.tip += '修改本账户角色，';
-            count++;
-          }
-          if (count > 0) {
-            this.tip += '请重新登录！';
+          if (this.judgeEditMe) {
+            this.tip += '修改本账户名，修改本账户角色，请重新登录！';
             this.storageService.remove('user');
-					}
-					this.reGetUsers();
-					$('#editModal').modal('hide');
+          }
+          this.reGetUsers();
+          $('#editModal').modal('hide');
           // location.reload();
           //this.judgeEditInput = true;
         } else if (judge == 9) {
@@ -188,14 +183,14 @@ export class userManagePage implements OnInit {
         if (this.userId == this.me.id) {
           this.tip += '删除本账户！';
           this.storageService.remove('user');
-				}
-				this.reGetUsers();
-				$('#deleteModal').modal('hide');
+        }
+        this.reGetUsers();
+        $('#deleteModal').modal('hide');
         // location.reload();
         //this.judgeDelete = true;
       } else {
         if (data.judge == -1) {
-					this.tip = this.judgeMsg[4];
+          this.tip = this.judgeMsg[4];
         } else {
           this.tip = this.judgeMsg[6];
         }
@@ -229,6 +224,7 @@ export class userManagePage implements OnInit {
     this.addInputPassword = '123456';
     this.addRealName = '';
     this.addLicense = '';
+    this.tip = '';
     this.getUsers();
   }
 
