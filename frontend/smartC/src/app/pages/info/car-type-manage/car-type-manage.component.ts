@@ -17,8 +17,6 @@ export class CarTypeManageComponent implements OnInit {
 
   carModel: Cartype = { id: null, brand: '', capacity: '', price: null, buy_time: '', seat_num: null, oil_type: null };
 
-  buyTime = { key: '', value: '' };
-
   deleteMsg = { id: null };
 
   /**
@@ -36,8 +34,6 @@ export class CarTypeManageComponent implements OnInit {
   judgeMsg = ['添加成功！', '修改成功！', '删除成功！', '添加失败！', '修改失败！', '删除失败！'];
   tip = '';
 
-  urls = 'carType/';
-
   constructor(private cartypeService: CarTypeService, private router: Router) {}
 
   /**
@@ -53,9 +49,12 @@ export class CarTypeManageComponent implements OnInit {
    * [resetModal 清除模态框数据 切换成add状态]
    */
   resetModal(): void {
+    this.tip = '';
     this.judgeTips.status = true;
     this.judgeTips.addEdit = true;
+    this.judgeTips.delete = true;
     this.carModel = { id: null, brand: '', capacity: '', price: null, buy_time: '', seat_num: null, oil_type: null };
+    $('#dateTimePicker').datetimepicker('update', new Date());
   }
 
   /**
@@ -63,8 +62,7 @@ export class CarTypeManageComponent implements OnInit {
    * @param {[type]} type [add edit]
    */
   handleCar(type): void {
-    let jqtime = Date.parse($('#datepicker').data().datepicker.dates[0]).toString();
-    let datetime = jqtime ? jqtime : this.buyTime.value;
+    let datetime = $("#dateTimePicker").data("datetimepicker").getDate().getTime();
     console.log(datetime);
 
     if (type == 'add') {
@@ -85,11 +83,11 @@ export class CarTypeManageComponent implements OnInit {
     //切换成修改按钮
     this.judgeTips.status = false;
     this.carModel = entity;
-    this.buyTime.key = this.carModel.buy_time.time;
-    this.buyTime.value = new Date(this.buyTime.key).toLocaleDateString();
+    $('#dateTimePicker').datetimepicker('update', new Date(this.carModel.buy_time.time));
   }
 
   getCarId(id) {
+    this.resetModal();
     this.deleteMsg.id = id;
   }
 
@@ -111,7 +109,7 @@ export class CarTypeManageComponent implements OnInit {
         if (judge == 0) {
           this.tip = this.judgeMsg[0];
           this.getCarTypes();
-          $("#carModal").modal('hide');
+          $('#carModal').modal('hide');
         } else {
           this.tip = this.judgeMsg[3];
         }
@@ -121,7 +119,7 @@ export class CarTypeManageComponent implements OnInit {
         if (judge == 0) {
           this.tip = this.judgeMsg[1];
           this.getCarTypes();
-          $("#carModal").modal('hide');
+          $('#carModal').modal('hide');
         } else {
           this.tip = this.judgeMsg[4];
         }
@@ -132,7 +130,7 @@ export class CarTypeManageComponent implements OnInit {
         if (judge == 0) {
           this.tip = this.judgeMsg[2];
           this.getCarTypes();
-          $("#deleteModal").modal('hide');
+          $('#deleteModal').modal('hide');
         } else {
           this.tip = this.judgeMsg[5];
         }
@@ -142,11 +140,13 @@ export class CarTypeManageComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCarTypes();
-    $('#datepicker').datepicker({
-      autoclose: true,
-      format: 'yyyy/mm/dd',
-      changeMonth: true,
-      changeYear: true,
+    $('#dateTimePicker').datetimepicker({
+      weekStart: 1,
+      todayBtn: 1,
+      autoclose: 1,
+      todayHighlight: 1,
+      startView: 2,
+      minView: 2
     });
   }
 }
