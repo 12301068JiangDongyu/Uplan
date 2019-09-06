@@ -1,7 +1,9 @@
 package com.pku.system.service;
 
 import com.pku.system.model.OfficialCarApply;
+import com.pku.system.model.QueryAvailcarList;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -59,6 +61,11 @@ public interface OfficialCarApplyService {
      * 定时任务的更新操作
      */
     void updateOfficialCarApplyStatusSchedule(int status);
+
+    /**
+     * 获取当前时间的可用车辆的列表
+     */
+    public List<QueryAvailcarList> queryAvailabilityCarList(Date stratTime);
 
 
 }

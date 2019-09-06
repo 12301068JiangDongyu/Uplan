@@ -2,10 +2,12 @@ package com.pku.system.service.impl;
 
 import com.pku.system.dao.OfficialCarApplyDao;
 import com.pku.system.model.OfficialCarApply;
+import com.pku.system.model.QueryAvailcarList;
 import com.pku.system.service.OfficialCarApplyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -54,5 +56,14 @@ public class OfficialCarApplyServiceImpl implements OfficialCarApplyService {
     @Override
     public void updateOfficialCarApplyStatusSchedule(int status){
         officialCarApplyDao.updateOfficialCarApplyStatusSchedule(status);
+    }
+
+    @Override
+    public List<QueryAvailcarList> queryAvailabilityCarList(Date starTime){
+        List<QueryAvailcarList> res = officialCarApplyDao.queryAvailabilityCarList(starTime);
+        for(QueryAvailcarList info : res){
+            info.setStatus("可用");
+        }
+        return res;
     }
 }

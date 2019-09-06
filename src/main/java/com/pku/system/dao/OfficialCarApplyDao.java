@@ -1,8 +1,10 @@
 package com.pku.system.dao;
 
 import com.pku.system.model.OfficialCarApply;
+import com.pku.system.model.QueryAvailcarList;
 import org.apache.ibatis.annotations.*;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,6 +18,7 @@ public interface OfficialCarApplyDao {
 
     /**
      * 通过ID查询单条用车申请数据记录
+     *
      * @param id 主键
      * @return 实例对象
      */
@@ -25,6 +28,7 @@ public interface OfficialCarApplyDao {
 
     /**
      * 通过用户ID查询信息（通过user_id进行全表查询）
+     *
      * @param user_id
      * @return 实例对象实例数据
      */
@@ -34,6 +38,7 @@ public interface OfficialCarApplyDao {
 
     /**
      * 通过公车ID查询信息（通过car_id进行全表查询）
+     *
      * @param car_id
      * @return 实例对象实例数据
      */
@@ -43,6 +48,7 @@ public interface OfficialCarApplyDao {
 
     /**
      * 新增申请用车信息操作，提交一条新的记录
+     *
      * @param officialCarApply 实例对象
      * @return 插入数据
      */
@@ -52,6 +58,7 @@ public interface OfficialCarApplyDao {
 
     /**
      * 更新申请用车信息操作，提交一条新的记录
+     *
      * @param officialCarApply 实例对象
      * @return 更新消息
      */
@@ -61,6 +68,7 @@ public interface OfficialCarApplyDao {
 
     /**
      * 通过user_id字段信息，执行删除申请用车信息操作
+     *
      * @param user_id
      * @return 删除用车信息
      */
@@ -70,5 +78,11 @@ public interface OfficialCarApplyDao {
 
     @Update("update official_car_apply set status = #{status} where status = 0")
     void updateOfficialCarApplyStatusSchedule(int status);
+
+    // 获取当前时间可用车辆清单列表
+    @Select("SELECT car.`id`,car_type.`brand`,car.`license_plate_num` FROM car,car_type WHERE car.`id` NOT IN(\n" +
+            " SELECT DISTINCT(car.`id`) FROM car,official_car_apply AS oca WHERE car.`id` = oca.`car_id` AND DATEDIFF(#{startTime},start_time) <> 0 AND oca.`status` = 1\n" +
+            " ) AND car.`car_type_id` = car_type.`id`")
+    public List<QueryAvailcarList> queryAvailabilityCarList(Date startTime);
 
 }
