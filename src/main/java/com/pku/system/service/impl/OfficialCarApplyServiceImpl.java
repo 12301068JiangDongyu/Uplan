@@ -39,7 +39,9 @@ public class OfficialCarApplyServiceImpl implements OfficialCarApplyService {
 
     @Override
     public List<OfficialCarApply> queryByUserId(int user_id) {
-        return officialCarApplyDao.queryByUserId(user_id);
+        List<OfficialCarApply> res = officialCarApplyDao.queryByUserId(user_id);
+        formateResult(res);
+        return res;
     }
 
     @Override
@@ -50,11 +52,6 @@ public class OfficialCarApplyServiceImpl implements OfficialCarApplyService {
     @Override
     public void addOfficialCarApply(OfficialCarApply officialCarApply) {
         officialCarApplyDao.addOfficialCarApply(officialCarApply);
-    }
-
-    @Override
-    public void updateOfficialCarApplyById(OfficialCarApply officialCarApply) {
-        officialCarApplyDao.updateOfficialCarApplyById(officialCarApply);
     }
 
     @Override
@@ -117,9 +114,11 @@ public class OfficialCarApplyServiceImpl implements OfficialCarApplyService {
     }
 
     @Override
-//    public void updateOfficialCarApply(OfficialCarApply officialCarApply) {
-//        officialCarApplyDao.updateOfficialCarApply(officialCarApply);
-//    }
+    public void updateOfficialCarApplyById(OfficialCarApply officialCarApply) {
+        officialCarApplyDao.updateOfficialCarApplyById(officialCarApply);
+    }
+
+    @Override
     public void updateOfficialCarApply(OfficialCarApply officialCarApply) {
         officialCarApplyDao.updateOfficialCarApply(officialCarApply.getStatus(),
                 officialCarApply.getUpdate_time(),
@@ -135,6 +134,7 @@ public class OfficialCarApplyServiceImpl implements OfficialCarApplyService {
 
     @Override
     public List<carListInfoByUserID> queryCarListInfoByUserId(){
+
         return officialCarApplyDao.queryCarListInfoByUserId();
     }
 

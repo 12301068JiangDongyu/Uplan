@@ -151,14 +151,15 @@ public class OfficialCarApplyController {
         JSONObject jsonReturn = new JSONObject();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("msg","调用成功");
-        jsonObject.put("code","0000");
+        jsonObject.put("judge","1");
 
         List<OfficialCarApply> officialCarApplies = officialCarApplyService.queryByCarId(officialCarApply.getCar_id());
         for (OfficialCarApply of :
                 officialCarApplies) {
             SimpleDateFormat df = new SimpleDateFormat("YYYY-MM-dd");
-            if (df.format(of.getStart_time()).equals(df.format(officialCarApply.getStart_time())) && of.getStatus() < 2){
+            if (df.format(of.getStart_time()).equals(df.format(officialCarApply.getStart_time())) && of.getStatus() == 1){
                 jsonObject.put("msg", officialCarApply.getStart_time()+"已经存在申请");
+                jsonObject.put("judge","0");
                 jsonReturn.put("data",jsonObject);
                 return jsonReturn.toString();
             }
@@ -177,7 +178,7 @@ public class OfficialCarApplyController {
             officialCarApplyService.addOfficialCarApply(officialCarApply);
         }catch (Exception e) {
             jsonObject.put("msg","调用失败");
-            jsonObject.put("code","1000");
+            jsonObject.put("judge","-1");
         }
         jsonReturn.put("data",jsonObject);
         return jsonReturn.toString();
@@ -185,20 +186,21 @@ public class OfficialCarApplyController {
 
     // 撤销掉 “未审核” 状态的单 为 “撤销” 状态
     @ApiOperation(value = "用车申请撤销", notes= "用车申请撤销", produces = "application/json")
-    @RequestMapping(value = "/officialCarApply/carRepeal",method = RequestMethod.GET)
-    public String carRepeal(OfficialCarApply officialCarApply) {
+    @RequestMapping(value = "/officialCarApply/carRepeal",method = RequestMethod.POST)
+    @ResponseBody
+    public String carRepeal(@RequestBody  OfficialCarApply officialCarApply) {
 
         JSONObject jsonReturn = new JSONObject();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("msg","调用成功");
-        jsonObject.put("code","0000");
+        jsonObject.put("judge","1");
         officialCarApply.setStatus(3);
 
         try {
-            officialCarApplyService.updateOfficialCarApply(officialCarApply);
+            officialCarApplyService.updateOfficialCarApplyById(officialCarApply);
         }catch (Exception e) {
             jsonObject.put("msg","调用失败");
-            jsonObject.put("code","1000");
+            jsonObject.put("judge","-1");
         }
         jsonReturn.put("data",jsonObject);
         return jsonReturn.toString();
@@ -210,22 +212,22 @@ public class OfficialCarApplyController {
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("msg","调用成功");
-        jsonObject.put("code","0000");
+        jsonObject.put("judge","1");
         try{
-            List<OfficialCarApply> officialCarApplyList = new ArrayList<OfficialCarApply>();
-            officialCarApplyList = officialCarApplyService.queryByUserId(user_id);
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
-            JSONArray jsonArray = new JSONArray();
-            for (OfficialCarApply expl :
-                    officialCarApplyList) {
-                JSONObject jsonObject1 = JSONObject.fromObject(expl);
-                jsonObject1.put("start_time",simpleDateFormat.format(expl.getStart_time()));
-                jsonArray.add(jsonObject1);
-            }
-            jsonObject.put("data",jsonArray);
+            List<OfficialCarApply> officialCarApplyList = officialCarApplyService.queryByUserId(user_id);
+//            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
+//            JSONArray jsonArray = new JSONArray();
+//            for (OfficialCarApply expl :
+//                    officialCarApplyList) {
+//                JSONObject jsonObject1 = JSONObject.fromObject(expl);
+//                jsonObject1.put("start_time",simpleDateFormat.format(expl.getStart_time()));
+//                jsonArray.add(jsonObject1);
+//
+//            }
+            jsonObject.put("data",officialCarApplyList);
         } catch(Exception e){
             jsonObject.put("msg","调用失败");
-            jsonObject.put("code","1000");
+            jsonObject.put("judge","-1");
         }
         return jsonObject.toString();
     }
@@ -236,14 +238,14 @@ public class OfficialCarApplyController {
         SimpleDateFormat sdf = new SimpleDateFormat("YYYY-M-d");
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("msg","调用成功");
-        jsonObject.put("code","0000");
+        jsonObject.put("judge","1");
         try{
             Date date = sdf.parse(dateInfo);
             List<QueryAvailcarList> list = officialCarApplyService.queryAvailabilityCarList(date);
             jsonObject.put("data",list);
         } catch (Exception e){
             jsonObject.put("msg","调用失败");
-            jsonObject.put("code","1000");
+            jsonObject.put("judge","-1");
         }
         return jsonObject.toString();
     }
@@ -252,13 +254,13 @@ public class OfficialCarApplyController {
     public String queryAllCarListInfo(){
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("msg","调用成功");
-        jsonObject.put("code","0000");
+        jsonObject.put("judge","1");
         try{
             List<carListInfoByUserID> list = officialCarApplyService.queryCarListInfoByUserId();
             jsonObject.put("data",list);
         } catch (Exception e){
             jsonObject.put("msg","调用失败");
-            jsonObject.put("code","1000");
+            jsonObject.put("judge","-1");
         }
         return jsonObject.toString();
     }
