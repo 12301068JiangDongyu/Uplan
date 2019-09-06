@@ -1,11 +1,9 @@
 package com.pku.system.model;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
-/**
- * (OfficialCarApply)实体类
- */
-public class OfficialCarApply{
+public class OfficialCarApply {
     //id
     private Integer id;
     //公车id
@@ -24,6 +22,24 @@ public class OfficialCarApply{
     private String reason;
     //实际行驶里程数
     private Integer travel_distance;
+    //实际使用油耗
+    private Double oil_used;
+    //状态  1:通过, 2:不通过
+    private Integer status;
+    //备注
+    private String remark;
+    //数据创建时间
+    private Date create_time;
+    //数据更新时间
+    private Date update_time;
+
+    private String startTime;
+    private String endTime;
+    private String createTime;
+    private String updateTime;
+    private String userName;
+    //状态名称
+    private String statusName;
 
     public Integer getId() {
         return id;
@@ -105,11 +121,11 @@ public class OfficialCarApply{
         this.oil_used = oil_used;
     }
 
-    public Boolean getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
@@ -137,16 +153,52 @@ public class OfficialCarApply{
         this.update_time = update_time;
     }
 
-    //实际使用油耗
-    private Double oil_used;
-    //状态  1:通过, 2:不通过
-    private Boolean status;
-    //备注
-    private String remark;
-    //数据创建时间
-    private Date create_time;
-    //数据更新时间
-    private Date update_time;
+    public String getStartTime() {
+        return startTime;
+    }
 
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getStatusName() {
+        return statusName;
+    }
+
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
+    }
 
 }
