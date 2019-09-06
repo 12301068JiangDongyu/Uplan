@@ -2,7 +2,6 @@ package com.pku.system.model;
 
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.List;
 
 public class Car {
     private int id;
@@ -23,36 +22,8 @@ public class Car {
         return id;
     }
 
-    public void setId(int Id) {
-        this.id = Id;
-    }
-
-    public int getMileage() {
-        return mileage;
-    }
-
-    public void setMileage(int mileage) {
-        this.mileage = mileage;
-    }
-
-    public double getOil_used() {
-        return oil_used;
-    }
-
-    public int getCar_Type_Id() {
-        return car_type_id;
-    }
-
-    public void setCar_Type_Id(int car_type_id) {
-        this.car_type_id = car_type_id;
-    }
-
-    public String getLicense_Plate_Num() {
-        return license_plate_num;
-    }
-
-    public void setLicense_Plate_Num(String license_plate_num) {
-        this.license_plate_num = license_plate_num;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getCar_type_id() {
@@ -71,12 +42,24 @@ public class Car {
         this.license_plate_num = license_plate_num;
     }
 
-    public Date getRun_time() {
+    public Timestamp getRun_time() {
         return run_time;
     }
 
     public void setRun_time(Timestamp run_time) {
         this.run_time = run_time;
+    }
+
+    public int getMileage() {
+        return mileage;
+    }
+
+    public void setMileage(int mileage) {
+        this.mileage = mileage;
+    }
+
+    public double getOil_used() {
+        return oil_used;
     }
 
     public void setOil_used(double oil_used) {
@@ -130,10 +113,4 @@ public class Car {
     public void setUpdate_time(Date update_time) {
         this.update_time = update_time;
     }
-
-
-
-
-
-
 }

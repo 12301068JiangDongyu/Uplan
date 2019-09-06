@@ -23,13 +23,12 @@ public interface CarDao {
     public void addCar(Car car);
 
     @Update("update car set car_type_id=#{car_type_id},license_plate_num=#{license_plate_num},run_time=#{run_time},mileage=#{mileage},oil_used=#{oil_used},oil_remained=#{oil_remained},type=#{type},status=#{status},creator=#{creator},create_time=#{create_time},update_time=#{update_time} where id=#{id}")
-    void updateCar(Car car);
+    public void updateCar(Car car);
 
     @Delete("delete from car where id=#{id}")
     public void deleteCar(int id);
 
-
-    @Select(("select * from car where status = #{status}"))
-    public List<Car> selectCarByStatus(int status);
-
+    //用车审批通过，将car的状态改为不可用。
+    @Update("update car set status=#{status}, update_time=#{update_time} where id=#{id}")
+    public void updateCarById(Car car);
 }

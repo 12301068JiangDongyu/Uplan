@@ -1,7 +1,5 @@
 package com.pku.system.controller;
 
-
-import com.pku.system.model.CameraType;
 import com.pku.system.model.Car;
 //import com.pku.system.model.CarType;
 import com.pku.system.model.CarType;
@@ -9,8 +7,6 @@ import com.pku.system.service.CarService;
 import com.pku.system.service.CarTypeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import net.sf.ehcache.pool.sizeof.SizeOf;
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -101,7 +97,7 @@ public class CarController {
         car.setCreate_time(time);
         car.setUpdate_time(time);
 
-         if(car.getLicense_Plate_Num().length()==0){
+         if(car.getLicense_plate_num().length()==0){
             //判断车牌号为空
             jsonData.put("judge","-1");
         }else if( car.getType() !=1 && car.getType()!= 2){
@@ -126,14 +122,14 @@ public class CarController {
         }
 
     @ApiOperation(value = "根据id删除公车信息信息", notes = "根据id删除公车信息notes", produces = "application/json")
-    @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-    public String deleteCar(@PathVariable("id") int id) {
+    @RequestMapping(value="/{carId}", method=RequestMethod.DELETE)
+    public String deleteCar(@PathVariable("carId") int id) {
         // 处理"/users/{id}"的DELETE请求，用来删除User
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("msg","调用成功");
         jsonObject.put("code","0000");
         JSONObject jsonData = new JSONObject();
-        //int a = Integer.parseInt(id);
+
         Car car = carService.selectById(id);
 
         if(car == null){
@@ -163,7 +159,7 @@ public class CarController {
         JSONObject jsonData = new JSONObject();
 
 
-        String license_Plate_Num = car.getLicense_Plate_Num();
+        String license_Plate_Num = car.getLicense_plate_num();
         int type = car.getType();
         int status = car.getStatus();
 
