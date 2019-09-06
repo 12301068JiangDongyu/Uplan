@@ -2,8 +2,8 @@ package com.pku.system.dao;
 
 import com.pku.system.model.OfficialCarApply;
 import com.pku.system.model.QueryAvailcarList;
+import com.pku.system.model.carListInfoByUserID;
 import org.apache.ibatis.annotations.*;
-
 import java.util.Date;
 import java.util.List;
 
@@ -63,7 +63,7 @@ public interface OfficialCarApplyDao {
      * @return 更新消息
      */
     @Update("update official_car_apply set status=#{status} where id = #{id}")
-    void updateOfficialCarApply(OfficialCarApply officialCarApply);
+    void updateOfficialCarApplyById(OfficialCarApply officialCarApply);
 
 
     /**
@@ -85,16 +85,12 @@ public interface OfficialCarApplyDao {
             " ) AND car.`car_type_id` = car_type.`id`")
     public List<QueryAvailcarList> queryAvailabilityCarList(Date startTime);
 
-}
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+    // 获取所有用户的用车记录
+    @Select("SELECT car.`id`,official_car_apply.`id` AS applyId,official_car_apply.`brand`,car_type.`seat_num`,official_car_apply.`start_time` FROM car,official_car_apply,car_type WHERE car.`car_type_id` = car_type.`id` AND car.id = official_car_apply.car_id AND official_car_apply.status = 1")
+    public List<carListInfoByUserID> queryCarListInfoByUserId();
 
-import java.util.Date;
-import java.util.List;
-@Mapper
-public interface OfficialCarApplyDao {
+
+    //-------------------------------------------------------张晔----------------------------------------------
     @Select("select ca.*, tu.username from `official_car_apply` ca, tb_user tu where ca.user_id = tu.id")
     public List<OfficialCarApply> getAllOfficialCarApply();
 
@@ -109,4 +105,8 @@ public interface OfficialCarApplyDao {
 
     @Select("select ca.*, tu.username from `official_car_apply` ca, tb_user tu where ca.user_id = tu.id and ca.status = #{status}")
     public List<OfficialCarApply> selectOfficialCarApplyByStatus(int status);
+
 }
+
+
+

@@ -64,7 +64,7 @@ public class CarController {
 
         Car car = carService.selectById(id);
         //int a=car.getCar_Type_Id();
-        CarType carType = carTypeService.selectById(car.getCar_Type_Id());
+        CarType carType = carTypeService.selectById(car.getCarTypeId());
 
         jsonData.put("carList",car);
         jsonData.put("carTypeList",carType);

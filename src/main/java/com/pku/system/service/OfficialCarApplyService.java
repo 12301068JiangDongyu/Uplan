@@ -2,6 +2,7 @@ package com.pku.system.service;
 
 import com.pku.system.model.OfficialCarApply;
 import com.pku.system.model.QueryAvailcarList;
+import com.pku.system.model.carListInfoByUserID;
 
 import java.util.Date;
 import java.util.List;
@@ -47,7 +48,7 @@ public interface OfficialCarApplyService {
      * @param officialCarApply 实例对象
      * @return 更新消息
      */
-    void updateOfficialCarApply(OfficialCarApply officialCarApply);
+    void updateOfficialCarApplyById(OfficialCarApply officialCarApply);
 
     /**
      * 通过user_id字段信息，执行删除申请用车信息操作
@@ -68,10 +69,6 @@ public interface OfficialCarApplyService {
     public List<QueryAvailcarList> queryAvailabilityCarList(Date stratTime);
 
 
-}
-import java.util.List;
-
-public interface OfficialCarApplyService {
     /**
      * 获得所有申请条目。
      * @return
@@ -97,5 +94,8 @@ public interface OfficialCarApplyService {
      * @return
      */
     public List<OfficialCarApply> selectOfficialCarApplyByStatus(int status);
+
+    // 获取所有用户的用车申请单信息
+    public List<carListInfoByUserID> queryCarListInfoByUserId();
 
 }

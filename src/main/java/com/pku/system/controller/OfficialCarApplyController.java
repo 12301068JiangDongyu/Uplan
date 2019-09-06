@@ -1,35 +1,18 @@
 package com.pku.system.controller;
 
-import com.pku.system.model.Car;
-import com.pku.system.model.CarType;
-import com.pku.system.model.OfficialCarApply;
-import com.pku.system.model.QueryAvailcarList;
-import com.pku.system.model.OfficialCarApply;
+import com.pku.system.model.*;
 import com.pku.system.service.CarService;
 import com.pku.system.service.CarTypeService;
 import com.pku.system.service.OfficialCarApplyService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import net.sf.json.JSONObject;
-import net.sf.ehcache.pool.sizeof.SizeOf;
 import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
-
-import java.sql.Timestamp;
-import java.text.*;
-
 import java.util.*;
 
 @Api(value="用车审批",tags = {"用车审批API"},description = "描述信息")
@@ -156,26 +139,12 @@ public class OfficialCarApplyController {
 
         return jsonObject.toString();
     }
-/**
- * (OfficialCarApply)表控制层
- *
- * @author makejava
- * @since 2019-09-03 15:00:58
- */
 
-
-    @Autowired
-    private OfficialCarApplyService officialCarApplyService;
-
-    @Autowired
-    CarTypeService carTypeService;
-
-    @Autowired
-    CarService carService;
+    // ---------------- 张 强 --------------------------------------------------------------------------
 
     // 提交用车申请的表单数据
     @ApiOperation(value = "用车申请", notes= "用车申请", produces = "application/json")
-    @RequestMapping(value = "/carApply",method = RequestMethod.POST)
+    @RequestMapping(value = "/officialCarApply/carApply",method = RequestMethod.POST)
     @ResponseBody
     public String carApply(@RequestBody OfficialCarApply officialCarApply) {
 
@@ -198,7 +167,7 @@ public class OfficialCarApplyController {
         //获得车信息
         Car car = carService.selectById(officialCarApply.getCar_id());
         //获得品牌型号
-        CarType carType = carTypeService.selectById(car.getCar_Type_Id());
+        CarType carType = carTypeService.selectById(car.getCarTypeId());
 
         officialCarApply.setBrand(carType.getBrand());
         officialCarApply.setCreate_time(new Date());
@@ -216,7 +185,7 @@ public class OfficialCarApplyController {
 
     // 撤销掉 “未审核” 状态的单 为 “撤销” 状态
     @ApiOperation(value = "用车申请撤销", notes= "用车申请撤销", produces = "application/json")
-    @RequestMapping(value = "/carRepeal",method = RequestMethod.GET)
+    @RequestMapping(value = "/officialCarApply/carRepeal",method = RequestMethod.GET)
     public String carRepeal(OfficialCarApply officialCarApply) {
 
         JSONObject jsonReturn = new JSONObject();
@@ -236,7 +205,7 @@ public class OfficialCarApplyController {
     }
 
     // 通过用户ID获取其提交的用车申请单（所有状态的记录都会获取到）
-    @RequestMapping(value = "/carListByUser",method = RequestMethod.GET)
+    @RequestMapping(value = "/officialCarApply/carListByUser",method = RequestMethod.GET)
     public String carListByUserId(int user_id){
 
         JSONObject jsonObject = new JSONObject();
@@ -262,15 +231,30 @@ public class OfficialCarApplyController {
     }
 
     // 通过时间参数获取当前可用的车辆清单列表
-    @RequestMapping(value = "/getAvailCarList",method = RequestMethod.GET)
-    public String getAvailCarList(String dateinfo){
-        SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
+    @RequestMapping(value = "/officialCarApply/getAvailCarList",method = RequestMethod.GET)
+    public String getAvailCarList(String dateInfo){
+        SimpleDateFormat sdf = new SimpleDateFormat("YYYY-M-d");
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("msg","调用成功");
         jsonObject.put("code","0000");
         try{
-            Date date = sdf.parse(dateinfo);
+            Date date = sdf.parse(dateInfo);
             List<QueryAvailcarList> list = officialCarApplyService.queryAvailabilityCarList(date);
+            jsonObject.put("data",list);
+        } catch (Exception e){
+            jsonObject.put("msg","调用失败");
+            jsonObject.put("code","1000");
+        }
+        return jsonObject.toString();
+    }
+
+    @RequestMapping(value = "/officialCarApply/getAllCarListInfo",method = RequestMethod.GET)
+    public String queryAllCarListInfo(){
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("msg","调用成功");
+        jsonObject.put("code","0000");
+        try{
+            List<carListInfoByUserID> list = officialCarApplyService.queryCarListInfoByUserId();
             jsonObject.put("data",list);
         } catch (Exception e){
             jsonObject.put("msg","调用失败");

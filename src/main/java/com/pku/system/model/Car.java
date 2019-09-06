@@ -26,7 +26,7 @@ public class Car {
         this.id = id;
     }
 
-    public int getCar_type_id() {
+    public int getCarTypeId() {
         return car_type_id;
     }
 

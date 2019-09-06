@@ -3,12 +3,16 @@ package com.pku.system.service.impl;
 import com.pku.system.dao.OfficialCarApplyDao;
 import com.pku.system.model.OfficialCarApply;
 import com.pku.system.model.QueryAvailcarList;
+import com.pku.system.model.carListInfoByUserID;
+import com.pku.system.service.UserService;
 import com.pku.system.service.OfficialCarApplyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+
 
 /**
  * (OfficialCarApply)表服务实现类
@@ -19,8 +23,11 @@ import java.util.List;
 @Service
 public class OfficialCarApplyServiceImpl implements OfficialCarApplyService {
 
-    @Autowired
+    @Autowired(required = false)
     OfficialCarApplyDao officialCarApplyDao;
+
+    @Autowired
+    UserService userService;
 
 
     @Override
@@ -44,8 +51,8 @@ public class OfficialCarApplyServiceImpl implements OfficialCarApplyService {
     }
 
     @Override
-    public void updateOfficialCarApply(OfficialCarApply officialCarApply) {
-        officialCarApplyDao.updateOfficialCarApply(officialCarApply);
+    public void updateOfficialCarApplyById(OfficialCarApply officialCarApply) {
+        officialCarApplyDao.updateOfficialCarApplyById(officialCarApply);
     }
 
     @Override
@@ -54,33 +61,20 @@ public class OfficialCarApplyServiceImpl implements OfficialCarApplyService {
     }
 
     @Override
-    public void updateOfficialCarApplyStatusSchedule(int status){
+    public void updateOfficialCarApplyStatusSchedule(int status) {
         officialCarApplyDao.updateOfficialCarApplyStatusSchedule(status);
     }
 
     @Override
-    public List<QueryAvailcarList> queryAvailabilityCarList(Date starTime){
+    public List<QueryAvailcarList> queryAvailabilityCarList(Date starTime) {
         List<QueryAvailcarList> res = officialCarApplyDao.queryAvailabilityCarList(starTime);
-        for(QueryAvailcarList info : res){
+        for (QueryAvailcarList info : res) {
             info.setStatus("可用");
         }
         return res;
     }
-}
-import com.pku.system.service.OfficialCarApplyService;
-import com.pku.system.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import java.text.SimpleDateFormat;
-import java.util.List;
 
-@Service
-public class OfficialCarApplyServiceImpl implements OfficialCarApplyService {
-    @Autowired(required = false)
-    OfficialCarApplyDao officialCarApplyDao;
-
-    @Autowired
-    UserService userService;
+    // ------------------------------------ 张晔 ---------------------------------------------
 
     @Override
     public List<OfficialCarApply> getAllOfficialCarApply() {
@@ -90,8 +84,8 @@ public class OfficialCarApplyServiceImpl implements OfficialCarApplyService {
         return applyList;
     }
 
-    private void formateResult(List<OfficialCarApply> result){
-        for(OfficialCarApply officialCarApply : result) {
+    private void formateResult(List<OfficialCarApply> result) {
+        for (OfficialCarApply officialCarApply : result) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             switch (officialCarApply.getStatus()) {
                 case 0:
@@ -107,7 +101,7 @@ public class OfficialCarApplyServiceImpl implements OfficialCarApplyService {
                     officialCarApply.setStatusName("撤销");
                     break;
             }
-            officialCarApply.setReason(officialCarApply.getReason()==null||officialCarApply.getReason().equals("")? "无" : officialCarApply.getReason());
+            officialCarApply.setReason(officialCarApply.getReason() == null || officialCarApply.getReason().equals("") ? "无" : officialCarApply.getReason());
             if (officialCarApply.getStart_time() != null) {
                 officialCarApply.setStartTime(dateFormat.format(officialCarApply.getStart_time()));
             } else
@@ -124,8 +118,7 @@ public class OfficialCarApplyServiceImpl implements OfficialCarApplyService {
 //    public void updateOfficialCarApply(OfficialCarApply officialCarApply) {
 //        officialCarApplyDao.updateOfficialCarApply(officialCarApply);
 //    }
-
-    public void updateOfficialCarApply(OfficialCarApply officialCarApply){
+    public void updateOfficialCarApply(OfficialCarApply officialCarApply) {
         officialCarApplyDao.updateOfficialCarApply(officialCarApply.getStatus(),
                 officialCarApply.getUpdate_time(),
                 officialCarApply.getId());
@@ -137,4 +130,10 @@ public class OfficialCarApplyServiceImpl implements OfficialCarApplyService {
         formateResult(res);
         return res;
     }
+
+    @Override
+    public List<carListInfoByUserID> queryCarListInfoByUserId(){
+        return officialCarApplyDao.queryCarListInfoByUserId();
+    }
 }
+

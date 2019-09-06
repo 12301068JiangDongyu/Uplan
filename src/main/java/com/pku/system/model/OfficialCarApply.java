@@ -200,18 +200,5 @@ public class OfficialCarApply {
     public void setStatusName(String statusName) {
         this.statusName = statusName;
     }
-}
-
-    //实际使用油耗
-    private Double oil_used;
-    //状态  1:通过, 2:不通过
-    private Integer status;
-    //备注
-    private String remark;
-    //数据创建时间
-    private Date create_time;
-    //数据更新时间
-    private Date update_time;
-
 
 }
