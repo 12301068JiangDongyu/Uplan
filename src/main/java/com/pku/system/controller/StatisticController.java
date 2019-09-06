@@ -2,6 +2,7 @@ package com.pku.system.controller;
 
 import com.pku.system.dto.StatisticDto;
 import com.pku.system.dto.StatisticTimeDto;
+import com.pku.system.service.DailyOperationService;
 import com.pku.system.service.OfficialCarApplyService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,6 +28,9 @@ public class StatisticController {
     @Autowired
     private OfficialCarApplyService officialCarApplyService;
 
+    @Autowired
+    private DailyOperationService dailyOperationService;
+
     @ApiOperation(value = "获得统计分析列表", notes = "获得统计分析列表notes", produces = "application/json")
     @RequestMapping(value="/", method= RequestMethod.GET)
     public String getAllStatistic(){
@@ -37,13 +41,23 @@ public class StatisticController {
 
         List<StatisticDto> carTypeCount = officialCarApplyService.getAllBrandCount();
         List<StatisticDto> userCount = officialCarApplyService.getAllUserCount();
+        List<StatisticDto> userRuleCount = dailyOperationService.getAllRuleUserCount();
         List<Integer> timeCount2018 = officialCarApplyService.getAllTimeCount(2018);
         List<Integer> timeCount2019 = officialCarApplyService.getAllTimeCount(2019);
+        List<StatisticTimeDto> repairList = dailyOperationService.getStatistics(1);
+        List<StatisticTimeDto> oilList = dailyOperationService.getStatistics(2);
+        List<StatisticTimeDto> ruleList = dailyOperationService.getStatistics(3);
+        List<String> cardNames = dailyOperationService.getAllCard();
 
         jsonData.put("carTypeCount",carTypeCount);
         jsonData.put("userCount",userCount);
+        jsonData.put("userRuleCount",userRuleCount);
         jsonData.put("timeCount2018",timeCount2018);
         jsonData.put("timeCount2019",timeCount2019);
+        jsonData.put("repairList",repairList);
+        jsonData.put("oilList",oilList);
+        jsonData.put("ruleList",ruleList);
+        jsonData.put("cardNames",cardNames);
 
         jsonObject.put("data",jsonData);
         return jsonObject.toString();

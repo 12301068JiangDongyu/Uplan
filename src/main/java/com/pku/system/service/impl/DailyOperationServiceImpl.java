@@ -1,6 +1,8 @@
 package com.pku.system.service.impl;
 
 import com.pku.system.dao.DailyOperationDao;
+import com.pku.system.dto.StatisticDto;
+import com.pku.system.dto.StatisticTimeDto;
 import com.pku.system.model.DailyOperation;
 import com.pku.system.service.CarService;
 import com.pku.system.service.DailyOperationService;
@@ -66,5 +68,31 @@ public class DailyOperationServiceImpl implements DailyOperationService {
         }
         return newList;
 
+    }
+
+    @Override
+    public List<StatisticTimeDto> getStatistics(int type) {
+        return dailyOperationDao.getStatistics(type);
+    }
+
+    @Override
+    public List<String> getAllCard() {
+
+        List<String> cardList = new ArrayList<>();
+
+        List<Integer> carIdList = dailyOperationDao.getALLDistinctCarId();
+
+        for(Integer id : carIdList){
+            if(carService.selectById(id) != null){
+                cardList.add(carService.selectById(id).getLicense_plate_num());
+            }
+        }
+
+        return cardList;
+    }
+
+    @Override
+    public List<StatisticDto> getAllRuleUserCount() {
+        return dailyOperationDao.getAllRuleUserCount();
     }
 }

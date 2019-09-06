@@ -1,5 +1,7 @@
 package com.pku.system.service;
 
+import com.pku.system.dto.StatisticDto;
+import com.pku.system.dto.StatisticTimeDto;
 import com.pku.system.model.DailyOperation;
 
 import java.util.Date;
@@ -39,5 +41,29 @@ public interface DailyOperationService {
      */
     public void deleteDailyOperation (int id);
 
+    /**
+     * 将getALL的返回处理为三个list
+     * @param list
+     * @return
+     */
     public List<DailyOperation> dealDailyOperation(List<DailyOperation> list);
+
+    /**
+     * 统计
+     * @param type
+     * @return
+     */
+    List<StatisticTimeDto> getStatistics(int type);
+
+    /**
+     * 获得车辆记录中所有的车牌号
+     * @return
+     */
+    List<String> getAllCard();
+
+    /**
+     * 获得违章的用户次数
+     * @return
+     */
+    List<StatisticDto> getAllRuleUserCount();
 }
