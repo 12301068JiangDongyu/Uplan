@@ -66,7 +66,7 @@ export class UserApplyListComponent implements OnInit {
 	 * [ 初始获取申请列表]
 	 */
 	getCarApplyInfosByUserId(): void {
-		this.carApplyInfoService.getApplyInfoByUserId(3).then(data => {
+		this.carApplyInfoService.getApplyInfoByUserId(1).then(data => {
 			console.log(data);
 			this.carApplyInfos = data;
 		})

@@ -27,7 +27,7 @@
                                 <tr>
                                     <th>编号</th>
                                     <th>汽车型号</th>
-                                    <th>目的地</th>
+                                    <!-- <th>目的地</th> -->
                                     <th>用车时间</th>
                                     <th>归还时间</th>
                                     <th>申请原因</th>
@@ -37,9 +37,9 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let info of carApplyInfos">
-                                    <td>{{info.c_id}}</td>
+                                    <td>{{info.id}}</td>
                                     <td>{{info.c_brand}}</td>
-                                    <td>{{info.destination}}</td>
+                                    <!-- <td>{{info.destination}}</td> -->
                                     <td>{{info.start_time}}</td>
                                     <td>{{info.end_time}}</td>
                                     <td>{{info.reason}}</td>

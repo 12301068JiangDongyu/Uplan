@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { CarInfo } from '../../../entity/carinfo.entity'
+import { User } from '../../../entity/user.entity'
+
 import { CarApplyInfo } from '../../../entity/carApplyInfo.entity'
 import { CarApplyInfoService } from 'app/service/car.service';
+import { StorageService } from 'app/service/storage.service';
 declare var $: any;
 
 @Component({
@@ -14,26 +17,47 @@ declare var $: any;
 
 export class CarApplyComponent implements OnInit {
 
-  cars: CarInfo[];
+  cars: CarInfo[]=[{ c_id: 0, c_brand: "", c_plateNum: "", status: "" }];
   carInfo: CarInfo = {c_id: 0, c_brand: "", c_plateNum: "", status: ""};
   applyInfo: CarApplyInfo = {id:0,car_id:0,brand:"",user_id:0,user_name:"",distination:"",
                               start_time:new Date(),end_time: new Date(),reason:"",travel_distance:0,
                               creat_time: new Date(),update_time: new Date(),oil_used:0,remark:"",status:0};
+  allApplyList = [{
+                title: '丰田阿尔法',
+                start: new Date(2019, 8, 7),
+                backgroundColor: '#f56954', //red
+                borderColor: '#f56954' //red
+              }];
   strHtml: string;
   applyReason: string = "";
   res: string;
 
-  constructor(private carApplyInfoService: CarApplyInfoService) {
+  constructor(private carApplyInfoService: CarApplyInfoService, private storageService: StorageService) {
 
   }
 
   ngOnInit(): void {
     this.getCarInfoByDate(new Date());
+    this.getAllApplyList();
     // this.getCarInfoByCarId(1);
     this.initCalendar();
   }
 
-  getCarInfoByDate(data): void {
+  getAllApplyList():void{
+    this.carApplyInfoService.getCarUseList().then(data => {
+      for(let info of data){
+        let temp = {title: info.brand, 
+                    start: info.startTime, 
+                    backgroundColor: '#f56954', //red
+                    borderColor: '#f56954' //red
+                  }
+        this.allApplyList.push(temp);
+      }
+    });
+    
+  }
+
+  getCarInfoByDate(date): void {
     let that = this
     that.cars = [{ c_id: 1, c_brand: "doge", c_plateNum: "d123323", status: "可用" },
     { c_id: 2, c_brand: "保时捷-怕那美拉", c_plateNum: "d123323", status: "可用" },
@@ -41,8 +65,8 @@ export class CarApplyComponent implements OnInit {
     { c_id: 3, c_brand: "宝马750Li", c_plateNum: "d123323", status: "可用" },
     { c_id: 4, c_brand: "丰田阿尔法", c_plateNum: "d123323", status: "可用" }];
 
-    that.carApplyInfoService.getCarListByDate(data).then(date => {
-      that.cars = date;
+    that.carApplyInfoService.getCarListByDate(date).then(data => {
+      that.cars = data;
     });
 
     let strHtml = "";
@@ -123,28 +147,29 @@ export class CarApplyComponent implements OnInit {
         list: '列表展示'
       },
       //Random default events
-      events: [
-        {
-          title: '丰田阿尔法',
-          start: new Date(y, m, 1, 7, 12),
-          backgroundColor: '#f56954', //red
-          borderColor: '#f56954' //red
-        },
-        {
-          title: '吉利熊猫3.0',
-          start: new Date(y, m, d + 5),
-          allDay: false,
-          backgroundColor: '#f39c12', //yellow
-          borderColor: '#f39c12' //yellow
-        },
-        {
-          title: '宝马750Li',
-          start: new Date(y, m, d, 10, 30),
-          allDay: false,
-          backgroundColor: '#0073b7', //Blue
-          borderColor: '#0073b7' //Blue
-        }
-      ],
+      events: that.allApplyList,
+      // [
+        // {
+        //   title: '丰田阿尔法',
+        //   start: new Date(y, m, 1, 7, 12),
+        //   backgroundColor: '#f56954', //red
+        //   borderColor: '#f56954' //red
+        // },
+        // {
+        //   title: '吉利熊猫3.0',
+        //   start: new Date(y, m, d + 5),
+        //   allDay: false,
+        //   backgroundColor: '#f39c12', //yellow
+        //   borderColor: '#f39c12' //yellow
+        // },
+        // {
+        //   title: '宝马750Li',
+        //   start: new Date(y, m, d, 10, 30),
+        //   allDay: false,
+        //   backgroundColor: '#0073b7', //Blue
+        //   borderColor: '#0073b7' //Blue
+        // }
+      // ],
       eventLimit: true,
       views: {
         agenda: {
@@ -170,12 +195,12 @@ export class CarApplyComponent implements OnInit {
         copiedEventObject.borderColor = $(this).css('border-color')
         // 向后端插入数据
         that.applyInfo.car_id = that.carInfo.c_id;//创建插入数据
-        that.applyInfo.user_id = 1;//创建插入数据
+        that.applyInfo.user_id = that.storageService.read<User>('user').id;//创建插入数据
         that.applyInfo.reason = that.applyReason;//创建插入数据
         that.applyInfo.start_time = date.format();//创建插入数据
 
         var res : number;
-        that.carApplyInfoService.addCarApply(that.carInfo.c_id, 1, that.applyReason, date.format()).then(data => {
+        that.carApplyInfoService.addCarApply(that.applyInfo).then(data => {
           res = data.judge;
         });
         // res = "成功";//将执行结果返回给也页面

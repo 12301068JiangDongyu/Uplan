@@ -42,6 +42,17 @@ export class CarApplyInfoService {
             .catch(this.handleError)
     }
 
+
+    // 获取用车申请所有数据
+
+    getCarUseList():Promise<any> {
+        return this.http
+            .get(this.carApplyUrl+"getCarUseList", this.options)
+            .toPromise()
+            .then(response => response.json().data)
+            .catch(this.handleError)
+    }
+
      /**
   	 * [ 获取申请列表]
   	 */
@@ -73,16 +84,16 @@ export class CarApplyInfoService {
     }
 
     // 增加申请
-    addCarApply(car_id:number, user_id:number, reason:string, startTime:Date): Promise<any> {
-        let data = {
-        	"car_id" : car_id,
-        	"user_id" : user_id,
-            "reason" : reason,
-            "start_time" : startTime
-        };
-        console.log(data);
+    addCarApply(applyInfo : CarApplyInfo): Promise<any> {
+        // let data = {
+        // 	"car_id" : car_id,
+        // 	"user_id" : user_id,
+        //     "reason" : reason,
+        //     "start_time" : startTime
+        // };
+        console.log(applyInfo);
         return this.http
-            .post(this.carApplyUrl + "officialCarApply/carApply", data, this.options)
+            .post(this.carApplyUrl + "officialCarApply/carApply", applyInfo, this.options)
             .toPromise()
             .then(response => response.json().data)
             .catch(this.handleError)
