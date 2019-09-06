@@ -13,6 +13,10 @@ export class StatisticsComponent implements OnInit {
   userCount: Statistics[];
   timeCount2018: any;
   timeCount2019: any;
+  oilList: any;
+  repairList: any;
+  ruleList: any;
+  cardNames: any;
 
   carTypeUsagePieOption: any;
   userCountBarOption: any;
@@ -27,6 +31,10 @@ export class StatisticsComponent implements OnInit {
       this.userCount = data.userCount;
       this.timeCount2018 = data.timeCount2018;
       this.timeCount2019 = data.timeCount2019;
+      this.oilList = data.oilList;
+      this.repairList = data.repairList;
+      this.ruleList = data.ruleList;
+      this.cardNames = data.cardNames;
       this.initCharts();
     });
   }
@@ -201,20 +209,34 @@ export class StatisticsComponent implements OnInit {
     };
   }
 
-  initOperateScatter(): void {
-    var dataOil = [
-      ['京AVBCHS', 55, 300, 201909],
-      ['京AVBCHA', 25, 10, 201802],
-    ];
-    var dataFix = [
-      ['京AVBCHS', 15, 150, 201902],
-      ['京AVBCHA', 5, 100, 201903],
-    ];
-    var dataViolate = [
-      ['京AVBCHS', 155, 200, 201901],
-      ['京AVBCHA', 125, 140, 201912],
-    ];
+  formatOperateScatter(): any {
+    let oilList = this.cardNames.map(x => {
+      console.log(x);
+      let data =  this.oilList.find(ele=>ele.card == x);
+      console.log(data);
 
+      return data? [data.card, data.count, data.cost, Number(data.time)] : [x, 0, 0, 0];
+    });
+    console.log(oilList);
+    let repairList = this.cardNames.map(x => {
+      let data =  this.repairList.find(ele=>ele.card == x);
+      return data? [data.card, data.count, data.cost, Number(data.time)] : [x, 0, 0, 0];
+    });
+    let ruleList = this.cardNames.map(x => {
+      let data =  this.ruleList.find(ele=>ele.card == x);
+      return data? [data.card, data.count, data.cost, Number(data.time)] : [x, 0, 0, 0];
+    });
+    // let repairList = this.repairList.map(x=>[x.card, x.count, x.cost, Number(x.time)]);
+    // let ruleList = this.ruleList.map(x=>[x.card, x.count, x.cost, Number(x.time)]);
+    return {
+      oilList,
+      repairList,
+      ruleList
+    }
+  }
+
+  initOperateScatter(): void {
+    let data = this.formatOperateScatter();
     var schema = [
       { name: 'license', index: 0, text: '车牌号' },
       { name: 'count', index: 1, text: '总次数' },
@@ -266,7 +288,7 @@ export class StatisticsComponent implements OnInit {
         formatter: function (obj) {
             var value = obj.value;
             return '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">'
-                + value[0]
+                + obj.seriesName + '记录：' + value[0]
                 + '</div>'
                 + schema[1].text + '：' + value[1] + '<br>'
                 + schema[2].text + '：' + value[2] + '元<br>'
@@ -316,8 +338,10 @@ export class StatisticsComponent implements OnInit {
           },
           outOfRange: {
             symbolSize: [10, 70],
-            color: ['rgba(255,255,255,.2)'],
+            // color: ['rgba(255,255,255,.2)'],
           },
+          min: 200,
+          max: 10000,
           show: false,
         },
         {
@@ -328,6 +352,8 @@ export class StatisticsComponent implements OnInit {
           outOfRange: {
             color: ['rgba(255,255,255,.2)'],
           },
+          min: 201801,
+          max: 201912,
           show: false,
         },
       ],
@@ -336,19 +362,19 @@ export class StatisticsComponent implements OnInit {
           name: '加油',
           type: 'scatter',
           itemStyle: itemStyle,
-          data: dataOil,
+          data: data.oilList,
         },
         {
           name: '维修',
           type: 'scatter',
           itemStyle: itemStyle,
-          data: dataFix,
+          data: data.repairList,
         },
         {
           name: '违章',
           type: 'scatter',
           itemStyle: itemStyle,
-          data: dataViolate,
+          data: data.ruleList,
         },
       ],
     };

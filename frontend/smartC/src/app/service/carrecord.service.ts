@@ -1,6 +1,3 @@
-/**
- * car-manage类
- */
 import { Constant } from '../common/constant';
 
 import { Injectable } from '@angular/core';
@@ -8,46 +5,43 @@ import { Headers, Http, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
-export class CarService {
-  private carInfoUrl: string;
+export class CarRecordService {
+  private dailyOperationUrl: string;
   private options: any;
+  private headers = new Headers({ 'Content-Type': 'application/json' });
 
   constructor(private constant: Constant, private http: Http) {
-    this.carInfoUrl = constant.URL + 'car/';
+    this.dailyOperationUrl = constant.URL + 'dailyOperation/';
     this.options = new RequestOptions({ withCredentials: true, headers: this.getHeaders() });
   }
 
-  /**
-   * [getCarNotes 获取车辆信息列表]
-   * @return {Promise<any>} [description]
-   */
-  getCarNotes(): Promise<any> {
+  getCarRecords(): Promise<any> {
     return this.http
-      .get(this.carInfoUrl, this.options)
+      .get(this.dailyOperationUrl, this.options)
       .toPromise()
       .then(response => response.json().data)
       .catch(this.handleError);
   }
 
-  addCar(entity): Promise<any> {
+  addCarRecord(entity): Promise<any> {
     return this.http
-      .post(this.carInfoUrl + 'carAdd', entity, this.options)
+      .post(this.dailyOperationUrl + 'dailyOperationAdd', entity, this.options)
       .toPromise()
       .then(response => response.json().data)
       .catch(this.handleError);
   }
 
-  editCar(id, entity): Promise<any> {
+  editCarRecord(id, entity): Promise<any> {
     return this.http
-      .put(this.carInfoUrl + 'carUpdate/' + id, entity, this.options)
+      .put(this.dailyOperationUrl + 'dailyOperationUpdate' + '/' + id, entity, this.options)
       .toPromise()
       .then(response => response.json().data)
       .catch(this.handleError);
   }
 
-  deleteCar(id, type): Promise<any> {
+  deleteCarRecord(id): Promise<any> {
     return this.http
-      .delete(this.carInfoUrl + id, this.options)
+      .delete(this.dailyOperationUrl + id, this.options)
       .toPromise()
       .then(response => response.json().data)
       .catch(this.handleError);

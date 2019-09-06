@@ -27,18 +27,17 @@
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab_1">
-              <table class="table table-bordered table-hover table-page" [mfData]="oilList" #mf="mfDataTable"
-                [mfRowsOnPage]="10">
+              <table class="table table-bordered table-hover table-page" [mfData]="oilList" #mf="mfDataTable" [mfRowsOnPage]="10">
                 <thead>
                   <tr>
                     <th>
-                      <mfDefaultSorter by="license">车牌号</mfDefaultSorter>
+                      <mfDefaultSorter by="license_num">车牌号</mfDefaultSorter>
                     </th>
                     <th>
-                      <mfDefaultSorter by="creator">责任人</mfDefaultSorter>
+                      <mfDefaultSorter by="real_name">责任人</mfDefaultSorter>
                     </th>
                     <th>
-                      <mfDefaultSorter by="occurrenceTime">时间</mfDefaultSorter>
+                      <mfDefaultSorter by="occurrence_time">时间</mfDefaultSorter>
                     </th>
                     <th>
                       <mfDefaultSorter by="cost">花费</mfDefaultSorter>
@@ -49,17 +48,15 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let oil of oilList">
-                    <td>{{ oil.license }}</td>
-                    <td>{{ oil.creator }}</td>
-                    <td>{{ oil.occurrenceTime }}</td>
+                    <td>{{ oil.license_num }}</td>
+                    <td>{{ oil.real_name }}</td>
+                    <td>{{ oil.occurrence_time.time | date: 'yyyy/MM/dd' }}</td>
                     <td>{{ oil.cost }}元</td>
                     <td>{{ oil.remark }}</td>
                     <td>
-                      <span class="label label-success cursor-hand" data-toggle="modal" data-target="#recordModal"
-                        (click)="getCarRecord(oil)"> 修改 </span>
+                      <span class="label label-success cursor-hand" data-toggle="modal" data-target="#recordModal" (click)="getCarRecord(oil, 'oil')"> 修改 </span>
                       &nbsp;
-                      <span class="label label-danger cursor-hand" data-toggle="modal" data-target="#deleteModal"
-                        (click)="getCarRecordId(oil.id)"> 删除 </span>
+                      <span class="label label-danger cursor-hand" data-toggle="modal" data-target="#deleteModal" (click)="getCarRecordId(oil.id, 'oil')"> 删除 </span>
                     </td>
                   </tr>
                 </tbody>
@@ -71,25 +68,21 @@
                   </tr>
                 </tfoot>
               </table>
-              <button class="btn btn-warning btn-flat" data-toggle="modal" data-target="#recordModal"
-                (click)="resetModal('oil')">添加记录</button>
+              <button class="btn btn-warning btn-flat" data-toggle="modal" data-target="#recordModal" (click)="resetModal('oil')">添加记录</button>
             </div>
             <!-- /.tab-pane -->
             <div class="tab-pane" id="tab_2">
-
-
-              <table class="table table-bordered table-hover table-page" [mfData]="oilList2" #mf="mfDataTable"
-                [mfRowsOnPage]="10">
+              <table class="table table-bordered table-hover table-page" [mfData]="repairList" #mf="mfDataTable" [mfRowsOnPage]="10">
                 <thead>
                   <tr>
                     <th>
-                      <mfDefaultSorter by="license">车牌号</mfDefaultSorter>
+                      <mfDefaultSorter by="license_num">车牌号</mfDefaultSorter>
                     </th>
                     <th>
-                      <mfDefaultSorter by="creator">责任人</mfDefaultSorter>
+                      <mfDefaultSorter by="real_name">责任人</mfDefaultSorter>
                     </th>
                     <th>
-                      <mfDefaultSorter by="occurrenceTime">时间</mfDefaultSorter>
+                      <mfDefaultSorter by="occurrence_time">时间</mfDefaultSorter>
                     </th>
                     <th>
                       <mfDefaultSorter by="cost">花费</mfDefaultSorter>
@@ -99,18 +92,16 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let oil of oilList2">
-                    <td>{{ oil.license }}</td>
-                    <td>{{ oil.creator }}</td>
-                    <td>{{ oil.occurrenceTime }}</td>
-                    <td>{{ oil.cost }}元</td>
-                    <td>{{ oil.remark }}</td>
+                  <tr *ngFor="let repair of repairList">
+                    <td>{{ repair.license_num }}</td>
+                    <td>{{ repair.real_name }}</td>
+                    <td>{{ repair.occurrence_time.time | date: 'yyyy/MM/dd' }}</td>
+                    <td>{{ repair.cost }}元</td>
+                    <td>{{ repair.remark }}</td>
                     <td>
-                      <span class="label label-success cursor-hand" data-toggle="modal" data-target="#recordModal"
-                        (click)="getCarRecord(oil)"> 修改 </span>
+                      <span class="label label-success cursor-hand" data-toggle="modal" data-target="#recordModal" (click)="getCarRecord(repair, 'repair')"> 修改 </span>
                       &nbsp;
-                      <span class="label label-danger cursor-hand" data-toggle="modal" data-target="#deleteModal"
-                        (click)="getCarRecordId(oil.id)"> 删除 </span>
+                      <span class="label label-danger cursor-hand" data-toggle="modal" data-target="#deleteModal" (click)="getCarRecordId(repair.id, 'repair')"> 删除 </span>
                     </td>
                   </tr>
                 </tbody>
@@ -122,24 +113,21 @@
                   </tr>
                 </tfoot>
               </table>
-              <button class="btn btn-warning btn-flat" data-toggle="modal" data-target="#recordModal"
-                (click)="resetModal('oil')">添加记录</button>
+              <button class="btn btn-warning btn-flat" data-toggle="modal" data-target="#recordModal" (click)="resetModal('repair')">添加记录</button>
             </div>
             <!-- /.tab-pane -->
             <div class="tab-pane" id="tab_3">
-
-              <table class="table table-bordered table-hover table-page" [mfData]="oilList3" #mf="mfDataTable"
-                [mfRowsOnPage]="10">
+              <table class="table table-bordered table-hover table-page" [mfData]="ruleList" #mf="mfDataTable" [mfRowsOnPage]="10">
                 <thead>
                   <tr>
                     <th>
-                      <mfDefaultSorter by="license">车牌号</mfDefaultSorter>
+                      <mfDefaultSorter by="license_num">车牌号</mfDefaultSorter>
                     </th>
                     <th>
-                      <mfDefaultSorter by="creator">责任人</mfDefaultSorter>
+                      <mfDefaultSorter by="real_name">责任人</mfDefaultSorter>
                     </th>
                     <th>
-                      <mfDefaultSorter by="occurrenceTime">时间</mfDefaultSorter>
+                      <mfDefaultSorter by="occurrence_time">时间</mfDefaultSorter>
                     </th>
                     <th>
                       <mfDefaultSorter by="cost">花费</mfDefaultSorter>
@@ -149,18 +137,16 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let oil of oilList3">
-                    <td>{{ oil.license }}</td>
-                    <td>{{ oil.creator }}</td>
-                    <td>{{ oil.occurrenceTime }}</td>
-                    <td>{{ oil.cost }}元</td>
-                    <td>{{ oil.remark }}</td>
+                  <tr *ngFor="let rule of ruleList">
+                    <td>{{ rule.license_num }}</td>
+                    <td>{{ rule.real_name }}</td>
+                    <td>{{ rule.occurrence_time.time | date: 'yyyy/MM/dd' }}</td>
+                    <td>{{ rule.cost }}元</td>
+                    <td>{{ rule.remark }}</td>
                     <td>
-                      <span class="label label-success cursor-hand" data-toggle="modal" data-target="#recordModal"
-                        (click)="getCarRecord(oil)"> 修改 </span>
+                      <span class="label label-success cursor-hand" data-toggle="modal" data-target="#recordModal" (click)="getCarRecord(rule, 'rule')"> 修改 </span>
                       &nbsp;
-                      <span class="label label-danger cursor-hand" data-toggle="modal" data-target="#deleteModal"
-                        (click)="getCarRecordId(oil.id)"> 删除 </span>
+                      <span class="label label-danger cursor-hand" data-toggle="modal" data-target="#deleteModal" (click)="getCarRecordId(rule.id, 'rule')"> 删除 </span>
                     </td>
                   </tr>
                 </tbody>
@@ -172,8 +158,7 @@
                   </tr>
                 </tfoot>
               </table>
-              <button class="btn btn-warning btn-flat" data-toggle="modal" data-target="#recordModal"
-                (click)="resetModal('oil')">添加记录</button>
+              <button class="btn btn-warning btn-flat" data-toggle="modal" data-target="#recordModal" (click)="resetModal('rule')">添加记录</button>
             </div>
             <!-- /.tab-pane -->
           </div>
@@ -192,8 +177,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
-            class="sr-only">Close</span></button>
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
         <h4 class="modal-title" id="myModalLabel">车辆记录信息</h4>
       </div>
       <div class="modal-body">
@@ -202,30 +186,33 @@
           <form class="form-horizontal">
             <div class="box-body">
               <div class="form-group">
-                <label for="license" class="col-sm-2 control-label">车牌号</label>
-
+                <label for="license_num" class="col-sm-2 control-label">车牌号</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" placeholder="车牌号" name="license"
-                    [(ngModel)]="carRecordModel.license" />
+                  <select class="form-control" name="license_num" [(ngModel)]="carRecordModel.car_id">
+                    <option *ngFor="let car of carList" [value]="car.id">
+                      {{ car.license_plate_num }}
+                    </option>
+                  </select>
                 </div>
               </div>
               <div class="form-group">
                 <label for="creator" class="col-sm-2 control-label">责任人</label>
 
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" placeholder="责任人" name="creator"
-                    [(ngModel)]="carRecordModel.creator" />
+                  <select class="form-control" name="creator" [(ngModel)]="carRecordModel.creator">
+                    <option *ngFor="let user of userList" [value]="user.id">
+                      {{ user.real_name }}
+                    </option>
+                  </select>
                 </div>
               </div>
               <div class="form-group">
-                <label for="occurrenceTime" class="col-sm-2 control-label">时间</label>
+                <label for="occurrence_time" class="col-sm-2 control-label">时间</label>
                 <div class="col-sm-10">
-                  <div class="input-group date">
-                    <div class="input-group-addon">
-                      <i class="fa fa-calendar"></i>
-                    </div>
-                    <input type="text" class="form-control pull-right" name="occurrenceTime" placeholder="选择时间"
-                      id="datepicker" [(ngModel)]="carRecordModel.occurrenceTime" />
+                  <div class="input-group date form_date col-sm-10" id="dateTimePicker" data-date="" data-date-format="yyyy/mm/dd">
+                    <input class="form-control" size="16" type="text" value="" readonly />
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                   </div>
                 </div>
               </div>
@@ -242,15 +229,14 @@
                 <label for="type" class="col-sm-2 control-label">类型</label>
                 <div class="col-sm-10">
                   <select class="form-control" name="type" [(ngModel)]="carRecordModel.type">
-                    <option *ngFor="let type of constant.RecordTypeMap" value="{{type.key}}">{{type.name}}</option>
+                    <option *ngFor="let type of constant.RecordTypeMap" value="{{ type.key }}">{{ type.name }}</option>
                   </select>
                 </div>
               </div>
               <div class="form-group">
                 <label for="remark" class="col-sm-2 control-label">备注</label>
                 <div class="col-sm-10">
-                  <textarea type="number" class="form-control" name="remark" rows="3"
-                    [(ngModel)]="carRecordModel.remark"></textarea>
+                  <textarea type="number" class="form-control" name="remark" rows="3" [(ngModel)]="carRecordModel.remark"></textarea>
                 </div>
               </div>
             </div>
@@ -258,21 +244,17 @@
         </div>
       </div>
       <div class="modal-footer">
-        <p class="label label-danger device-wrong-tip" [ngClass]="{ 'div-display': judgeTips.addEdit }"
-          style="margin-top: 5px;float: left;">{{ tip }}</p>
+        <p class="label label-danger device-wrong-tip" [ngClass]="{ 'div-display': judgeTips.addEdit }" style="margin-top: 5px;float: left;">{{ tip }}</p>
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button type="button" *ngIf="judgeTips.status" class="btn btn-primary computer-btn"
-          (click)="handleComputer('add')">添加</button>
-        <button type="button" *ngIf="!judgeTips.status" class="btn btn-primary computer-btn"
-          (click)="handleComputer('edit')">修改</button>
+        <button type="button" *ngIf="judgeTips.status" class="btn btn-primary computer-btn" (click)="handleCarRecord('add')">添加</button>
+        <button type="button" *ngIf="!judgeTips.status" class="btn btn-primary computer-btn" (click)="handleCarRecord('edit')">修改</button>
       </div>
     </div>
   </div>
 </div>
 
 <!--模态框删除-->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
-  aria-hidden="true">
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -282,15 +264,14 @@
       <div class="modal-body">
         <div class="form-horizontal" role="form">
           <div class="fcol-sm-5 ">
-            <p>确定要删除该设备吗？</p>
+            <p>确定要删除该记录吗？</p>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <p class="label label-danger delete-wrong-tip" [ngClass]="{ 'div-display': judgeTips.delete }"
-          style="margin-top: 5px;float: left;">{{ tip }}</p>
+        <p class="label label-danger delete-wrong-tip" [ngClass]="{ 'div-display': judgeTips.delete }" style="margin-top: 5px;float: left;">{{ tip }}</p>
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button type="submit" class="btn btn-primary" (click)="deleteDeviceType()">删除</button>
+        <button type="submit" class="btn btn-primary" (click)="deleteCarRecord()">删除</button>
       </div>
     </div>
     <!-- /.modal-content -->

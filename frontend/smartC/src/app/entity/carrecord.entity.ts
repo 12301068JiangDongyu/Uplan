@@ -1,11 +1,13 @@
 export class CarRecord {
   id: number;
+  car_id: number;
   // 车牌号
-  license: string;
+  license_num: string;
   // 记录时间
-  occurrenceTime: string;
+  occurrence_time: any;
   // 责任人
-  creator: string;
+  creator: number;
+  real_name: string;
   // 花费
   cost: string;
   // 备注

@@ -13,208 +13,205 @@
     </ol>
   </section>
 
-   <!-- Main content -->
-    <section class="content">
-        <div class="row">
-            <div class="col-md-12">
-                <!-- Custom Tabs -->
-                <div class="nav-tabs-custom">
-                 
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="tab_1">
-                            <table class="table table-bordered table-hover table-page"[mfData]="cartypes" #mf="mfDataTable" [mfRowsOnPage]="10">
-                                <thead>
-                                <tr>
-                                    <th><mfDefaultSorter by="id">编号</mfDefaultSorter></th>
-                                    <th><mfDefaultSorter by="license_plate_num">车牌号</mfDefaultSorter></th>
-                                    <th><mfDefaultSorter by="brand">车型</mfDefaultSorter></th>
-                                    <th><mfDefaultSorter by="type">车辆用途</mfDefaultSorter></th>
-                                     <th><mfDefaultSorter by="run_time.time">投入日期</mfDefaultSorter></th>
-                                     <th><mfDefaultSorter by="mileage">里程数</mfDefaultSorter></th>
-                                     <th><mfDefaultSorter by="oil_remained">剩余油量</mfDefaultSorter></th>
-                                    <th><mfDefaultSorter by="status">车辆状态</mfDefaultSorter></th>
-                                    <th>操作</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let car of cars">
-                                        <td>{{car.id}}</td>
-                                        <td>{{car.license_plate_num}}</td>
-                                        <td>{{car.brand}}</td>
-                                        <td>{{car.type== 1 ?'班车':'公车'}}</td>
-                                        <td>{{car.run_time.time| date: 'yyyy/MM/dd' }}</td>
-                                        <td>{{car.mileage}}km</td>
-                                        <td>{{car.oil_remained}}L</td>
-                                        <td>
-                                            <p *ngIf="car.status==1">空闲</p >
-                                            <p *ngIf="car.status==2">使用中</p >
-                                            <p *ngIf="car.status==3">维修中</p >
-                                        </td>
-                                        <td>
-                                            <span class="label label-success cursor-hand" data-toggle="modal" data-target="#carModal" (click)="getCarInfo(car)"> 修改 </span>
-                                            &nbsp;
-                                            <span class="label label-danger cursor-hand" data-toggle="modal" data-target="#deleteModal" (click)="getCarId(car.id,'car')"> 删除 </span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                         
-                            </table>
-                            <button class="btn btn-warning btn-flat" data-toggle="modal" data-target="#carModal" (click)="resetModal()">添加车辆</button>
-                        </div>
-                    </div>
-                    <!-- /.tab-content -->
-                </div>
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- Custom Tabs -->
+        <div class="nav-tabs-custom">
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab_1">
+              <table class="table table-bordered table-hover table-page" [mfData]="cartypes" #mf="mfDataTable" [mfRowsOnPage]="10">
+                <thead>
+                  <tr>
+                    <th><mfDefaultSorter by="id">编号</mfDefaultSorter></th>
+                    <th><mfDefaultSorter by="license_plate_num">车牌号</mfDefaultSorter></th>
+                    <th><mfDefaultSorter by="brand">车型</mfDefaultSorter></th>
+                    <th><mfDefaultSorter by="type">车辆用途</mfDefaultSorter></th>
+                    <th><mfDefaultSorter by="run_time.time">投入日期</mfDefaultSorter></th>
+                    <th><mfDefaultSorter by="mileage">里程数</mfDefaultSorter></th>
+                    <th><mfDefaultSorter by="oil_remained">剩余油量</mfDefaultSorter></th>
+                    <th><mfDefaultSorter by="status">车辆状态</mfDefaultSorter></th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let car of cars">
+                    <td>{{ car.id }}</td>
+                    <td>{{ car.license_plate_num }}</td>
+                    <td>{{ car.brand }}</td>
+                    <td>{{ car.type == 1 ? '班车' : '公车' }}</td>
+                    <td>{{ car.run_time.time | date: 'yyyy/MM/dd' }}</td>
+                    <td>{{ car.mileage }}km</td>
+                    <td>{{ car.oil_remained }}L</td>
+                    <td>
+                      <p *ngIf="car.status == 1">空闲</p>
+                      <p *ngIf="car.status == 2">使用中</p>
+                      <p *ngIf="car.status == 3">维修中</p>
+                    </td>
+                    <td>
+                      <span class="label label-success cursor-hand" data-toggle="modal" data-target="#carModal" (click)="getCarInfo(car)"> 修改 </span>
+                      &nbsp;
+                      <span class="label label-danger cursor-hand" data-toggle="modal" data-target="#deleteModal" (click)="getCarId(car.id, 'car')"> 删除 </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <button class="btn btn-warning btn-flat" data-toggle="modal" data-target="#carModal" (click)="resetModal()">添加车辆</button>
             </div>
-            <!-- /.col -->
+          </div>
+          <!-- /.tab-content -->
         </div>
-        <!-- /.row -->
-    </section>
-    <!-- /.content -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </section>
+  <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
 
 <!-- computerModal -->
 <div class="modal fade" id="carModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalLabel">车辆信息</h4>
-            </div>
-            <div class="modal-body">
-                <div class="modal-width">
-                    <!-- form start -->
-                    <form class="form-horizontal">
-                        <div class="box-body">
-                            <div class="form-group">
-                                <label for="inputComputerName" class="col-sm-2 control-label">车牌号</label>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">车辆信息</h4>
+      </div>
+      <div class="modal-body">
+        <div class="modal-width">
+          <!-- form start -->
+          <form class="form-horizontal">
+            <div class="box-body">
+              <div class="form-group">
+                <label for="inputComputerName" class="col-sm-2 control-label">车牌号</label>
 
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" placeholder="车牌号" name="computerTypeName" [(ngModel)]="carModel.license_plate_num ">
-                                </div>
-                            </div>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" placeholder="车牌号" name="computerTypeName" [(ngModel)]="carModel.license_plate_num" />
+                </div>
+              </div>
 
-                            <div class="form-group">
-                                <label for="inputOS" class="col-sm-2 control-label">车型</label>
+              <div class="form-group">
+                <label for="inputOS" class="col-sm-2 control-label">车型</label>
 
-                             <!--    <div class="col-sm-10">
+                <!--    <div class="col-sm-10">
                                     <input type="text" class="form-control" placeholder="车型" name="operatingSystem" [(ngModel)]="carModel.brand">
                                 </div>  -->
-                                 <div class="col-sm-10">
-                                    <select class="form-control" name="carBrand" [(ngModel)]="carModel.car_type_id">
-                                        <option *ngFor="let cartype of cartypes" [value]="cartype.id">
-                                            {{cartype.brand}}
-                                        </option>
-                                    </select>
-                                </div> 
-                            </div>
-
-                            <div class="form-group">
-                                <label for="inputMemory" class="col-sm-2 control-label">用途</label>
-
-                                <div class="col-sm-10">
-                            
-                                    <select type="text" class="form-control" placeholder="用途" name="type" [(ngModel)]="carModel.type">
-                                        <!--bindings={ "ng-reflect-ng-for-of": "[object Object],[object Object"}-->
-                                        <option value=1 ng-reflect-value=1>
-                                            班车
-                                        </option>
-                                        <option value=2 ng-reflect-value=2>
-                                            公车
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-
-                        <div class="form-group">
-                           <label for="inputCarRunTime" class="col-sm-2 control-label">日期</label>
-                          <div class="col-sm-10">
-                              <div class="input-group date form_date col-sm-10" id="dateTimePicker" data-date="" data-date-format="yyyy/mm/dd">
-                              <input class="form-control" size="16" type="text" value="" readonly />
-                              <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                              <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                             </div>
-                         </div>
-                        </div>
-
-                            <div class="form-group">
-                                <label for="carMileage" class="col-sm-2 control-label">里程数</label>
-                                
-                                <div class="col-sm-10">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="里程数" name="Mileage" [(ngModel)]="carModel.mileage ">
-                                    <span class="input-group-addon">km</span>
-                                </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="carRemained" class="col-sm-2 control-label">油量</label>
-
-                                <div class="col-sm-10">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="油量" name="Remained" [(ngModel)]="carModel.oil_remained ">
-                                    <span class="input-group-addon">L</span>
-                                </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="inputDisk" class="col-sm-2 control-label">状态</label>
-
-                                <div class="col-sm-10">
-                              <!--       <input type="text" class="form-control" placeholder="状态" name="diskSize" [(ngModel)]="computerModel.diskSize"> -->
-                                      <select type="text" class="form-control" placeholder="状态" name="status" [(ngModel)]="carModel.status">
-                                        <!--bindings={ "ng-reflect-ng-for-of": "[object Object],[object Object"}-->
-                                        <option value=1>
-                                            空闲
-                                        </option>
-                                        <option value=2>
-                                            使用中
-                                        </option>
-                                         <option value=3>
-                                            维修中
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                <div class="col-sm-10">
+                  <select class="form-control" name="carBrand" [(ngModel)]="carModel.car_type_id">
+                    <option *ngFor="let cartype of cartypes" [value]="cartype.id">
+                      {{ cartype.brand }}
+                    </option>
+                  </select>
                 </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputMemory" class="col-sm-2 control-label">用途</label>
+
+                <div class="col-sm-10">
+                  <select type="text" class="form-control" placeholder="用途" name="type" [(ngModel)]="carModel.type">
+                    <!--bindings={ "ng-reflect-ng-for-of": "[object Object],[object Object"}-->
+                    <option value="1" ng-reflect-value="1">
+                      班车
+                    </option>
+                    <option value="2" ng-reflect-value="2">
+                      公车
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputCarRunTime" class="col-sm-2 control-label">日期</label>
+                <div class="col-sm-10">
+                  <div class="input-group date form_date col-sm-10" id="dateTimePicker" data-date="" data-date-format="yyyy/mm/dd">
+                    <input class="form-control" size="16" type="text" value="" readonly />
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="carMileage" class="col-sm-2 control-label">里程数</label>
+
+                <div class="col-sm-10">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="里程数" name="Mileage" [(ngModel)]="carModel.mileage" />
+                    <span class="input-group-addon">km</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="carRemained" class="col-sm-2 control-label">油量</label>
+
+                <div class="col-sm-10">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="油量" name="Remained" [(ngModel)]="carModel.oil_remained" />
+                    <span class="input-group-addon">L</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputDisk" class="col-sm-2 control-label">状态</label>
+
+                <div class="col-sm-10">
+                  <!--       <input type="text" class="form-control" placeholder="状态" name="diskSize" [(ngModel)]="computerModel.diskSize"> -->
+                  <select type="text" class="form-control" placeholder="状态" name="status" [(ngModel)]="carModel.status">
+                    <!--bindings={ "ng-reflect-ng-for-of": "[object Object],[object Object"}-->
+                    <option value="1">
+                      空闲
+                    </option>
+                    <option value="2">
+                      使用中
+                    </option>
+                    <option value="3">
+                      维修中
+                    </option>
+                  </select>
+                </div>
+              </div>
             </div>
-            <div class="modal-footer">
-                <p class="label label-danger device-wrong-tip" [ngClass]="{'div-display': judgeTips.addEdit}" style="margin-top: 5px;float: left;" >{{tip}}</p>
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <!-- <button type="button" *ngIf="judgeTips.status" class="btn btn-primary computer-btn" (click)="handleComputer('add')">添加</button> -->
-                <button class="btn btn-primary computer-btn" *ngIf="judgeTips.status" type="button" (click)="handleCar('add')">添加</button>
-                <button class="btn btn-primary computer-btn"*ngIf="!judgeTips.status" type="button" (click)="handleCar('edit')">修改</button>
-            </div>
+          </form>
         </div>
+      </div>
+      <div class="modal-footer">
+        <p class="label label-danger device-wrong-tip" [ngClass]="{ 'div-display': judgeTips.addEdit }" style="margin-top: 5px;float: left;">{{ tip }}</p>
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <!-- <button type="button" *ngIf="judgeTips.status" class="btn btn-primary computer-btn" (click)="handleComputer('add')">添加</button> -->
+        <button class="btn btn-primary computer-btn" *ngIf="judgeTips.status" type="button" (click)="handleCar('add')">添加</button>
+        <button class="btn btn-primary computer-btn" *ngIf="!judgeTips.status" type="button" (click)="handleCar('edit')">修改</button>
+      </div>
     </div>
+  </div>
 </div>
 <!--模态框删除-->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true" >
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="deleteModalLabel">删除车辆</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-horizontal" role="form">
-
-                    <div class="fcol-sm-5 ">
-                        <p>确定要删除该车辆吗？</p>
-
-                    </div>
-
-                </div>
-            </div>
-            <div class="modal-footer">
-                <p class="label label-danger delete-wrong-tip" [ngClass]="{'div-display': judgeTips.delete}" style="margin-top: 5px;float: left;" >{{tip}}</p>
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="submit" class="btn btn-primary" (click)="deleteDeviceType()">删除</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="deleteModalLabel">删除车辆</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-horizontal" role="form">
+          <div class="fcol-sm-5 ">
+            <p>确定要删除该车辆吗？</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <p class="label label-danger delete-wrong-tip" [ngClass]="{ 'div-display': judgeTips.delete }" style="margin-top: 5px;float: left;">{{ tip }}</p>
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="submit" class="btn btn-primary" (click)="deleteCar()">删除</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

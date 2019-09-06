@@ -42,6 +42,7 @@ import { BuildClassService } from './service/buildClass.service';
 import { ToastService } from './service/toast.service';
 import { CarTypeService } from './service/cartype.service';
 import { StatisticsService } from './service/statistics.service';
+import { CarRecordService } from './service/carrecord.service';
 
 import {ActivateGuard} from './guard/auth.guard';
 import {DeactivateGuard} from './guard/deactivate.guard';
@@ -109,7 +110,8 @@ import * as $ from 'jquery';
     ActivateGuard,
     DeactivateGuard,
     CarTypeService,
-    StatisticsService
+    StatisticsService,
+    CarRecordService
   ],
   bootstrap: [AppComponent]
 })
