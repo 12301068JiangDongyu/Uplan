@@ -8,4 +8,6 @@ export class User{
 	password : string;
 	r_id : number;
 	role : Role;
+	real_name: string;
+	license: string;
 }
