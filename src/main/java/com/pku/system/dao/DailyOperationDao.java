@@ -1,5 +1,6 @@
 package com.pku.system.dao;
 
+import com.pku.system.dto.StatisticTimeDto;
 import com.pku.system.model.DailyOperation;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
@@ -13,9 +14,7 @@ public interface DailyOperationDao {
 @Select("select id,car_id,cost,type,occurrence_time,remark,creator from daily_operation where id = #{id}")
     public DailyOperation selectById(int id);
 
-
 @Select("select id,car_id,cost,type,occurrence_time,remark,creator from daily_operation where remark = #{remark}")
-
     public DailyOperation selectByRemark (String remark);
 
 
@@ -31,6 +30,7 @@ public interface DailyOperationDao {
 @Delete("delete from daily_operation where id = #{id}")
     public void deleteDailyOperation (int id);
 
-
+@Select("SELECT c.license_plate_num as card, COUNT(d.id) AS count, SUM(d.cost) as cost, DATE_FORMAT(c.run_time,'%Y%m') AS time FROM daily_operation d INNER JOIN car c on d.car_id = c.id WHERE d.type = #{type} GROUP BY d.id")
+    List<StatisticTimeDto> getStatistics(int type);
 
 }
