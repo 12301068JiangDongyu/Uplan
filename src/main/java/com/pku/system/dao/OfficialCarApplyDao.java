@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 @Mapper
 public interface OfficialCarApplyDao {
-    @Select("select * from official_car_apply")
+    @Select("select ca.*, tu.username from `official_car_apply` ca, tb_user tu where ca.user_id = tu.id")
     public List<OfficialCarApply> getAllOfficialCarApply();
 
     @Select("select * from official_car_apply where id = #{id}")
@@ -22,6 +22,6 @@ public interface OfficialCarApplyDao {
                                        @Param("update_time") Date update_time,
                                        @Param("id") int id);
 
-    @Select("select * from official_car_apply where status = #{status}")
+    @Select("select ca.*, tu.username from `official_car_apply` ca, tb_user tu where ca.user_id = tu.id and ca.status = #{status}")
     public List<OfficialCarApply> selectOfficialCarApplyByStatus(int status);
 }
