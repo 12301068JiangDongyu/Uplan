@@ -73,4 +73,20 @@ public class DailyOperationServiceImpl implements DailyOperationService {
     public List<StatisticTimeDto> getStatistics(int type) {
         return dailyOperationDao.getStatistics(type);
     }
+
+    @Override
+    public List<String> getAllCard() {
+
+        List<String> cardList = new ArrayList<>();
+
+        List<Integer> carIdList = dailyOperationDao.getALLDistinctCarId();
+
+        for(Integer id : carIdList){
+            if(carService.selectById(id) != null){
+                cardList.add(carService.selectById(id).getLicense_plate_num());
+            }
+        }
+
+        return cardList;
+    }
 }

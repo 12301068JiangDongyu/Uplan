@@ -53,4 +53,10 @@ public interface DailyOperationService {
      * @return
      */
     List<StatisticTimeDto> getStatistics(int type);
+
+    /**
+     * 获得车辆记录中所有的车牌号
+     * @return
+     */
+    List<String> getAllCard();
 }

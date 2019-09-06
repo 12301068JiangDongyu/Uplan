@@ -46,6 +46,7 @@ public class StatisticController {
         List<StatisticTimeDto> repairList = dailyOperationService.getStatistics(1);
         List<StatisticTimeDto> oilList = dailyOperationService.getStatistics(2);
         List<StatisticTimeDto> ruleList = dailyOperationService.getStatistics(3);
+        List<String> cardNames = dailyOperationService.getAllCard();
 
         jsonData.put("carTypeCount",carTypeCount);
         jsonData.put("userCount",userCount);
@@ -54,6 +55,7 @@ public class StatisticController {
         jsonData.put("repairList",repairList);
         jsonData.put("oilList",oilList);
         jsonData.put("ruleList",ruleList);
+        jsonData.put("cardNames",cardNames);
 
         jsonObject.put("data",jsonData);
         return jsonObject.toString();

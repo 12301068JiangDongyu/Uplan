@@ -30,7 +30,10 @@ public interface DailyOperationDao {
 @Delete("delete from daily_operation where id = #{id}")
     public void deleteDailyOperation (int id);
 
-@Select("SELECT c.license_plate_num as card, COUNT(d.id) AS count, SUM(d.cost) as cost, DATE_FORMAT(c.run_time,'%Y%m') AS time FROM daily_operation d INNER JOIN car c on d.car_id = c.id WHERE d.type = #{type} GROUP BY d.id")
+@Select("SELECT c.license_plate_num AS card,COUNT( 1 ) AS count,SUM( d.cost ) AS cost,DATE_FORMAT(c.run_time,'%Y%m') AS time FROM daily_operation d INNER JOIN car c on d.car_id = c.id WHERE d.type = #{type} GROUP BY d.car_id")
     List<StatisticTimeDto> getStatistics(int type);
+
+@Select("select distinct car_id from daily_operation")
+    List<Integer> getALLDistinctCarId();
 
 }
