@@ -106,17 +106,27 @@ export class StatisticsComponent implements OnInit {
   }
 
   formatUserCountBarChart(): any {
-    let userCount = this.userCount.map(x => [x.keyName, x.keyValue]);
-    let userRuleCount = this.userRuleCount.map(x => [x.keyName, x.keyValue]);
-
+    let userCountArr = [];
+    let userRuleCountArr = [];
+    let userNames = Array.from(new Set(this.userRuleCount.map(x => x.keyName).concat(this.userCount.map(x => x.keyName))));
+    userNames.forEach(user => {
+      let count = this.userCount.find(x => x.keyName == user);
+      let ruleCount = this.userRuleCount.find(x => x.keyName == user);
+      let userCount = count ? count.keyValue : 0;
+      let userRuleCount = ruleCount ? ruleCount.keyValue : 0;
+      userCountArr.push(userCount);
+      userRuleCountArr.push(userRuleCount);
+    });
     return {
-      userCount,
-      userRuleCount,
+      userNames,
+      userCountArr,
+      userRuleCountArr,
     };
   }
 
   initUserCountBarChart(): void {
     let data = this.formatUserCountBarChart();
+    console.log(data);
     this.userCountBarOption = {
       toolbox: {
         show: true,
@@ -132,20 +142,26 @@ export class StatisticsComponent implements OnInit {
         align: 'left',
         left: 10,
       },
+      calculable: true,
       tooltip: {},
       grid: { containLabel: true },
-      yAxis: { type: 'value', name: '次数' },
-      xAxis: { type: 'category' },
+      yAxis: {},
+      xAxis: {
+        type: 'category',
+        data: data.userNames,
+        "axisLabel":{
+          interval: 0
+        }},
       series: [
         {
           type: 'bar',
           name: '预约',
-          data: data.userCount,
+          data: data.userCountArr,
         },
         {
           type: 'bar',
           name: '违章',
-          data: data.userRuleCount,
+          data: data.userRuleCountArr,
         },
       ],
     };

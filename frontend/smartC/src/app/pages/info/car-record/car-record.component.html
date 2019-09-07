@@ -27,7 +27,7 @@
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab_1">
-              <table class="table table-bordered table-hover table-page" [mfData]="oilList" #mf="mfDataTable" [mfRowsOnPage]="10">
+              <table class="table table-bordered table-hover table-page" [mfData]="oilList" #ol="mfDataTable" [mfRowsOnPage]="10">
                 <thead>
                   <tr>
                     <th>
@@ -47,7 +47,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let oil of oilList">
+                  <tr *ngFor="let oil of ol.data">
                     <td>{{ oil.license_num }}</td>
                     <td>{{ oil.real_name }}</td>
                     <td>{{ oil.occurrence_time.time | date: 'yyyy/MM/dd' }}</td>
@@ -72,7 +72,7 @@
             </div>
             <!-- /.tab-pane -->
             <div class="tab-pane" id="tab_2">
-              <table class="table table-bordered table-hover table-page" [mfData]="repairList" #mf="mfDataTable" [mfRowsOnPage]="10">
+              <table class="table table-bordered table-hover table-page" [mfData]="repairList" #rl="mfDataTable" [mfRowsOnPage]="10">
                 <thead>
                   <tr>
                     <th>
@@ -92,7 +92,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let repair of repairList">
+                  <tr *ngFor="let repair of rl.data">
                     <td>{{ repair.license_num }}</td>
                     <td>{{ repair.real_name }}</td>
                     <td>{{ repair.occurrence_time.time | date: 'yyyy/MM/dd' }}</td>
@@ -117,7 +117,7 @@
             </div>
             <!-- /.tab-pane -->
             <div class="tab-pane" id="tab_3">
-              <table class="table table-bordered table-hover table-page" [mfData]="ruleList" #mf="mfDataTable" [mfRowsOnPage]="10">
+              <table class="table table-bordered table-hover table-page" [mfData]="ruleList" #rulel="mfDataTable" [mfRowsOnPage]="10">
                 <thead>
                   <tr>
                     <th>
@@ -137,7 +137,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let rule of ruleList">
+                  <tr *ngFor="let rule of rulel.data">
                     <td>{{ rule.license_num }}</td>
                     <td>{{ rule.real_name }}</td>
                     <td>{{ rule.occurrence_time.time | date: 'yyyy/MM/dd' }}</td>
@@ -160,6 +160,7 @@
               </table>
               <button class="btn btn-warning btn-flat" data-toggle="modal" data-target="#recordModal" (click)="resetModal('rule')">添加记录</button>
             </div>
+
             <!-- /.tab-pane -->
           </div>
           <!-- /.tab-content -->
