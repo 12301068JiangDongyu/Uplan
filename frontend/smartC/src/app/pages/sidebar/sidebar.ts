@@ -6,85 +6,85 @@ import { UserService } from '../../service/user.service';
 import { User } from '../../entity/user.entity';
 import { StorageService } from '../../service/storage.service';
 
-
 @Component({
   selector: 'sidebar-component',
   templateUrl: './sidebar.html',
-  providers: [StorageService]
+  providers: [StorageService],
 })
 export class SidebarComponent {
   user: User;
-  
+
   judgeOptions = {
-    deviceManage : true,
-    videoManage : true,
-    systemManage : true,
-    editDevice : true,
-    deviceInfo : true,
-    assignDevice : true,
-    deviceMonitor : true,
-    videoStream: true,
-    buildClassManage : true,
-    privilegeManage : true,
-    userManage : true,
-    roleManage : true,
-    messageManage : true
+    infoManage: true,
+    carMissionManage: true,
+    systemManage: true,
+    statisticsManage: true,
+    carTypeManage: true,
+    carManage: true,
+    carRecord: true,
+    carApply: true,
+    myApply: true,
+    carCheck: true,
+    privilegeManage: true,
+    userManage: true,
+    roleManage: true,
+    statistics: true,
   };
 
-  constructor(
-  	public router: Router,
-    private storageService: StorageService) {
-  	this.user = this.storageService.read<User>('user');
+  constructor(public router: Router, private storageService: StorageService) {
+    this.user = this.storageService.read<User>('user');
     this.changeSiderStatus();
-  // Push a search term into the observable stream.
+    // Push a search term into the observable stream.
   }
 
-  changeSiderStatus(): void{
+  changeSiderStatus(): void {
     var permissions = this.user.role.p_ids;
-    for(let i=0;i<permissions.length;i++){
+    for (let i = 0; i < permissions.length; i++) {
       this.permissionMap(permissions[i]);
     }
   }
 
-  permissionMap(permission): void{
+  permissionMap(permission): void {
     switch (permission) {
       case 11:
-        this.judgeOptions.deviceManage = false;
+        this.judgeOptions.infoManage = false;
         break;
       case 21:
-        this.judgeOptions.videoManage = false;
+        this.judgeOptions.carMissionManage = false;
         break;
       case 31:
-        this.judgeOptions.systemManage = false;
+        this.judgeOptions.statisticsManage = false;
         break;
+      case 41:
+        this.judgeOptions.systemManage = false;
       case 111:
-        this.judgeOptions.editDevice = false;
+        this.judgeOptions.carTypeManage = false;
         break;
       case 112:
-        this.judgeOptions.deviceMonitor = false;
+        this.judgeOptions.carManage = false;
+        break;
+      case 113:
+        this.judgeOptions.carRecord = false;
         break;
       case 211:
-        this.judgeOptions.videoStream = false;
+        this.judgeOptions.carApply = false;
+        break;
+      case 212:
+        this.judgeOptions.myApply = false;
+        break;
+      case 213:
+        this.judgeOptions.carCheck = false;
         break;
       case 311:
-        this.judgeOptions.buildClassManage = false;
+        this.judgeOptions.statistics = false;
         break;
-      case 312:
+      case 411:
         this.judgeOptions.privilegeManage = false;
         break;
-      case 313:
-        this.judgeOptions.messageManage = false;
-        break;
-      case 1111:
-        this.judgeOptions.deviceInfo = false;
-        break;
-      case 1112:
-        this.judgeOptions.assignDevice = false;
-        break;
-      case 3121:
+      case 4111:
         this.judgeOptions.userManage = false;
         break;
-      case 3122:
+      case 4112:
         this.judgeOptions.roleManage = false;
         break;
       default:

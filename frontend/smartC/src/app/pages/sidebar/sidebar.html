@@ -29,7 +29,7 @@
     <ul class="sidebar-menu">
       <li class="header">导航</li>
       <!-- Optionally, you can add icons to the links -->
-      <li class="info-manage active">
+      <li class="info-manage active" [ngClass]="{ 'div-display': judgeOptions.infoManage }">
         <a href="#">
           <i class="fa fa-car"></i> <span>信息管理</span>
           <span class="pull-right-container">
@@ -48,7 +48,7 @@
           </li>
         </ul>
       </li>
-      <li class="car-mission-manage active">
+      <li class="car-mission-manage active" [ngClass]="{ 'div-display': judgeOptions.carMissionManage }">
         <a href="#">
           <i class="fa fa-tasks"></i> <span>派车任务</span>
           <span class="pull-right-container">
@@ -56,18 +56,18 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li routerLinkActive="active" class="car-apply" [ngClass]="{ 'div-display': judgeOptions.carTypeManage }">
+          <li routerLinkActive="active" class="car-apply" [ngClass]="{ 'div-display': judgeOptions.carApply }">
             <a routerLink="/carApply"><i class="fa fa-circle-o"></i> 派车申请</a>
           </li>
-          <li routerLinkActive="active" class="car-check" [ngClass]="{ 'div-display': judgeOptions.carManage }">
+          <li routerLinkActive="active" class="car-check" [ngClass]="{ 'div-display': judgeOptions.myApply }">
             <a routerLink="/carApplyList"><i class="fa fa-circle-o"></i> 我的申请</a>
           </li>
-          <li routerLinkActive="active" class="car-check" [ngClass]="{ 'div-display': judgeOptions.carManage }">
+          <li routerLinkActive="active" class="car-check" [ngClass]="{ 'div-display': judgeOptions.carCheck }">
             <a routerLink="/carCheck"><i class="fa fa-circle-o"></i> 派车审核</a>
           </li>
         </ul>
       </li>
-      <li class="statistics-manage active">
+      <li class="statistics-manage active" [ngClass]="{ 'div-display': judgeOptions.statisticsManage }">
           <a href="#">
             <i class="fa fa-bar-chart"></i> <span>统计</span>
             <span class="pull-right-container">
@@ -99,12 +99,12 @@
               </li>
             </ul>
           </li>
-          <li routerLinkActive="active" class="message-manage" [ngClass]="{ 'div-display': judgeOptions.messageManage }">
+          <!-- <li routerLinkActive="active" class="message-manage" [ngClass]="{ 'div-display': judgeOptions.messageManage }">
             <a routerLink="/messageManage"><i class="fa fa-circle-o"></i> 消息管理</a>
-          </li>
+          </li> -->
         </ul>
       </li>
-      <li class="device-manage" [ngClass]="{ 'div-display': judgeOptions.deviceManage }">
+      <!-- <li class="device-manage" [ngClass]="{ 'div-display': judgeOptions.deviceManage }">
         <a href="#"
           ><i class="fa fa-laptop"></i> <span>设备管理</span>
           <span class="pull-right-container">
@@ -167,7 +167,7 @@
             <a routerLink="/messageManage"><i class="fa fa-circle-o"></i> 消息管理</a>
           </li>
         </ul>
-      </li>
+      </li> -->
     </ul>
     <!-- /.sidebar-menu -->
   </section>
