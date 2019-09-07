@@ -1,23 +1,17 @@
 package com.pku.system.controller;
 
-
-import com.pku.system.model.CameraType;
 import com.pku.system.model.Car;
-//import com.pku.system.model.CarType;
 import com.pku.system.model.CarType;
 import com.pku.system.service.CarService;
 import com.pku.system.service.CarTypeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import net.sf.ehcache.pool.sizeof.SizeOf;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.*;
 
-
-import java.security.Timestamp;
 import java.text.ParseException;
 
 import java.text.SimpleDateFormat;
@@ -143,7 +137,7 @@ public class CarController {
         jsonObject.put("msg","调用成功");
         jsonObject.put("code","0000");
         JSONObject jsonData = new JSONObject();
-        //int a = Integer.parseInt(id);
+
         Car car = carService.selectById(id);
 
         if(car == null){

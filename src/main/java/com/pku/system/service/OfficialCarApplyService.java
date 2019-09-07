@@ -2,7 +2,10 @@ package com.pku.system.service;
 
 import com.pku.system.dto.StatisticDto;
 import com.pku.system.model.OfficialCarApply;
+import com.pku.system.model.QueryAvailcarList;
+import com.pku.system.model.carListInfoByUserID;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -46,7 +49,7 @@ public interface OfficialCarApplyService {
      * @param officialCarApply 实例对象
      * @return 更新消息
      */
-    void updateOfficialCarApply(OfficialCarApply officialCarApply);
+    void updateOfficialCarApplyById(OfficialCarApply officialCarApply);
 
     /**
      * 通过user_id字段信息，执行删除申请用车信息操作
@@ -72,5 +75,46 @@ public interface OfficialCarApplyService {
      * @return
      */
     List<Integer> getAllTimeCount(int year);
+
+
+    /**
+     * 定时任务的更新操作
+     */
+    void updateOfficialCarApplyStatusSchedule(int status);
+
+    /**
+     * 获取当前时间的可用车辆的列表
+     */
+    public List<QueryAvailcarList> queryAvailabilityCarList(Date stratTime);
+
+
+    /**
+     * 获得所有申请条目。
+     * @return
+     */
+    public List<OfficialCarApply> getAllOfficialCarApply();
+
+    /**
+     * 根据申请单号查询申请条目。
+     * @param id
+     * @return
+     */
+    public OfficialCarApply selectOfficialCarApplyById(int id);
+
+    /**
+     * 审核更新，将申请条目的状态置为通过或者未通过。
+     * @param officialCarApply
+     */
+
+    public void updateOfficialCarApply(OfficialCarApply officialCarApply);
+    /**
+     * 通过状态值来查询对应的所有表单信息。
+     * @param status
+     * @return
+     */
+    public List<OfficialCarApply> selectOfficialCarApplyByStatus(int status);
+
+    // 获取所有用户的用车申请单信息
+    public List<carListInfoByUserID> queryCarListInfoByUserId();
 
 }

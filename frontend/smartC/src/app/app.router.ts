@@ -26,6 +26,7 @@ import { CarRecordComponent } from './pages/info/car-record/car-record.component
 import { CarApplyComponent } from './pages/mission/carApply/carApply';
 import { CarCheckComponent } from './pages/mission/car-check/car-check.component';
 import { StatisticsComponent } from './pages/statistics/statistics/statistics.component'
+import { UserApplyListComponent } from './pages/mission/user-apply-list/user-apply-list.component';
 
 export const MAINMENU_ROUTES = [
     //full : makes sure the path is absolute path
@@ -48,6 +49,7 @@ export const MAINMENU_ROUTES = [
     { path: 'carManage', component: CarManageComponent},
     { path: 'carRecord', component: CarRecordComponent},
     { path: 'carApply', component: CarApplyComponent},
+    { path: 'carApplyList', component: UserApplyListComponent},
     { path: 'carCheck', component: CarCheckComponent},
     { path: 'statistics', component: StatisticsComponent},
 ];
