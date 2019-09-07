@@ -35,8 +35,20 @@ export class CarApplyInfoService {
     }
 
     getApplyInfoByUserId(id): Promise<any> {
+        console.log(id);
         return this.http
             .get(this.carApplyUrl+"officialCarApply/carListByUser?user_id="+id, this.options)
+            .toPromise()
+            .then(response => response.json().data)
+            .catch(this.handleError)
+    }
+
+
+    // 获取用车申请所有数据
+
+    getCarUseList():Promise<any> {
+        return this.http
+            .get(this.carApplyUrl+"officialCarApply/getAllCarListInfo", this.options)
             .toPromise()
             .then(response => response.json().data)
             .catch(this.handleError)
@@ -57,10 +69,22 @@ export class CarApplyInfoService {
     //请求某一天的汽车数据:
     getCarListByDate(date): Promise<any> {
         return this.http
-            .get(this.constant.URL + "car/carListOn", this.options)
+            .get(this.constant.URL + "officialCarApply/getAvailCarList?dateInfo="+date, this.options)
             .toPromise()
             .then(response => response.json().data)
             .catch(this.handleError)
+
+        // $.ajax({
+        //     type: "GET",
+        //     url: this.constant.URL + "officialCarApply/getAvailCarList?dateInfo="+date,
+        //     async: false,
+        //     dataType: "json",
+        //     success: function(res){
+        //         console.log(res.data);
+        //         return res.data;
+        //     }
+                       
+        //   });
     }
 
     //通过公车id请求某个公车的详细数据:
@@ -73,16 +97,15 @@ export class CarApplyInfoService {
     }
 
     // 增加申请
-    addCarApply(car_id:number, user_id:number, reason:string, startTime:Date): Promise<any> {
-        let data = {
-        	"car_id" : car_id,
-        	"user_id" : user_id,
-            "reason" : reason,
-            "start_time" : startTime
-        };
-        console.log(data);
+    addCarApply(applyInfo : CarApplyInfo): Promise<any> {
+        // let data = {
+        // 	"car_id" : car_id,
+        // 	"user_id" : user_id,
+        //     "reason" : reason,
+        //     "start_time" : startTime
+        // };
         return this.http
-            .post(this.carApplyUrl + "officialCarApply/carApply", data, this.options)
+            .post(this.carApplyUrl + "officialCarApply/carApply", applyInfo, this.options)
             .toPromise()
             .then(response => response.json().data)
             .catch(this.handleError)
@@ -108,22 +131,20 @@ export class CarApplyInfoService {
 
     checkApplyByApplyId(applyId:number, status: string): Promise<any> {
         let s : number;
-        if(status == "通过"){
-            s = 1;
-        }
-        if(status == "不通过"){
-            s = 2;
-        }
-        if(status == "撤回"){
-            s = 3;
-        }
-
+        switch(status) {
+            case "未审核":s=0; break;
+            case "通过":s=1; break;
+            case "不通过":s=2; break;
+            case "撤销":s=3; break;
+            default:s=0;
+       }
         let data = {
         	"id" : applyId,
         	"status" : s
         };
+        console.log(data);
         return this.http
-            .get(this.constant.URL + "check?id="+applyId+"&status="+s, this.options)
+            .post(this.constant.URL + "officialCarApply/carRepeal",data, this.options)
             .toPromise()
             .then(response => response.json().data)
             .catch(this.handleError)

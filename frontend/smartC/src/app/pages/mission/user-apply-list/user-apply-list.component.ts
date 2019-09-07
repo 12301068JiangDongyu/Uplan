@@ -2,8 +2,12 @@ import { Component, OnInit } from '@angular/core';
 
 //entity
 import { CarApplyInfo } from '../../../entity/carApplyInfo.entity';
+import { User } from '../../../entity/user.entity'
+
 //service
 import { CarApplyInfoService } from '../../../service/car.service';
+import { StorageService } from '../../../service/storage.service';
+
 
 
 @Component({
@@ -11,10 +15,13 @@ import { CarApplyInfoService } from '../../../service/car.service';
 	templateUrl: './user-apply-list.component.html'
 })
 export class UserApplyListComponent implements OnInit {
+
 	userId: number;
 	applyId: number;
 	judgeDelete: boolean = true;
-	
+	today=new Date().toLocaleDateString();
+	is_show:boolean[];
+
 	carApplyInfos: CarApplyInfo[];
 	judgeMsg: string[] = [
 		'请输入20位以下用户名！',//0
@@ -30,8 +37,7 @@ export class UserApplyListComponent implements OnInit {
 	tip: string = '';
 
 	// carApplyInfos : CarApplyInfo[];
-	constructor(private carApplyInfoService: CarApplyInfoService) {
-
+	constructor(private carApplyInfoService: CarApplyInfoService, private storageService: StorageService) {
 	}
 
 	/**
@@ -39,6 +45,7 @@ export class UserApplyListComponent implements OnInit {
   	 */
 	getApplyId(id): void {
 		this.applyId = id;
+		console.log(this.applyId);
 	}
 
 	/**
@@ -47,7 +54,7 @@ export class UserApplyListComponent implements OnInit {
 	dropApply(): void {
 		this.carApplyInfoService.checkApplyByApplyId(this.applyId, "撤回").then(data => {
 			this.judgeDelete = false;
-			if (data.judge == 0) {
+			if (data.judge > 0) {
 				this.tip = this.judgeMsg[9];
 				location.reload();
 			} else {
@@ -66,13 +73,19 @@ export class UserApplyListComponent implements OnInit {
 	 * [ 初始获取申请列表]
 	 */
 	getCarApplyInfosByUserId(): void {
-		this.carApplyInfoService.getApplyInfoByUserId(3).then(data => {
-			console.log(data);
+		this.carApplyInfoService.getApplyInfoByUserId(this.userId).then(data => {
 			this.carApplyInfos = data;
+			this.is_show=new Array(this.carApplyInfos.length);
+			console.log(this.carApplyInfos);
+			for(let i = 0;i<this.carApplyInfos.length;i++){
+				this.is_show[i] = true;
+			}
+
 		})
 	}
 
 	ngOnInit(): void {
+		this.userId = this.storageService.read<User>('user').id;	
 		this.getCarApplyInfosByUserId();
 	}
 
