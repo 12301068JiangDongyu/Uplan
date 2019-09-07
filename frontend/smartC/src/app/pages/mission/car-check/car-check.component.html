@@ -22,10 +22,9 @@
             <h3 class="box-title">申请列表</h3>
             <!-- 查询框begin -->
             <div class="">
-              <button class="btn btn-primary pull-right" (click)=findCarApplyListByStatus(statusInput.value)>查询</button>
+              <button class="btn btn-primary pull-right" (click)="findCarApplyListByStatus(statusInput.value)">查询</button>
               <div class="form-group pull-right">
-                <input list="list" class="form-control dropdown-toggle" #statusInput placeholder="状态"
-                  (keyup.enter)="findCarApplyListByStatus(statusInput.value)">
+                <input list="list" class="form-control dropdown-toggle" #statusInput placeholder="状态" (keyup.enter)="findCarApplyListByStatus(statusInput.value)" />
 
                 <datalist id="list">
                   <option value="未审核"></option>
@@ -34,32 +33,31 @@
                   <option value="撤销"></option>
                 </datalist>
               </div>
-
             </div>
             <!-- 查询框end -->
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            <table id="example2" class="table table-bordered table-hover">
+            <table id="example2" class="table table-bordered table-hover" [mfData]="carApplyInfos" #mf="mfDataTable" [mfRowsOnPage]="10">
               <thead>
                 <tr>
                   <th>编号</th>
-                  <th>车辆型号</th>
-                  <th>预约用户</th>
-                  <th>计划开始用车时间</th>
+                  <th><mfDefaultSorter by="brand">车辆型号</mfDefaultSorter></th>
+                  <th><mfDefaultSorter by="userName">预约用户</mfDefaultSorter></th>
+                  <th><mfDefaultSorter by="startTime">计划开始用车时间</mfDefaultSorter></th>
                   <th>申请原因</th>
-                  <th>数据状态</th>
+                  <th><mfDefaultSorter by="statusName">数据状态</mfDefaultSorter></th>
                   <th>操作</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let info of carApplyInfos">
-                  <td>{{info.id}}</td>
-                  <td>{{info.brand}}</td>
-                  <td>{{info.userName}}</td>
-                  <td>{{info.startTime}}</td>
-                  <td>{{info.reason}}</td>
-                  <td>{{info.statusName}}</td>
+                <tr *ngFor="let info of mf.data">
+                  <td>{{ info.id }}</td>
+                  <td>{{ info.brand }}</td>
+                  <td>{{ info.userName }}</td>
+                  <td>{{ info.startTime }}</td>
+                  <td>{{ info.reason }}</td>
+                  <td>{{ info.statusName }}</td>
                   <td>
                     <span class="label label-success cursor-hand" data-toggle="modal" data-target="#checkModal"
                       (click)="getApplyId(info.id, '通过')" *ngIf="info.is_delay"> 通过 </span>
@@ -69,7 +67,13 @@
                   </td>
                 </tr>
               </tbody>
-
+              <tfoot>
+                <tr>
+                  <td colspan="10">
+                    <mfBootstrapPaginator [rowsOnPageSet]="[5, 10, 25]"></mfBootstrapPaginator>
+                  </td>
+                </tr>
+              </tfoot>
             </table>
           </div>
           <!-- /.box-body -->
@@ -85,8 +89,7 @@
 <!-- /.content-wrapper -->
 
 <!--模态框删除-->
-<div class="modal fade" id="checkModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
-  aria-hidden="true">
+<div class="modal fade" id="checkModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -95,20 +98,20 @@
       </div>
       <div class="modal-body">
         <div class="form-horizontal" role="form">
-
           <div class="fcol-sm-5 ">
-            <p>此次审核结果为：{{statusOperate}}，您确定本次操作吗？</p>
-
+            <p>此次审核结果为：{{ statusOperate }}，您确定本次操作吗？</p>
           </div>
 
         </div>
       </div>
       <div class="modal-footer">
-        <p class="label label-danger delete-wrong-tip" [ngClass]="{'div-display': judgeDelete}"
-          style="margin-top: 5px;float: left;">{{tip}}</p>
+        <p class="label label-danger delete-wrong-tip" [ngClass]="{ 'div-display': judgeDelete }" style="margin-top: 5px;float: left;">{{ tip }}</p>
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
         <button type="submit" class="btn btn-primary" (click)="checkApply()">确定</button>
       </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
