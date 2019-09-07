@@ -62,10 +62,10 @@
                   <td>{{info.statusName}}</td>
                   <td>
                     <span class="label label-success cursor-hand" data-toggle="modal" data-target="#checkModal"
-                      (click)="getApplyId(info.id, '通过')"> 通过 </span>
+                      (click)="getApplyId(info.id, '通过')" *ngIf="info.is_delay"> 通过 </span>
                     &nbsp;
                     <span class="label label-danger cursor-hand" data-toggle="modal" data-target="#checkModal"
-                      (click)="getApplyId(info.id, '不通过')"> 不通过 </span>
+                      (click)="getApplyId(info.id, '不通过')" *ngIf="info.is_delay"> 不通过 </span>
                   </td>
                 </tr>
               </tbody>

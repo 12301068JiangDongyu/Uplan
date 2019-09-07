@@ -23,7 +23,7 @@ export class CarApplyComponent implements OnInit {
     id: 0, car_id: 0, brand: "", user_id: 0, userName: "", distination: "",
     start_time: new Date(), end_time: new Date(), reason: "", travel_distance: 0,
     creatTime: "", creat_time: new Date(), updateTime: "", startTime: "",
-    update_time: new Date(), oil_used: 0, remark: "", status_name: ""
+    update_time: new Date(), oil_used: 0, remark: "", statusName: "",status:1, is_delay: true
   };
   allApplyList = [{
     title: '丰田阿尔法',

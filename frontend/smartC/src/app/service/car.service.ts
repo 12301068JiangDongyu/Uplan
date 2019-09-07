@@ -144,6 +144,19 @@ export class CarApplyInfoService {
         };
         console.log(data);
         return this.http
+            .post(this.constant.URL + "check?id="+applyId+"&status="+s, this.options)
+            .toPromise()
+            .then(response => response.json().data)
+            .catch(this.handleError)
+    }
+
+    dropApply(applyId:number, status: string): Promise<any> {
+        let data = {
+        	"id" : applyId,
+        	"status" : 3
+        };
+        console.log(data);
+        return this.http
             .post(this.constant.URL + "officialCarApply/carRepeal",data, this.options)
             .toPromise()
             .then(response => response.json().data)

@@ -87,7 +87,7 @@ public interface OfficialCarApplyDao {
     // 获取当前时间可用车辆清单列表
     @Select("SELECT car.`id`,car_type.`brand`,car.`license_plate_num` FROM car,car_type WHERE car.`id` NOT IN(\n" +
             "SELECT car_id FROM official_car_apply AS oca WHERE DATEDIFF(#{startTime},start_time) = 0 AND oca.`status` = 1\n" +
-            ") AND car.`car_type_id` = car_type.id;")
+            ") AND car.`car_type_id` = car_type.id AND car.`status` = 1;")
     public List<QueryAvailcarList> queryAvailabilityCarList(Date startTime);
 
     // 获取所有用户的用车记录

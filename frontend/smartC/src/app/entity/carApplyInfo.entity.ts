@@ -18,5 +18,7 @@ export class CarApplyInfo {
     update_time: Data;
     oil_used: number;
     remark:string;
-    status_name:String;
+    statusName:string;
+    status:number;
+    is_delay:boolean = true;
 }

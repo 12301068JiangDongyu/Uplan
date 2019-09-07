@@ -7,6 +7,7 @@ import { User } from '../../../entity/user.entity'
 //service
 import { CarApplyInfoService } from '../../../service/car.service';
 import { StorageService } from '../../../service/storage.service';
+import { of } from 'rxjs/observable/of';
 
 
 
@@ -19,9 +20,23 @@ export class UserApplyListComponent implements OnInit {
 	userId: number;
 	applyId: number;
 	judgeDelete: boolean = true;
-	today=new Date().toLocaleDateString();
-	is_show:boolean[];
+	today : string = this.formatDate(new Date()) ;
 
+	formatDate(date): string{
+		var d = new Date(date),
+			month = '' + (d.getMonth() + 1),
+			day = '' + d.getDate(),
+			year = d.getFullYear();
+	
+		if (month.length < 2) month = '0' + month;
+		if (day.length < 2) day = '0' + day;
+	
+		return [year, month, day].join('-');
+	}
+
+
+	is_show:boolean[];
+	
 	carApplyInfos: CarApplyInfo[];
 	judgeMsg: string[] = [
 		'请输入20位以下用户名！',//0
@@ -52,7 +67,7 @@ export class UserApplyListComponent implements OnInit {
   	 * [ 初始点击对应的数据id]
   	 */
 	dropApply(): void {
-		this.carApplyInfoService.checkApplyByApplyId(this.applyId, "撤回").then(data => {
+		this.carApplyInfoService.dropApply(this.applyId, "撤回").then(data => {
 			this.judgeDelete = false;
 			if (data.judge > 0) {
 				this.tip = this.judgeMsg[9];
@@ -75,10 +90,14 @@ export class UserApplyListComponent implements OnInit {
 	getCarApplyInfosByUserId(): void {
 		this.carApplyInfoService.getApplyInfoByUserId(this.userId).then(data => {
 			this.carApplyInfos = data;
-			this.is_show=new Array(this.carApplyInfos.length);
 			console.log(this.carApplyInfos);
-			for(let i = 0;i<this.carApplyInfos.length;i++){
-				this.is_show[i] = true;
+			for(let i = 0; i < this.carApplyInfos.length; i++){
+				if(this.today > this.carApplyInfos[i].startTime || this.carApplyInfos[i].status === 3 || this.carApplyInfos[i].status === 2){
+					this.carApplyInfos[i].is_delay = false;
+
+				}else{
+					this.carApplyInfos[i].is_delay = true;
+				}
 			}
 
 		})
