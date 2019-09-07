@@ -343,8 +343,8 @@ export class StatisticsComponent implements OnInit {
             symbolSize: [10, 70],
             // color: ['rgba(255,255,255,.2)'],
           },
-          min: 200,
-          max: 10000,
+          min: 10000,
+          max: 100000,
           show: false,
         },
         {
@@ -355,7 +355,7 @@ export class StatisticsComponent implements OnInit {
           outOfRange: {
             color: ['rgba(255,255,255,.2)'],
           },
-          min: 201801,
+          min: 201712,
           max: 201912,
           show: false,
         },
