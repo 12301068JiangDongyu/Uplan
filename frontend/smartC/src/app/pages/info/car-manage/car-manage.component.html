@@ -21,14 +21,14 @@
         <div class="nav-tabs-custom">
           <div class="tab-content">
             <div class="tab-pane active" id="tab_1">
-              <table class="table table-bordered table-hover table-page" [mfData]="cartypes" #mf="mfDataTable" [mfRowsOnPage]="10">
+              <table class="table table-bordered table-hover table-page" [mfData]="cars" #mf="mfDataTable" [mfRowsOnPage]="10">
                 <thead>
                   <tr>
                     <th><mfDefaultSorter by="id">编号</mfDefaultSorter></th>
                     <th><mfDefaultSorter by="license_plate_num">车牌号</mfDefaultSorter></th>
                     <th><mfDefaultSorter by="brand">车型</mfDefaultSorter></th>
                     <th><mfDefaultSorter by="type">车辆用途</mfDefaultSorter></th>
-                    <th><mfDefaultSorter by="run_time.time">投入日期</mfDefaultSorter></th>
+                    <th><mfDefaultSorter by="run_time">投入日期</mfDefaultSorter></th>
                     <th><mfDefaultSorter by="mileage">里程数</mfDefaultSorter></th>
                     <th><mfDefaultSorter by="oil_remained">剩余油量</mfDefaultSorter></th>
                     <th><mfDefaultSorter by="status">车辆状态</mfDefaultSorter></th>
@@ -36,7 +36,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let car of cars">
+                  <tr *ngFor="let car of mf.data">
                     <td>{{ car.id }}</td>
                     <td>{{ car.license_plate_num }}</td>
                     <td>{{ car.brand }}</td>
@@ -56,6 +56,13 @@
                     </td>
                   </tr>
                 </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="7">
+                      <mfBootstrapPaginator [rowsOnPageSet]="[5, 10, 25]"></mfBootstrapPaginator>
+                    </td>
+                  </tr>
+                </tfoot>
               </table>
               <button class="btn btn-warning btn-flat" data-toggle="modal" data-target="#carModal" (click)="resetModal()">添加车辆</button>
             </div>
