@@ -28,6 +28,7 @@ export class CarApplyComponent implements OnInit {
   allApplyList = [{
     title: '丰田阿尔法',
     start: new Date(2019, 8, 7),
+    allDay: true,
     backgroundColor: '#f56954', //red
     borderColor: '#f56954' //red
   }];
@@ -51,25 +52,27 @@ export class CarApplyComponent implements OnInit {
   getAllApplyList(): void {
     let that = this;
     that.carApplyInfoService.getCarUseList().then(data => {
-      console.log("所有申请汽车数据");
+      // 变量初始化，防止累加
+      that.allApplyList = [{
+        title: '丰田阿尔法',
+        start: new Date(2019, 8, 7),
+        allDay: true,
+        backgroundColor: '#f56954', //red
+        borderColor: '#f56954' //red
+      }];
       console.log(data);
       for (let info of data) {
         let temp = {
-          title: info.brand,
-          start: new Date(info.start_time.year,info.start_time.month,info.start_time.day),
+          title: info.brand+info.id,
+          allDay : true,
+          start: new Date(info.startTime),
           backgroundColor: '#f56954', //red
           borderColor: '#f56954' //red
         }
         that.allApplyList.push(temp);
       }
-      console.log(this.allApplyList);
       that.initCalendar();
-
-      var originalEventObject = $(this).data('eventObject')
-      // we need to copy it, so that multiple events don't have a reference to the same object
-      var copiedEventObject = $.extend({}, this.allApplyList)
-      $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
-
+      $('#calendar').fullCalendar('renderEvent', that.allApplyList, true);
     });
 
   }
@@ -77,7 +80,6 @@ export class CarApplyComponent implements OnInit {
   // 通过日期获取可用汽车信息， 给cars变量赋值
   getCarInfoByDate(date): void {
     let that = this
-    console.log(date);
     this.carApplyInfoService.getCarListByDate(date).then(data => {
       that.cars = data; 
       console.log(that.cars);
@@ -91,7 +93,6 @@ export class CarApplyComponent implements OnInit {
       });
       $("#external-events").html(strHtml);
       that.getAllApplyList()
-      // that.initCalendar();
     });
   }
 
@@ -189,6 +190,8 @@ export class CarApplyComponent implements OnInit {
         copiedEventObject.allDay = true;
         copiedEventObject.backgroundColor = $(this).css('background-color');
         copiedEventObject.borderColor = $(this).css('border-color');
+        console.log("copiedEventObject=======");
+        console.log(copiedEventObject);
         // 向后端插入数据
         that.applyInfo.car_id = that.carInfo.id;//创建插入数据
         that.applyInfo.user_id = that.storageService.read<User>('user').id;//创建插入数据
@@ -198,7 +201,6 @@ export class CarApplyComponent implements OnInit {
         that.carApplyInfoService.addCarApply(that.applyInfo).then(data => {
           console.log(data);
           let res = data.judge;
-          console.log(res);
           if (res > 0) {
             $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
             $(this).remove();

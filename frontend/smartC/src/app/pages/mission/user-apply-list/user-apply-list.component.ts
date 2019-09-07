@@ -19,7 +19,9 @@ export class UserApplyListComponent implements OnInit {
 	userId: number;
 	applyId: number;
 	judgeDelete: boolean = true;
-	
+	today=new Date().toLocaleDateString();
+	is_show:boolean[];
+
 	carApplyInfos: CarApplyInfo[];
 	judgeMsg: string[] = [
 		'请输入20位以下用户名！',//0
@@ -72,9 +74,12 @@ export class UserApplyListComponent implements OnInit {
 	 */
 	getCarApplyInfosByUserId(): void {
 		this.carApplyInfoService.getApplyInfoByUserId(this.userId).then(data => {
-			console.log(data);
 			this.carApplyInfos = data;
+			this.is_show=new Array(this.carApplyInfos.length);
 			console.log(this.carApplyInfos);
+			for(let i = 0;i<this.carApplyInfos.length;i++){
+				this.is_show[i] = true;
+			}
 
 		})
 	}

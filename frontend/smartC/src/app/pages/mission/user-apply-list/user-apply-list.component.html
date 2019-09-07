@@ -44,9 +44,9 @@
                                     <!-- <td>{{info.end_time}}</td> -->
                                     <td>{{info.reason}}</td>
                                     <td>{{info.statusName}}</td>
-                                    <td *ngIf="info.statusName == '未审核'">
+                                    <td>
                                         <span class="label label-danger cursor-hand" data-toggle="modal"
-                                            data-target="#deleteModal" (click)="getApplyId(info.id)"> 撤回 </span>
+                                            data-target="#deleteModal" (click)="getApplyId(info.id)" *ngIf="show"> 撤回 </span>
                                     </td>
                                 </tr>
                             </tbody>
