@@ -10,6 +10,8 @@ import com.pku.system.service.UserService;
 import com.pku.system.service.OfficialCarApplyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -134,8 +136,16 @@ public class OfficialCarApplyServiceImpl implements OfficialCarApplyService {
 
     @Override
     public List<carListInfoByUserID> queryCarListInfoByUserId(){
+        List<carListInfoByUserID> res = officialCarApplyDao.queryCarListInfoByUserId();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        for(carListInfoByUserID carlistinfo : res){
+            try{
+                carlistinfo.setStartTime((df.format(carlistinfo.getStart_time())));
+            } catch (Exception e){
 
-        return officialCarApplyDao.queryCarListInfoByUserId();
+            }
+        }
+        return res;
     }
 
 

@@ -6,6 +6,15 @@ public class carListInfoByUserID {
     private int id;
     private int applyId;
     private String brand;
+    private String startTime;
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
 
     public int getApplyId() {
         return applyId;

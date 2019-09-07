@@ -156,7 +156,7 @@ public class OfficialCarApplyController {
         List<OfficialCarApply> officialCarApplies = officialCarApplyService.queryByCarId(officialCarApply.getCar_id());
         for (OfficialCarApply of :
                 officialCarApplies) {
-            SimpleDateFormat df = new SimpleDateFormat("YYYY-MM-dd");
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             if (df.format(of.getStart_time()).equals(df.format(officialCarApply.getStart_time())) && of.getStatus() == 1){
                 jsonObject.put("msg", officialCarApply.getStart_time()+"已经存在申请");
                 jsonObject.put("judge","0");
@@ -235,7 +235,7 @@ public class OfficialCarApplyController {
     // 通过时间参数获取当前可用的车辆清单列表
     @RequestMapping(value = "/officialCarApply/getAvailCarList",method = RequestMethod.GET)
     public String getAvailCarList(String dateInfo){
-        SimpleDateFormat sdf = new SimpleDateFormat("YYYY-M-d");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("msg","调用成功");
         jsonObject.put("judge","1");
